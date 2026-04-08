@@ -1,0 +1,27 @@
+# Visual Studio / SSDT
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build outputs
+bin/
+obj/
+
+# SSIS / SSAS deployment artifacts (optional keep)
+*.ispac
+*.asdatabase
+*.deploymentoptions
+*.deploymenttargets
+
+# Logs and temp
+logs/
+temp/
+*.log
+!logs/.gitkeep
+!temp/.gitkeep
+
+# OS
+Thumbs.db
+.DS_Store
