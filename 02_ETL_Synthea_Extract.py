@@ -263,6 +263,77 @@ def reset_landing_tables() -> bool:
         return False
 
 
+def ensure_min_column_length(
+    database_name: str,
+    table_name: str,
+    column_name: str,
+    min_length: int,
+    data_type: str = 'VARCHAR'
+) -> bool:
+    """Đảm bảo độ dài tối thiểu cho cột text để tránh truncate khi load."""
+
+    try:
+        check_sql = f"""
+        SELECT CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
+        FROM [{database_name}].INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = 'dbo'
+          AND TABLE_NAME = '{table_name}'
+          AND COLUMN_NAME = '{column_name}'
+        """
+        result = execute_sql(check_sql, database_name, fetch=True)
+
+        if not result:
+            logger.warning(f"[WARN] Column not found: {table_name}.{column_name}")
+            return False
+
+        current_length = result[0][0]
+        is_nullable = result[0][1]
+
+        if current_length is None or current_length >= min_length:
+            logger.info(f"[OK] {table_name}.{column_name} length = {current_length}, no change needed")
+            return True
+
+        nullable_sql = "NULL" if str(is_nullable).upper() == "YES" else "NOT NULL"
+        alter_sql = (
+            f"ALTER TABLE [dbo].[{table_name}] "
+            f"ALTER COLUMN [{column_name}] {data_type}({min_length}) {nullable_sql};"
+        )
+        execute_sql(alter_sql, database_name)
+
+        logger.info(
+            f"[OK] Altered {table_name}.{column_name} from {current_length} to {min_length}"
+        )
+        return True
+
+    except Exception as e:
+        logger.error(
+            f"[ERROR] Failed to ensure length for {table_name}.{column_name}: {str(e)}"
+        )
+        return False
+
+
+def ensure_landing_schema_compatibility() -> bool:
+    """Đồng bộ nhanh các cột dễ bị truncate trong Landing trước khi load."""
+
+    checks = [
+        ("Landing_Observations", "VALUE", 255),
+        ("Landing_Imaging_Studies", "SOP_CODE", 64),
+    ]
+
+    all_ok = True
+    for table_name, column_name, min_length in checks:
+        ok = ensure_min_column_length(
+            database_name=Config.LANDING_DB,
+            table_name=table_name,
+            column_name=column_name,
+            min_length=min_length,
+            data_type='VARCHAR'
+        )
+        all_ok = all_ok and ok
+
+    return all_ok
+
+
 # ============================================================================
 # LANDING LAYER - LOAD RAW DATA (VỚI KIỂU VARCHAR CHO TẤT CẢ CỘT)
 # ============================================================================
@@ -437,6 +508,10 @@ def run_etl_pipeline() -> None:
     logger.info("\n[STEP 1] Creating databases...")
     create_database(Config.LANDING_DB)
     create_database(Config.STAGING_DB)
+
+    # Step 1.5: Ensure Landing schema is compatible with incoming CSV
+    logger.info("\n[STEP 1.5] Validating Landing schema compatibility...")
+    ensure_landing_schema_compatibility()
 
     # Step 2: Reset Landing tables
     logger.info("\n[STEP 2] Resetting landing tables...")
