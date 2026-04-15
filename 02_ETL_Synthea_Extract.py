@@ -318,6 +318,9 @@ def ensure_landing_schema_compatibility() -> bool:
     checks = [
         ("Landing_Observations", "VALUE", 255),
         ("Landing_Imaging_Studies", "SOP_CODE", 64),
+        ("Landing_Organizations", "PHONE", 50),
+        ("Landing_Payers", "PHONE", 50),
+        ("Landing_Payers", "QOLS_AVG", 20),
     ]
 
     all_ok = True
