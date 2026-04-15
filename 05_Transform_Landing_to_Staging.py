@@ -297,6 +297,233 @@ def transform_medications(df: pd.DataFrame) -> pd.DataFrame:
     return df_transform
 
 
+def transform_conditions(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Conditions data"""
+    logger.info("Transforming Conditions...")
+    df_transform = pd.DataFrame()
+    df_transform['START'] = df['START'].apply(safe_to_date)
+    df_transform['STOP'] = df['STOP'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Conditions rows")
+    return df_transform
+
+
+def transform_procedures(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Procedures data"""
+    logger.info("Transforming Procedures...")
+    df_transform = pd.DataFrame()
+    df_transform['DATE'] = df['DATE'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['BASE_COST'] = df['BASE_COST'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['REASONCODE'] = df['REASONCODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['REASONDESCRIPTION'] = df['REASONDESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Procedures rows")
+    return df_transform
+
+
+def transform_immunizations(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Immunizations data"""
+    logger.info("Transforming Immunizations...")
+    df_transform = pd.DataFrame()
+    df_transform['DATE'] = df['DATE'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['BASE_COST'] = df['BASE_COST'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Immunizations rows")
+    return df_transform
+
+
+def transform_allergies(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Allergies data"""
+    logger.info("Transforming Allergies...")
+    df_transform = pd.DataFrame()
+    df_transform['START'] = df['START'].apply(safe_to_date)
+    df_transform['STOP'] = df['STOP'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Allergies rows")
+    return df_transform
+
+
+def transform_careplans(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Careplans data"""
+    logger.info("Transforming Careplans...")
+    df_transform = pd.DataFrame()
+    df_transform['Id'] = df['Id'].apply(lambda x: trim_string(x, 36))
+    df_transform['START'] = df['START'].apply(safe_to_date)
+    df_transform['STOP'] = df['STOP'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['REASONCODE'] = df['REASONCODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['REASONDESCRIPTION'] = df['REASONDESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Careplans rows")
+    return df_transform
+
+
+def transform_devices(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Devices data"""
+    logger.info("Transforming Devices...")
+    df_transform = pd.DataFrame()
+    df_transform['START'] = df['START'].apply(safe_to_date)
+    df_transform['STOP'] = df['STOP'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['UDI'] = df['UDI'].apply(lambda x: trim_string(x, 500))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Devices rows")
+    return df_transform
+
+
+def transform_imaging_studies(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Imaging Studies data"""
+    logger.info("Transforming Imaging Studies...")
+    df_transform = pd.DataFrame()
+    df_transform['Id'] = df['Id'].apply(lambda x: trim_string(x, 36))
+    df_transform['DATE'] = df['DATE'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['BODYSITE_CODE'] = df['BODYSITE_CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['BODYSITE_DESCRIPTION'] = df['BODYSITE_DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['MODALITY_CODE'] = df['MODALITY_CODE'].apply(lambda x: trim_string(x, 5))
+    df_transform['MODALITY_DESCRIPTION'] = df['MODALITY_DESCRIPTION'].apply(lambda x: trim_string(x, 50))
+    df_transform['SOP_CODE'] = df['SOP_CODE'].apply(lambda x: trim_string(x, 30))
+    df_transform['SOP_DESCRIPTION'] = df['SOP_DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Imaging Studies rows")
+    return df_transform
+
+
+def transform_supplies(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Supplies data"""
+    logger.info("Transforming Supplies...")
+    df_transform = pd.DataFrame()
+    df_transform['DATE'] = df['DATE'].apply(safe_to_date)
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['ENCOUNTER'] = df['ENCOUNTER'].apply(lambda x: trim_string(x, 36))
+    df_transform['CODE'] = df['CODE'].apply(lambda x: trim_string(x, 20))
+    df_transform['DESCRIPTION'] = df['DESCRIPTION'].apply(lambda x: trim_string(x, 255))
+    df_transform['QUANTITY'] = df['QUANTITY'].apply(safe_to_int)
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Supplies rows")
+    return df_transform
+
+
+def transform_organizations(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Organizations data"""
+    logger.info("Transforming Organizations...")
+    df_transform = pd.DataFrame()
+    df_transform['Id'] = df['Id'].apply(lambda x: trim_string(x, 36))
+    df_transform['NAME'] = df['NAME'].apply(lambda x: trim_string(x, 255))
+    df_transform['ADDRESS'] = df['ADDRESS'].apply(lambda x: trim_string(x, 255))
+    df_transform['CITY'] = df['CITY'].apply(lambda x: trim_string(x, 100))
+    df_transform['STATE'] = df['STATE'].apply(lambda x: trim_string(x, 50))
+    df_transform['ZIP'] = df['ZIP'].apply(lambda x: trim_string(x, 10))
+    df_transform['LAT'] = df['LAT'].apply(lambda x: safe_to_decimal(x, 10))
+    df_transform['LON'] = df['LON'].apply(lambda x: safe_to_decimal(x, 10))
+    df_transform['PHONE'] = df['PHONE'].apply(lambda x: trim_string(x, 20))
+    df_transform['REVENUE'] = df['REVENUE'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['UTILIZATION'] = df['UTILIZATION'].apply(safe_to_int)
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Organizations rows")
+    return df_transform
+
+
+def transform_providers(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Providers data"""
+    logger.info("Transforming Providers...")
+    df_transform = pd.DataFrame()
+    df_transform['Id'] = df['Id'].apply(lambda x: trim_string(x, 36))
+    df_transform['ORGANIZATION'] = df['ORGANIZATION'].apply(lambda x: trim_string(x, 36))
+    df_transform['NAME'] = df['NAME'].apply(lambda x: trim_string(x, 255))
+    df_transform['GENDER'] = df['GENDER'].apply(lambda x: trim_string(x, 1))
+    df_transform['SPECIALITY'] = df['SPECIALITY'].apply(lambda x: trim_string(x, 100))
+    df_transform['ADDRESS'] = df['ADDRESS'].apply(lambda x: trim_string(x, 255))
+    df_transform['CITY'] = df['CITY'].apply(lambda x: trim_string(x, 100))
+    df_transform['STATE'] = df['STATE'].apply(lambda x: trim_string(x, 50))
+    df_transform['ZIP'] = df['ZIP'].apply(lambda x: trim_string(x, 10))
+    df_transform['LAT'] = df['LAT'].apply(lambda x: safe_to_decimal(x, 10))
+    df_transform['LON'] = df['LON'].apply(lambda x: safe_to_decimal(x, 10))
+    df_transform['UTILIZATION'] = df['UTILIZATION'].apply(safe_to_int)
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Providers rows")
+    return df_transform
+
+
+def transform_payers(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Payers data"""
+    logger.info("Transforming Payers...")
+    df_transform = pd.DataFrame()
+    df_transform['Id'] = df['Id'].apply(lambda x: trim_string(x, 36))
+    df_transform['NAME'] = df['NAME'].apply(lambda x: trim_string(x, 255))
+    df_transform['ADDRESS'] = df['ADDRESS'].apply(lambda x: trim_string(x, 255))
+    df_transform['CITY'] = df['CITY'].apply(lambda x: trim_string(x, 100))
+    df_transform['STATE_HEADQUARTERED'] = df['STATE_HEADQUARTERED'].apply(lambda x: trim_string(x, 50))
+    df_transform['ZIP'] = df['ZIP'].apply(lambda x: trim_string(x, 10))
+    df_transform['PHONE'] = df['PHONE'].apply(lambda x: trim_string(x, 20))
+    df_transform['AMOUNT_COVERED'] = df['AMOUNT_COVERED'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['AMOUNT_UNCOVERED'] = df['AMOUNT_UNCOVERED'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['REVENUE'] = df['REVENUE'].apply(lambda x: safe_to_decimal(x, 2))
+    df_transform['COVERED_ENCOUNTERS'] = df['COVERED_ENCOUNTERS'].apply(safe_to_int)
+    df_transform['UNCOVERED_ENCOUNTERS'] = df['UNCOVERED_ENCOUNTERS'].apply(safe_to_int)
+    df_transform['COVERED_MEDICATIONS'] = df['COVERED_MEDICATIONS'].apply(safe_to_int)
+    df_transform['UNCOVERED_MEDICATIONS'] = df['UNCOVERED_MEDICATIONS'].apply(safe_to_int)
+    df_transform['COVERED_PROCEDURES'] = df['COVERED_PROCEDURES'].apply(safe_to_int)
+    df_transform['UNCOVERED_PROCEDURES'] = df['UNCOVERED_PROCEDURES'].apply(safe_to_int)
+    df_transform['COVERED_IMMUNIZATIONS'] = df['COVERED_IMMUNIZATIONS'].apply(safe_to_int)
+    df_transform['UNCOVERED_IMMUNIZATIONS'] = df['UNCOVERED_IMMUNIZATIONS'].apply(safe_to_int)
+    df_transform['UNIQUE_CUSTOMERS'] = df['UNIQUE_CUSTOMERS'].apply(safe_to_int)
+    df_transform['QOLS_AVG'] = df['QOLS_AVG'].apply(lambda x: safe_to_decimal(x, 4))
+    df_transform['MEMBER_MONTHS'] = df['MEMBER_MONTHS'].apply(safe_to_int)
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Payers rows")
+    return df_transform
+
+
+def transform_payer_transitions(df: pd.DataFrame) -> pd.DataFrame:
+    """Transform Payer Transitions data"""
+    logger.info("Transforming Payer Transitions...")
+    df_transform = pd.DataFrame()
+    df_transform['PATIENT'] = df['PATIENT'].apply(lambda x: trim_string(x, 36))
+    df_transform['START_YEAR'] = df['START_YEAR'].apply(safe_to_int)
+    df_transform['END_YEAR'] = df['END_YEAR'].apply(safe_to_int)
+    df_transform['PAYER'] = df['PAYER'].apply(lambda x: trim_string(x, 36))
+    df_transform['OWNERSHIP'] = df['OWNERSHIP'].apply(lambda x: trim_string(x, 50))
+    df_transform['create_at'] = datetime.now()
+    df_transform['update_at'] = datetime.now()
+    logger.info(f"[OK] Transformed {len(df_transform)} Payer Transitions rows")
+    return df_transform
+
+
 # ============================================================================
 # MAIN TRANSFORMATION PIPELINE
 # ============================================================================
@@ -322,6 +549,18 @@ def transform_landing_to_staging():
             ('Landing_Encounters', 'Staging_Encounters', transform_encounters),
             ('Landing_Observations', 'Staging_Observations', transform_observations),
             ('Landing_Medications', 'Staging_Medications', transform_medications),
+            ('Landing_Conditions', 'Staging_Conditions', transform_conditions),
+            ('Landing_Procedures', 'Staging_Procedures', transform_procedures),
+            ('Landing_Immunizations', 'Staging_Immunizations', transform_immunizations),
+            ('Landing_Allergies', 'Staging_Allergies', transform_allergies),
+            ('Landing_Careplans', 'Staging_Careplans', transform_careplans),
+            ('Landing_Devices', 'Staging_Devices', transform_devices),
+            ('Landing_Imaging_Studies', 'Staging_Imaging_Studies', transform_imaging_studies),
+            ('Landing_Supplies', 'Staging_Supplies', transform_supplies),
+            ('Landing_Organizations', 'Staging_Organizations', transform_organizations),
+            ('Landing_Providers', 'Staging_Providers', transform_providers),
+            ('Landing_Payers', 'Staging_Payers', transform_payers),
+            ('Landing_Payer_Transitions', 'Staging_Payer_Transitions', transform_payer_transitions),
         ]
 
         results = []
