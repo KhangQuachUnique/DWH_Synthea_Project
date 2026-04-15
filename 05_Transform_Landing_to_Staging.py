@@ -124,6 +124,83 @@ def create_connection(database_name: str = None):
         raise
 
 
+def ensure_min_staging_column_length(
+    table_name: str,
+    column_name: str,
+    min_length: int,
+    data_type: str = 'VARCHAR'
+) -> bool:
+    """Đảm bảo độ dài tối thiểu cho cột text trong Staging để tránh truncate."""
+
+    conn = None
+    try:
+        conn = create_connection(Config.STAGING_DB)
+        cursor = conn.cursor()
+
+        check_sql = """
+        SELECT CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = 'dbo'
+          AND TABLE_NAME = ?
+          AND COLUMN_NAME = ?
+        """
+        row = cursor.execute(check_sql, (table_name, column_name)).fetchone()
+
+        if not row:
+            logger.warning(f"[WARN] Column not found: {table_name}.{column_name}")
+            return False
+
+        current_length = row[0]
+        is_nullable = row[1]
+
+        if current_length is None or current_length >= min_length:
+            logger.info(f"[OK] {table_name}.{column_name} length = {current_length}, no change needed")
+            return True
+
+        nullable_sql = "NULL" if str(is_nullable).upper() == "YES" else "NOT NULL"
+        alter_sql = (
+            f"ALTER TABLE [dbo].[{table_name}] "
+            f"ALTER COLUMN [{column_name}] {data_type}({min_length}) {nullable_sql};"
+        )
+        cursor.execute(alter_sql)
+        conn.commit()
+
+        logger.info(
+            f"[OK] Altered {table_name}.{column_name} from {current_length} to {min_length}"
+        )
+        return True
+
+    except Exception as e:
+        logger.error(
+            f"[ERROR] Failed to ensure length for {table_name}.{column_name}: {str(e)}"
+        )
+        return False
+    finally:
+        if conn:
+            conn.close()
+
+
+def ensure_staging_schema_compatibility() -> bool:
+    """Đồng bộ nhanh các cột Staging dễ bị truncate trước khi transform/load."""
+
+    checks = [
+        ("Staging_Observations", "VALUE", 255),
+        ("Staging_Imaging_Studies", "SOP_CODE", 64),
+    ]
+
+    all_ok = True
+    for table_name, column_name, min_length in checks:
+        ok = ensure_min_staging_column_length(
+            table_name=table_name,
+            column_name=column_name,
+            min_length=min_length,
+            data_type='VARCHAR'
+        )
+        all_ok = all_ok and ok
+
+    return all_ok
+
+
 # ============================================================================
 # DATA UTILITIES
 # ============================================================================
@@ -543,6 +620,10 @@ def transform_landing_to_staging():
     logger.info("="*80 + "\n")
 
     try:
+        # Ensure key Staging columns are wide enough before loading
+        logger.info("[STEP] Validating Staging schema compatibility...")
+        ensure_staging_schema_compatibility()
+
         # Transformation tables mapping
         tables_to_transform = [
             ('Landing_Patients', 'Staging_Patients', transform_patients),
