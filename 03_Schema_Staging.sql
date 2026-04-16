@@ -1,1 +1,399 @@
+-- ============================================================================
+-- SYNTHEA STAGING DATABASE SCHEMA
+-- ============================================================================
+-- Mục đích: Tạo Staging Database để lưu dữ liệu đã clean + đúng kiểu dữ liệu
+-- Dữ kiện: Ngày tạo: 2026-04-15
+-- ============================================================================
+
+USE master;
+GO
+
+-- Tạo Staging Database nếu chưa tồn tại
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DW_Synthea_Staging')
+BEGIN
+    CREATE DATABASE [DW_Synthea_Staging]
+END;
+GO
+
+USE [DW_Synthea_Staging];
+GO
+
+-- ============================================================================
+-- 1. STAGING_PATIENTS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Patients]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Patients] (
+        [Id] VARCHAR(36) NOT NULL,
+        [BIRTHDATE] DATE NULL,
+        [DEATHDATE] DATE NULL,
+        [SSN] VARCHAR(11) NULL,
+        [DRIVERS] VARCHAR(50) NULL,
+        [PASSPORT] VARCHAR(50) NULL,
+        [PREFIX] VARCHAR(10) NULL,
+        [FIRST] VARCHAR(100) NULL,
+        [LAST] VARCHAR(100) NULL,
+        [SUFFIX] VARCHAR(10) NULL,
+        [MAIDEN] VARCHAR(100) NULL,
+        [MARITAL] VARCHAR(20) NULL,
+        [RACE] VARCHAR(50) NULL,
+        [ETHNICITY] VARCHAR(50) NULL,
+        [GENDER] CHAR(1) NULL,
+        [BIRTHPLACE] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(50) NULL,
+        [COUNTY] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(10) NULL,
+        [LAT] DECIMAL(18,2) NULL,
+        [LON] DECIMAL(18,2) NULL,
+        [HEALTHCARE_EXPENSES] DECIMAL(18,2) NULL,
+        [HEALTHCARE_COVERAGE] DECIMAL(18,2) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE CLUSTERED INDEX [IX_Staging_Patients_Id] ON [dbo].[Staging_Patients]([Id]);
+END;
+GO
+
+-- ============================================================================
+-- 2. STAGING_ENCOUNTERS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Encounters]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Encounters] (
+        [Id] VARCHAR(36) NULL,
+        [START] DATETIME NULL,
+        [STOP] DATETIME NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ORGANIZATION] VARCHAR(36) NULL,
+        [PROVIDER] VARCHAR(36) NULL,
+        [PAYER] VARCHAR(36) NULL,
+        [ENCOUNTERCLASS] VARCHAR(50) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [BASE_ENCOUNTER_COST] DECIMAL(18,2) NULL,
+        [TOTAL_CLAIM_COST] DECIMAL(18,2) NULL,
+        [PAYER_COVERAGE] DECIMAL(18,2) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Encounters_Patient] ON [dbo].[Staging_Encounters]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 3. STAGING_CONDITIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Conditions]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Conditions] (
+        [START] DATE NULL,
+        [STOP] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Conditions_Patient] ON [dbo].[Staging_Conditions]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 4. STAGING_MEDICATIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Medications]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Medications] (
+        [START] DATE NULL,
+        [STOP] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [PAYER] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [BASE_COST] DECIMAL(18,2) NULL,
+        [PAYER_COVERAGE] DECIMAL(18,2) NULL,
+        [DISPENSES] INT NULL,
+        [TOTALCOST] DECIMAL(18,2) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Medications_Patient] ON [dbo].[Staging_Medications]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 5. STAGING_OBSERVATIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Observations]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Observations] (
+        [DATE] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [VALUE] VARCHAR(255) NULL,
+        [UNITS] VARCHAR(20) NULL,
+        [TYPE] VARCHAR(50) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Observations_Patient] ON [dbo].[Staging_Observations]([PATIENT]);
+    CREATE NONCLUSTERED INDEX [IX_Staging_Observations_Date] ON [dbo].[Staging_Observations]([DATE]);
+END;
+GO
+
+-- ============================================================================
+-- 6. STAGING_PROCEDURES
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Procedures]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Procedures] (
+        [DATE] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [BASE_COST] DECIMAL(18,2) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Procedures_Patient] ON [dbo].[Staging_Procedures]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 7. STAGING_IMMUNIZATIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Immunizations]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Immunizations] (
+        [DATE] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [BASE_COST] DECIMAL(18,2) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Immunizations_Patient] ON [dbo].[Staging_Immunizations]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 8. STAGING_ALLERGIES
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Allergies]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Allergies] (
+        [START] DATE NULL,
+        [STOP] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Allergies_Patient] ON [dbo].[Staging_Allergies]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 9. STAGING_CAREPLANS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Careplans]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Careplans] (
+        [Id] VARCHAR(36) NULL,
+        [START] DATE NULL,
+        [STOP] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Careplans_Patient] ON [dbo].[Staging_Careplans]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 10. STAGING_DEVICES
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Devices]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Devices] (
+        [START] DATE NULL,
+        [STOP] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [UDI] VARCHAR(500) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Devices_Patient] ON [dbo].[Staging_Devices]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 11. STAGING_IMAGING_STUDIES
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Imaging_Studies]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Imaging_Studies] (
+        [Id] VARCHAR(36) NULL,
+        [DATE] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [BODYSITE_CODE] VARCHAR(20) NULL,
+        [BODYSITE_DESCRIPTION] VARCHAR(255) NULL,
+        [MODALITY_CODE] VARCHAR(5) NULL,
+        [MODALITY_DESCRIPTION] VARCHAR(50) NULL,
+        [SOP_CODE] VARCHAR(64) NULL,
+        [SOP_DESCRIPTION] VARCHAR(255) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Imaging_Studies_Patient] ON [dbo].[Staging_Imaging_Studies]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 12. STAGING_SUPPLIES
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Supplies]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Supplies] (
+        [DATE] DATE NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
+        [QUANTITY] INT NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Supplies_Patient] ON [dbo].[Staging_Supplies]([PATIENT]);
+END;
+GO
+
+-- ============================================================================
+-- 13. STAGING_ORGANIZATIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Organizations]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Organizations] (
+        [Id] VARCHAR(36) NULL,
+        [NAME] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(50) NULL,
+        [ZIP] VARCHAR(10) NULL,
+        [LAT] DECIMAL(18,10) NULL,
+        [LON] DECIMAL(18,10) NULL,
+        [PHONE] VARCHAR(20) NULL,
+        [REVENUE] DECIMAL(18,2) NULL,
+        [UTILIZATION] INT NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Organizations_Id] ON [dbo].[Staging_Organizations]([Id]);
+END;
+GO
+
+-- ============================================================================
+-- 14. STAGING_PROVIDERS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Providers]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Providers] (
+        [Id] VARCHAR(36) NULL,
+        [ORGANIZATION] VARCHAR(36) NULL,
+        [NAME] VARCHAR(255) NULL,
+        [GENDER] CHAR(1) NULL,
+        [SPECIALITY] VARCHAR(100) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(50) NULL,
+        [ZIP] VARCHAR(10) NULL,
+        [LAT] DECIMAL(18,10) NULL,
+        [LON] DECIMAL(18,10) NULL,
+        [UTILIZATION] INT NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Providers_Id] ON [dbo].[Staging_Providers]([Id]);
+END;
+GO
+
+-- ============================================================================
+-- 15. STAGING_PAYERS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payers]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Payers] (
+        [Id] VARCHAR(36) NULL,
+        [NAME] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE_HEADQUARTERED] VARCHAR(50) NULL,
+        [ZIP] VARCHAR(10) NULL,
+        [PHONE] VARCHAR(20) NULL,
+        [AMOUNT_COVERED] DECIMAL(18,2) NULL,
+        [AMOUNT_UNCOVERED] DECIMAL(18,2) NULL,
+        [REVENUE] DECIMAL(18,2) NULL,
+        [COVERED_ENCOUNTERS] INT NULL,
+        [UNCOVERED_ENCOUNTERS] INT NULL,
+        [COVERED_MEDICATIONS] INT NULL,
+        [UNCOVERED_MEDICATIONS] INT NULL,
+        [COVERED_PROCEDURES] INT NULL,
+        [UNCOVERED_PROCEDURES] INT NULL,
+        [COVERED_IMMUNIZATIONS] INT NULL,
+        [UNCOVERED_IMMUNIZATIONS] INT NULL,
+        [UNIQUE_CUSTOMERS] INT NULL,
+        [QOLS_AVG] DECIMAL(18,4) NULL,
+        [MEMBER_MONTHS] INT NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Payers_Id] ON [dbo].[Staging_Payers]([Id]);
+END;
+GO
+
+-- ============================================================================
+-- 16. STAGING_PAYER_TRANSITIONS
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payer_Transitions]'))
+BEGIN
+    CREATE TABLE [dbo].[Staging_Payer_Transitions] (
+        [PATIENT] VARCHAR(36) NULL,
+        [START_YEAR] INT NULL,
+        [END_YEAR] INT NULL,
+        [PAYER] VARCHAR(36) NULL,
+        [OWNERSHIP] VARCHAR(50) NULL,
+        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
+        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
+    );
+    CREATE NONCLUSTERED INDEX [IX_Staging_Payer_Transitions_Patient] ON [dbo].[Staging_Payer_Transitions]([PATIENT]);
+END;
+GO
+
+PRINT 'Staging Database Schema Created Successfully!';
  

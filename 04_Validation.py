@@ -41,7 +41,7 @@ def main():
     print("\n[1] Checking Python Dependencies")
     print("-" * 80)
 
-    dependencies = ['pandas', 'pyodbc', 'sqlalchemy', 'tqdm']
+    dependencies = ['pandas', 'pyodbc', 'tqdm']
     all_installed = True
 
     for dep in dependencies:
@@ -125,7 +125,9 @@ def main():
         import pyodbc
 
         print("  Attempting connection to SQL Server...")
-        conn_str = "DRIVER={ODBC Driver 17 for SQL Server};SERVER=Akuma;Trusted_Connection=yes;"
+        sql_server = os.environ.get('SYNTHEA_SQL_SERVER', 'localhost')
+        odbc_driver = os.environ.get('SYNTHEA_ODBC_DRIVER', 'ODBC Driver 17 for SQL Server')
+        conn_str = f"DRIVER={{{odbc_driver}}};SERVER={sql_server};Trusted_Connection=yes;"
         conn = pyodbc.connect(conn_str, timeout=5)
         cursor = conn.cursor()
 
@@ -206,7 +208,8 @@ def main():
         print("  1. Run SQL scripts:")
         print("     - 01_Schema_Landing.sql")
         print("     - 03_Schema_Staging.sql")
-        print("  2. Run: python 02_ETL_Synthea_Extract.py")
+        print("  2. Extract:   python 02_ETL_Synthea_Extract.py")
+        print("  3. Transform: python 05_Transform_Landing_to_Staging.py")
         return True
     else:
         print("\n[ERR] Some checks failed. Fix issues before running ETL.")

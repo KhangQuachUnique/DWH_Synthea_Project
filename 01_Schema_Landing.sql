@@ -12,18 +12,6 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DW_Synthea_Landing')
 BEGIN
     CREATE DATABASE [DW_Synthea_Landing]
-    ON PRIMARY (
-        NAME = 'DW_Synthea_Landing_Data',
-        FILENAME = 'C:\SQLServerData\DW_Synthea_Landing.mdf',
-        SIZE = 1024MB,
-        FILEGROWTH = 512MB
-    )
-    LOG ON (
-        NAME = 'DW_Synthea_Landing_Log',
-        FILENAME = 'C:\SQLServerData\DW_Synthea_Landing.ldf',
-        SIZE = 256MB,
-        FILEGROWTH = 256MB
-    );
 END;
 GO
 

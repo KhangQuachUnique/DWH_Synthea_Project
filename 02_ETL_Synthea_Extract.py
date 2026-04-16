@@ -9,7 +9,7 @@ Tác giả: Data Engineering Team
 Ngày tạo: 2026-04-15
 Version: 1.0
 
-Yêu cầu: pip install pandas pyodbc sqlalchemy tqdm openpyxl
+Yêu cầu: python -m pip install -r requirements.txt
 ================================================================================
 """
 
@@ -44,10 +44,12 @@ class Config:
     ERROR_LOG_PATH = PROJECT_ROOT / "logs" / "errors"
 
     # SQL Server Configuration
-    SQL_SERVER = "AKUMA"       # Your local SQL Server name
-    SQL_USER = ""              # Để trống nếu dùng Windows Authentication
-    SQL_PASSWORD = ""          # Để trống nếu dùng Windows Authentication
-    USE_WINDOWS_AUTH = True    # True = Windows Auth, False = SQL Auth
+    SQL_SERVER = os.environ.get("SYNTHEA_SQL_SERVER", "localhost")
+    ODBC_DRIVER = os.environ.get("SYNTHEA_ODBC_DRIVER", "ODBC Driver 17 for SQL Server")
+
+    SQL_USER = "admin"              # Để trống nếu dùng Windows Authentication
+    SQL_PASSWORD = "password"          # Để trống nếu dùng Windows Authentication
+    USE_WINDOWS_AUTH = False    # True = Windows Auth, False = SQL Auth
 
     # Database names
     LANDING_DB = "DW_Synthea_Landing"
@@ -138,13 +140,13 @@ def get_connection_string(database_name: str = None, use_windows_auth: bool = Tr
 
     if use_windows_auth:
         # Windows Authentication
-        conn_str = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={Config.SQL_SERVER};"
+        conn_str = f"DRIVER={{{Config.ODBC_DRIVER}}};SERVER={Config.SQL_SERVER};"
         if database_name:
             conn_str += f"DATABASE={database_name};"
         conn_str += "Trusted_Connection=yes;"
     else:
         # SQL Server Authentication
-        conn_str = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={Config.SQL_SERVER};"
+        conn_str = f"DRIVER={{{Config.ODBC_DRIVER}}};SERVER={Config.SQL_SERVER};"
         conn_str += f"UID={Config.SQL_USER};PWD={Config.SQL_PASSWORD};"
         if database_name:
             conn_str += f"DATABASE={database_name};"
@@ -396,7 +398,7 @@ def load_to_landing(table_key: str, csv_file: str) -> Dict:
         total_rows = 0
 
         # Tạo connection
-        conn_str = f"Driver={{ODBC Driver 17 for SQL Server}};Server={Config.SQL_SERVER};Database={Config.LANDING_DB};Trusted_Connection=yes;"
+        conn_str = get_connection_string(Config.LANDING_DB, Config.USE_WINDOWS_AUTH)
         conn = pyodbc.connect(conn_str, timeout=30)
         cursor = conn.cursor()
 
@@ -535,13 +537,11 @@ def run_etl_pipeline() -> None:
         else:
             logger.warning(f"[ERROR] {result['table']:30} | ERROR: {result['error']}")
 
-    # Step 4: Transform to Staging (optional - placeholder)
+    # Step 4: Transform to Staging
+    # (Handled by: 05_Transform_Landing_to_Staging.py)
     logger.info("\n[STEP 4] Transforming to Staging layer...")
+    logger.info("[SKIP] Run 05_Transform_Landing_to_Staging.py after this step")
     staging_results = []
-
-    for table_key in Config.CSV_FILES.keys():
-        result = transform_and_load_to_staging(table_key)
-        staging_results.append(result)
 
     # Step 5: Summary Report
     logger.info("\n" + "="*80)

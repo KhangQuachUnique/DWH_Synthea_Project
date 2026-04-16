@@ -2,14 +2,22 @@
 
 ## ⚡ Bắt Đầu Nhanh (5 Phút)
 
-**Chọn bước đầu tiên của bạn:**
+### 1. Cấu hình SQL Server
+```bash
+# Copy file config mẫu
+copy .env.example .env
 
-### 🪟 Windows Users
+# Sửa file .env với thông tin SQL Server của bạn
+notepad .env
+```
+
+### 2. Chạy ETL
+**Windows:**
 ```bash
 Double-click → 00_Quick_Start.bat
 ```
 
-### 🐧 macOS/Linux Users
+**macOS/Linux:**
 ```bash
 python 04_Validation.py
 python 02_ETL_Synthea_Extract.py
@@ -50,7 +58,7 @@ Kimball Star Schema
 | **04_Validation.py** | Python | ✅ Kiểm tra setup |
 | **05_Transform_Landing_to_Staging.py** | Python | ✨ Landing → Staging |
 | **requirements.txt** | Config | 📦 Packages |
-| **FLOW_DOCUMENTATION.md** | Docs | 📖 Chi tiết flow |
+| **README_ETL.md** | Docs | 📖 Hướng dẫn chi tiết |
 
 ---
 
@@ -59,15 +67,15 @@ Kimball Star Schema
 ### 📌 [Bước 1] Chuẩn Bị Máy (5 phút)
 
 Kiểm tra:
-- ✅ Python 3.8+ 
+- ✅ Python 3.9+
 - ✅ SQL Server running
-- ✅ ODBC Driver 17
+- ✅ ODBC Driver 17+
 - ✅ CSV files ở `data/raw/synthea/csv/`
 
 ### 📌 [Bước 2] Cài Python Packages (2 phút)
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ### 📌 [Bước 3] Kiểm Tra Setup (1 phút)
@@ -123,9 +131,8 @@ update_at  => Khi transform gần nhất
 
 ## 📖 Documentation
 
-📍 **Bắt đầu:** [FLOW_DOCUMENTATION.md](FLOW_DOCUMENTATION.md)  
-📍 **Chi tiết:** [FILE_MANIFEST.md](FILE_MANIFEST.md)  
 📍 **Hướng dẫn:** [README_ETL.md](README_ETL.md)  
+📍 **Quick start (Windows):** [00_Quick_Start.bat](00_Quick_Start.bat)  
 
 ---
 

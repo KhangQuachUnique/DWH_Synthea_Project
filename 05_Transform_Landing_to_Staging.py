@@ -44,7 +44,9 @@ class Config:
     LOG_PATH = PROJECT_ROOT / "logs"
     ERROR_LOG_PATH = PROJECT_ROOT / "logs" / "errors"
 
-    SQL_SERVER = "Akuma"       # Your local SQL Server
+    SQL_SERVER = os.environ.get("SYNTHEA_SQL_SERVER", "localhost")
+    ODBC_DRIVER = os.environ.get("SYNTHEA_ODBC_DRIVER", "ODBC Driver 17 for SQL Server")
+
     SQL_USER = ""
     SQL_PASSWORD = ""
     USE_WINDOWS_AUTH = True
@@ -100,12 +102,12 @@ logger = setup_logging()
 def get_connection_string(database_name: str = None) -> str:
     """Tạo connection string"""
     if Config.USE_WINDOWS_AUTH:
-        conn_str = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={Config.SQL_SERVER};"
+        conn_str = f"DRIVER={{{Config.ODBC_DRIVER}}};SERVER={Config.SQL_SERVER};"
         if database_name:
             conn_str += f"DATABASE={database_name};"
         conn_str += "Trusted_Connection=yes;"
     else:
-        conn_str = f"DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={Config.SQL_SERVER};"
+        conn_str = f"DRIVER={{{Config.ODBC_DRIVER}}};SERVER={Config.SQL_SERVER};"
         conn_str += f"UID={Config.SQL_USER};PWD={Config.SQL_PASSWORD};"
         if database_name:
             conn_str += f"DATABASE={database_name};"
@@ -652,18 +654,20 @@ def transform_landing_to_staging():
             try:
                 logger.info(f"\n[Transform] {landing_table} -> {staging_table}")
 
-                # Read from Landing
-                conn_str = get_connection_string(Config.LANDING_DB)
+                # Read from Landing (pyodbc)
+                landing_conn_str = get_connection_string(Config.LANDING_DB)
+                landing_conn = pyodbc.connect(landing_conn_str, timeout=30)
                 query = f"SELECT * FROM [{landing_table}]"
-                df_landing = pd.read_sql(query, f'mssql+pyodbc:///?odbc_connect={conn_str}')
+                df_landing = pd.read_sql(query, landing_conn)
+                landing_conn.close()
 
                 logger.info(f"  Loaded {len(df_landing):,} rows from {landing_table}")
 
                 # Transform
                 df_staging = transform_func(df_landing)
 
-                # Write to Staging using pyodbc (faster than SQLAlchemy)
-                staging_conn_str = f"Driver={{ODBC Driver 17 for SQL Server}};Server={Config.SQL_SERVER};Database={Config.STAGING_DB};Trusted_Connection=yes;"
+                # Write to Staging using pyodbc
+                staging_conn_str = get_connection_string(Config.STAGING_DB)
                 staging_conn = pyodbc.connect(staging_conn_str, timeout=30)
                 staging_cursor = staging_conn.cursor()
 

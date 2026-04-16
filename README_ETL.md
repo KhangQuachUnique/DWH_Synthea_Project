@@ -69,10 +69,10 @@ python -m venv venv
 venv\Scripts\activate
 
 # Cài đặt thư viện
-pip install pandas pyodbc sqlalchemy tqdm
+python -m pip install -r requirements.txt
 
 # Kiểm tra cài đặt
-python -c "import pandas, pyodbc, sqlalchemy; print('✓ All libraries installed')"
+python -c "import pandas, pyodbc, tqdm; print('✓ All libraries installed')"
 ```
 
 ### 4. **Chuẩn bị File CSV**

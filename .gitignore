@@ -18,6 +18,9 @@ obj/
 # Logs and temp
 logs/
 temp/
+
+# Environment variables
+.env
 *.log
 !logs/.gitkeep
 !temp/.gitkeep
