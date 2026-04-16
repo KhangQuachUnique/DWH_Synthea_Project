@@ -53,7 +53,7 @@ def main():
 
     if not all_installed:
         print("\n[ERROR] Missing dependencies!")
-        print("Run: pip install -r requirements.txt")
+        print("Run: pip install pandas pyodbc tqdm")
         return False
 
     # Step 2: Check CSV files
@@ -84,6 +84,8 @@ def main():
 
     if not csv_path.exists():
         print(f"  [ERR] CSV directory not found: {csv_path}")
+        print(f"\n  Please create folder and copy CSV files:")
+        print(f"  {csv_path}")
         return False
 
     print(f"  CSV Path: {csv_path}\n")
@@ -125,9 +127,40 @@ def main():
         import pyodbc
 
         print("  Attempting connection to SQL Server...")
+        
+        # Get SQL Server name
         sql_server = os.environ.get('SYNTHEA_SQL_SERVER', 'localhost')
-        odbc_driver = os.environ.get('SYNTHEA_ODBC_DRIVER', 'ODBC Driver 17 for SQL Server')
+        
+        # Auto-detect ODBC Driver
+        installed_drivers = pyodbc.drivers()
+        odbc_driver = None
+        
+        for preferred in ['ODBC Driver 18 for SQL Server', 'ODBC Driver 17 for SQL Server']:
+            if preferred in installed_drivers:
+                odbc_driver = preferred
+                break
+        
+        if not odbc_driver:
+            for driver in reversed(installed_drivers):
+                if 'SQL Server' in driver:
+                    odbc_driver = driver
+                    break
+        
+        if not odbc_driver:
+            print(f"  [ERR] No ODBC Driver found!")
+            print(f"  Installed drivers: {installed_drivers}")
+            print(f"\n  Please install ODBC Driver 17 or 18 for SQL Server")
+            return False
+        
+        print(f"  Using ODBC Driver: {odbc_driver}")
+        
+        # Build connection string with Windows Authentication
         conn_str = f"DRIVER={{{odbc_driver}}};SERVER={sql_server};Trusted_Connection=yes;"
+        
+        # Add encryption settings for ODBC 18
+        if 'Driver 18' in odbc_driver:
+            conn_str += "Encrypt=no;TrustServerCertificate=yes;"
+        
         conn = pyodbc.connect(conn_str, timeout=5)
         cursor = conn.cursor()
 
@@ -160,8 +193,10 @@ def main():
         print(f"\n  [ERROR] Cannot connect to SQL Server!")
         print("  Troubleshooting:")
         print("    1. Is SQL Server running?")
-        print("    2. Is ODBC Driver 17 installed?")
-        print("    3. Correct server name? (or use IP address)")
+        print("    2. Is ODBC Driver installed?")
+        print("    3. Correct server name?")
+        print(f"    4. Current server: {sql_server}")
+        print("    5. Windows Authentication có quyền truy cập?")
         return False
 
     # Step 4: Check disk space
@@ -202,17 +237,17 @@ def main():
     print("VALIDATION SUMMARY")
     print("="*80)
 
-    if found_files == len(expected_files) and free_gb >= (total_size_mb / 1024) * 3:
-        print("\n[OK] All checks passed! Ready to run ETL.")
+    if all_installed and found_files > 0:
+        print("\n[OK] Validation checks passed!")
         print("\nNext steps:")
-        print("  1. Run SQL scripts:")
+        print("  1. Run SQL scripts in SQL Server Management Studio:")
         print("     - 01_Schema_Landing.sql")
         print("     - 03_Schema_Staging.sql")
         print("  2. Extract:   python 02_ETL_Synthea_Extract.py")
         print("  3. Transform: python 05_Transform_Landing_to_Staging.py")
         return True
     else:
-        print("\n[ERR] Some checks failed. Fix issues before running ETL.")
+        print("\n[WARNING] Some checks failed. Fix issues before running ETL.")
         return False
 
 

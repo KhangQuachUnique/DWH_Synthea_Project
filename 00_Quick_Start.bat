@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 REM ============================================================================
 REM SYNTHEA ETL - Quick Start Script (Windows)
 REM ============================================================================
@@ -22,7 +22,9 @@ if not exist ".env" (
 
 REM Load environment variables from .env (if exists)
 if exist ".env" (
-    for /f "tokens=*" %%i in (.env) do set %%i 2>nul
+    for /f "tokens=*" %%i in (.env) do (
+        echo %%i | findstr /r "^[A-Za-z_][A-Za-z0-9_]*=" >nul && set %%i
+    )
 )
 
 REM Check if Python is installed

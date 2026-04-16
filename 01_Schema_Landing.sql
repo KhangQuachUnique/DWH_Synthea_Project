@@ -301,17 +301,17 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Organizations]'))
 BEGIN
     CREATE TABLE [dbo].[Landing_Organizations] (
-        [Id] VARCHAR(36),
+        [Id] VARCHAR(100),
         [NAME] VARCHAR(255),
         [ADDRESS] VARCHAR(255),
         [CITY] VARCHAR(100),
-        [STATE] VARCHAR(50),
-        [ZIP] VARCHAR(10),
-        [LAT] VARCHAR(50),
-        [LON] VARCHAR(50),
-        [PHONE] VARCHAR(20),
-        [REVENUE] VARCHAR(20),
-        [UTILIZATION] VARCHAR(10),
+        [STATE] VARCHAR(100),
+        [ZIP] VARCHAR(100),
+        [LAT] VARCHAR(100),
+        [LON] VARCHAR(100),
+        [PHONE] VARCHAR(100),
+        [REVENUE] VARCHAR(100),
+        [UTILIZATION] VARCHAR(100),
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -325,8 +325,8 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Providers]'))
 BEGIN
     CREATE TABLE [dbo].[Landing_Providers] (
-        [Id] VARCHAR(36),
-        [ORGANIZATION] VARCHAR(36),
+        [Id] VARCHAR(100),
+        [ORGANIZATION] VARCHAR(100),
         [NAME] VARCHAR(255),
         [GENDER] CHAR(1),
         [SPECIALITY] VARCHAR(100),
@@ -350,27 +350,27 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Payers]'))
 BEGIN
     CREATE TABLE [dbo].[Landing_Payers] (
-        [Id] VARCHAR(36),
+        [Id] VARCHAR(100),
         [NAME] VARCHAR(255),
         [ADDRESS] VARCHAR(255),
         [CITY] VARCHAR(100),
         [STATE_HEADQUARTERED] VARCHAR(50),
-        [ZIP] VARCHAR(10),
-        [PHONE] VARCHAR(20),
-        [AMOUNT_COVERED] VARCHAR(20),
-        [AMOUNT_UNCOVERED] VARCHAR(20),
-        [REVENUE] VARCHAR(20),
-        [COVERED_ENCOUNTERS] VARCHAR(10),
-        [UNCOVERED_ENCOUNTERS] VARCHAR(10),
-        [COVERED_MEDICATIONS] VARCHAR(10),
-        [UNCOVERED_MEDICATIONS] VARCHAR(10),
-        [COVERED_PROCEDURES] VARCHAR(10),
-        [UNCOVERED_PROCEDURES] VARCHAR(10),
-        [COVERED_IMMUNIZATIONS] VARCHAR(10),
-        [UNCOVERED_IMMUNIZATIONS] VARCHAR(10),
-        [UNIQUE_CUSTOMERS] VARCHAR(10),
-        [QOLS_AVG] VARCHAR(10),
-        [MEMBER_MONTHS] VARCHAR(10),
+        [ZIP] VARCHAR(100),
+        [PHONE] VARCHAR(100),
+        [AMOUNT_COVERED] VARCHAR(100),
+        [AMOUNT_UNCOVERED] VARCHAR(100),
+        [REVENUE] VARCHAR(100),
+        [COVERED_ENCOUNTERS] VARCHAR(100),
+        [UNCOVERED_ENCOUNTERS] VARCHAR(100),
+        [COVERED_MEDICATIONS] VARCHAR(100),
+        [UNCOVERED_MEDICATIONS] VARCHAR(100),
+        [COVERED_PROCEDURES] VARCHAR(100),
+        [UNCOVERED_PROCEDURES] VARCHAR(100),
+        [COVERED_IMMUNIZATIONS] VARCHAR(100),
+        [UNCOVERED_IMMUNIZATIONS] VARCHAR(100),
+        [UNIQUE_CUSTOMERS] VARCHAR(100),
+        [QOLS_AVG] VARCHAR(100),
+        [MEMBER_MONTHS] VARCHAR(100),
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -384,10 +384,10 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Payer_Transitions]'))
 BEGIN
     CREATE TABLE [dbo].[Landing_Payer_Transitions] (
-        [PATIENT] VARCHAR(36),
+        [PATIENT] VARCHAR(100),
         [START_YEAR] VARCHAR(10),
         [END_YEAR] VARCHAR(10),
-        [PAYER] VARCHAR(36),
+        [PAYER] VARCHAR(100),
         [OWNERSHIP] VARCHAR(50),
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
