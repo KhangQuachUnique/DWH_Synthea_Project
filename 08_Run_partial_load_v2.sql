@@ -1,7 +1,7 @@
 USE DW_Synthea_DWH;
 GO
 
--- Chỉ lấy 4 năm gần đây cho nhẹ (từ đầu 2019 đến cuối 2021)
+-- Chỉ lấy 2 năm (từ đầu 2019 đến cuối 2020)
 DECLARE @FromDate    DATE = '2019-01-01'; 
 DECLARE @ToDate      DATE = '2020-12-31';
 DECLARE @Today       DATE = CONVERT(DATE, GETDATE());
