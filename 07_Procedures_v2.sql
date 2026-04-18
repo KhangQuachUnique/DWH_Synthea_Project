@@ -275,7 +275,12 @@ BEGIN
     DELETE f FROM dbo.fact_encounter_daily f 
     WHERE f.date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);
 
-    INSERT INTO dbo.fact_encounter_daily (date_key, organization_key, payer_key, provider_key, encounter_class, encounter_count, unique_patient_count, total_base_cost, total_claim_cost, total_payer_coverage, hospitalized_count, icu_count, total_los_days)
+    INSERT INTO dbo.fact_encounter_daily (
+        date_key, organization_key, payer_key, provider_key, encounter_class, 
+        encounter_count, unique_patient_count, 
+        total_base_cost, total_claim_cost, total_payer_coverage, total_out_of_pocket, -- Đã thêm
+        hospitalized_count, icu_count, total_los_days
+    )
     SELECT 
         start_date_key AS date_key,
         organization_key, payer_key, provider_key, encounter_class,
@@ -284,6 +289,7 @@ BEGIN
         SUM(base_encounter_cost) AS total_base_cost,
         SUM(total_claim_cost) AS total_claim_cost,
         SUM(payer_coverage) AS total_payer_coverage,
+        SUM(total_claim_cost - payer_coverage) AS total_out_of_pocket, -- Tính logic ở đây
         SUM(CAST(ISNULL(is_hospitalized,0) AS INT)) AS hospitalized_count,
         SUM(CAST(ISNULL(is_icu,0) AS INT)) AS icu_count,
         SUM(ISNULL(length_of_stay_days,0)) AS total_los_days
