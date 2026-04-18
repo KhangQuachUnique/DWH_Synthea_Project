@@ -29,10 +29,6 @@ from tqdm import tqdm
 import warnings
 warnings.filterwarnings('ignore')
 
-# Load environment variables from .env (optional)
-from dotenv import load_dotenv
-load_dotenv()
-
 
 # ============================================================================
 # CONFIG
@@ -45,11 +41,14 @@ class Config:
     LOG_PATH = PROJECT_ROOT / "logs"
     
     # SQL Server - Windows Authentication ONLY
-    SQL_SERVER = os.environ.get('SYNTHEA_SQL_SERVER', 'LAPTOP-GE6ISH50')
+    SQL_SERVER = os.environ.get('SYNTHEA_SQL_SERVER')
+    if not SQL_SERVER:
+        raise RuntimeError("SYNTHEA_SQL_SERVER is not set. Copy .env.example -> .env and edit.")
+    
     LANDING_DB = "DW_Synthea_Landing"
     STAGING_DB = "DW_Synthea_Staging"
     
-    # Chunk / Insert processing
+    # Chunk / Batch processing
     CHUNK_SIZE = int(os.environ.get('SYNTHEA_CHUNK_SIZE', '50000'))
     BATCH_SIZE = int(os.environ.get('SYNTHEA_BATCH_SIZE', '10000'))
 
