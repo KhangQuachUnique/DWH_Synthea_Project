@@ -29,6 +29,10 @@ from tqdm import tqdm
 import warnings
 warnings.filterwarnings('ignore')
 
+# Load environment variables from .env (optional)
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # ============================================================================
 # CONFIG
@@ -41,7 +45,7 @@ class Config:
     LOG_PATH = PROJECT_ROOT / "logs"
     
     # SQL Server - Windows Authentication ONLY
-    SQL_SERVER = os.environ.get('SYNTHEA_SQL_SERVER', 'DESKTOP-MG82CSN\SQLEXPRESS')
+    SQL_SERVER = os.environ.get('SYNTHEA_SQL_SERVER', 'LAPTOP-GE6ISH50')
     LANDING_DB = "DW_Synthea_Landing"
     STAGING_DB = "DW_Synthea_Staging"
     
