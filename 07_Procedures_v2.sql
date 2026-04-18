@@ -389,7 +389,7 @@ BEGIN
             CONVERT(DATE, m.[START]) AS start_date, 
             ISNULL(m.CODE, 'UNKNOWN') AS medication_code,
             
-            -- Gộp các record trùng: Lấy ngày xa nhất, string ngẫu nhiên lớn nhất
+            -- Lấy ngày xa nhất và các thông tin chung
             MAX(CONVERT(DATE, m.[STOP])) AS stop_date,
             MAX(m.PAYER) AS payer_id,
             MAX(m.ENCOUNTER) AS encounter_id,
@@ -398,7 +398,7 @@ BEGIN
             MAX(e.PROVIDER) AS provider_id, 
             MAX(e.ORGANIZATION) AS organization_id,
 
-            -- Gộp các record trùng: Cộng dồn chi phí và số lượng cấp phát
+            -- Cộng dồn chi phí và số lượng
             SUM(ISNULL(m.BASE_COST, 0)) AS base_cost, 
             SUM(ISNULL(m.PAYER_COVERAGE, 0)) AS payer_coverage, 
             SUM(ISNULL(m.DISPENSES, 1)) AS dispense_count
@@ -416,19 +416,12 @@ BEGIN
         dbo.fn_date_key(s.start_date), 
         s.medication_code, 
         
-        -- Bypass ngày rác giống Fact Conditions
-        CASE 
-            WHEN s.stop_date IS NULL OR s.stop_date < '1900-01-01' OR s.stop_date > '2099-12-31' THEN NULL 
-            ELSE dbo.fn_date_key(s.stop_date) 
-        END,
+        -- Chặn ngày rác
+        CASE WHEN s.stop_date IS NULL OR s.stop_date < '1900-01-01' OR s.stop_date > '2099-12-31' THEN NULL ELSE dbo.fn_date_key(s.stop_date) END,
         pr.provider_key, o.organization_key, pa.payer_key, s.encounter_id, s.medication_description, s.reason_code, 
         s.base_cost, s.payer_coverage, 
         
-        -- Tính toán duration an toàn
-        CASE 
-            WHEN s.stop_date IS NULL OR s.stop_date < '1900-01-01' OR s.stop_date > '2099-12-31' THEN NULL 
-            ELSE DATEDIFF(DAY, s.start_date, s.stop_date) 
-        END, 
+        CASE WHEN s.stop_date IS NULL OR s.stop_date < '1900-01-01' OR s.stop_date > '2099-12-31' THEN NULL ELSE DATEDIFF(DAY, s.start_date, s.stop_date) END, 
         s.dispense_count
     FROM src s
     OUTER APPLY (SELECT TOP 1 d.patient_key FROM dbo.dim_patient d WHERE d.patient_id = s.patient_id AND s.start_date BETWEEN d.valid_from AND d.valid_to ORDER BY d.valid_from DESC) p
