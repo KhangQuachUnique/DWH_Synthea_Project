@@ -1,9 +1,9 @@
 USE DW_Synthea_DWH;
 GO
 
--- Chỉ lấy 4 năm gần đây cho nhẹ (từ đầu 2023 đến cuối 2026)
-DECLARE @FromDate    DATE = '2023-01-01'; 
-DECLARE @ToDate      DATE = '2026-12-31';
+-- Chỉ lấy 4 năm gần đây cho nhẹ (từ đầu 2019 đến cuối 2021)
+DECLARE @FromDate    DATE = '2019-01-01'; 
+DECLARE @ToDate      DATE = '2020-12-31';
 DECLARE @Today       DATE = CONVERT(DATE, GETDATE());
 
 PRINT '=== START LOAD DWH V2 (RECENT DATA) - ' + CONVERT(VARCHAR, GETDATE(), 120) + ' ===';
