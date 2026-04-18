@@ -29,6 +29,9 @@ from tqdm import tqdm
 import warnings
 warnings.filterwarnings('ignore')
 
+# Load environment variables from .env (optional)
+from dotenv import load_dotenv
+load_dotenv()
 
 # ============================================================================
 # CONFIG
