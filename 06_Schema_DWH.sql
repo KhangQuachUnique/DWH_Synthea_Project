@@ -368,3 +368,77 @@ BEGIN
     CREATE INDEX IX_fact_costs_date ON dbo.fact_costs (date_key);
 END;
 GO
+
+-- ============================================================================
+-- Add Foreign Key Constraints to DWH
+-- ============================================================================
+USE [DW_Synthea_DWH];
+GO
+
+-- 1) fact_utilization → dimensions
+ALTER TABLE dbo.fact_utilization WITH CHECK
+    ADD CONSTRAINT FK_util_date FOREIGN KEY (date_key)
+        REFERENCES dbo.dim_date(date_key);
+
+ALTER TABLE dbo.fact_utilization WITH CHECK
+    ADD CONSTRAINT FK_util_provider FOREIGN KEY (provider_key)
+        REFERENCES dbo.dim_provider(provider_key);
+
+ALTER TABLE dbo.fact_utilization WITH CHECK
+    ADD CONSTRAINT FK_util_payer FOREIGN KEY (payer_key)
+        REFERENCES dbo.dim_payer(payer_key);
+
+ALTER TABLE dbo.fact_utilization WITH CHECK
+    ADD CONSTRAINT FK_util_org FOREIGN KEY (organization_key)
+        REFERENCES dbo.dim_organization(organization_key);
+
+-- 2) fact_conditions → dimensions
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_code FOREIGN KEY (condition_code_key)
+        REFERENCES dbo.dim_condition_code(condition_code_key);
+
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_patient FOREIGN KEY (patient_key)
+        REFERENCES dbo.dim_patient(patient_key);
+
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_provider FOREIGN KEY (provider_key)
+        REFERENCES dbo.dim_provider(provider_key);
+
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_org FOREIGN KEY (organization_key)
+        REFERENCES dbo.dim_organization(organization_key);
+
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_encounter FOREIGN KEY (encounter_key)
+        REFERENCES dbo.dim_encounter(encounter_key);
+
+ALTER TABLE dbo.fact_conditions WITH CHECK
+    ADD CONSTRAINT FK_cond_start_date FOREIGN KEY (condition_start_date_key)
+        REFERENCES dbo.dim_date(date_key);
+
+-- 3) dim_encounter → dimensions
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_patient FOREIGN KEY (patient_key)
+        REFERENCES dbo.dim_patient(patient_key);
+
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_provider FOREIGN KEY (provider_key)
+        REFERENCES dbo.dim_provider(provider_key);
+
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_payer FOREIGN KEY (payer_key)
+        REFERENCES dbo.dim_payer(payer_key);
+
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_org FOREIGN KEY (organization_key)
+        REFERENCES dbo.dim_organization(organization_key);
+
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_start_date FOREIGN KEY (start_date_key)
+        REFERENCES dbo.dim_date(date_key);
+
+-- 4) dim_encounter -> dimesions
+ALTER TABLE dbo.dim_encounter WITH CHECK
+    ADD CONSTRAINT FK_enc_stop_date FOREIGN KEY (stop_date_key)
+        REFERENCES dbo.dim_date(date_key);

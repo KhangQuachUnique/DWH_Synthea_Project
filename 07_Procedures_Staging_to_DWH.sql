@@ -95,7 +95,8 @@ BEGIN
     IF @AsOfDate IS NULL
         SET @AsOfDate = CONVERT(DATE, GETDATE());
 
-    DECLARE @OpenEnded DATE = '9999-12-31';
+    DECLARE @OpenEnded        DATE = '9999-12-31';
+    DECLARE @InitialValidFrom DATE = '1900-01-01';   -- Dùng cho Full Load
 
     BEGIN TRAN;
 
@@ -147,15 +148,15 @@ BEGIN
 
     -- Expire current rows
     UPDATE d
-        SET d.valid_to = DATEADD(DAY, -1, @AsOfDate),
+        SET d.valid_to   = DATEADD(DAY, -1, @AsOfDate),
             d.is_current = 0,
-            d.update_at = SYSUTCDATETIME()
+            d.update_at  = SYSUTCDATETIME()
     FROM dbo.dim_patient d
     JOIN #chg_patient c
         ON c.patient_id = d.patient_id
     WHERE d.is_current = 1;
 
-    -- Insert new + changed
+    -- Insert new + changed (sử dụng @InitialValidFrom cho Full Load)
     INSERT INTO dbo.dim_patient
     (
         patient_id, first_name, last_name, birthdate, deathdate, gender, race, ethnicity, city, state, zip,
@@ -165,7 +166,7 @@ BEGIN
     SELECT
         s.patient_id, s.first_name, s.last_name, s.birthdate, s.deathdate, s.gender, s.race, s.ethnicity, s.city, s.state, s.zip,
         s.healthcare_expenses, s.healthcare_coverage,
-        @AsOfDate, @OpenEnded, 1, s.row_hash
+        @InitialValidFrom, @OpenEnded, 1, s.row_hash
     FROM #src_patient s
     LEFT JOIN dbo.dim_patient d
         ON d.patient_id = s.patient_id
@@ -190,7 +191,8 @@ BEGIN
     IF @AsOfDate IS NULL
         SET @AsOfDate = CONVERT(DATE, GETDATE());
 
-    DECLARE @OpenEnded DATE = '9999-12-31';
+    DECLARE @OpenEnded        DATE = '9999-12-31';
+    DECLARE @InitialValidFrom DATE = '1900-01-01';   -- Dùng cho Full Load
 
     BEGIN TRAN;
 
@@ -231,9 +233,9 @@ BEGIN
     CREATE UNIQUE CLUSTERED INDEX IX_chg_org ON #chg_org(organization_id);
 
     UPDATE d
-        SET d.valid_to = DATEADD(DAY, -1, @AsOfDate),
+        SET d.valid_to   = DATEADD(DAY, -1, @AsOfDate),
             d.is_current = 0,
-            d.update_at = SYSUTCDATETIME()
+            d.update_at  = SYSUTCDATETIME()
     FROM dbo.dim_organization d
     JOIN #chg_org c
         ON c.organization_id = d.organization_id
@@ -246,7 +248,7 @@ BEGIN
     )
     SELECT
         s.organization_id, s.[name], s.city, s.[state], s.zip, s.phone, s.revenue, s.utilization,
-        @AsOfDate, @OpenEnded, 1, s.row_hash
+        @InitialValidFrom, @OpenEnded, 1, s.row_hash
     FROM #src_org s
     LEFT JOIN dbo.dim_organization d
         ON d.organization_id = s.organization_id
@@ -271,7 +273,8 @@ BEGIN
     IF @AsOfDate IS NULL
         SET @AsOfDate = CONVERT(DATE, GETDATE());
 
-    DECLARE @OpenEnded DATE = '9999-12-31';
+    DECLARE @OpenEnded        DATE = '9999-12-31';
+    DECLARE @InitialValidFrom DATE = '1900-01-01';   -- Dùng cho Full Load
 
     BEGIN TRAN;
 
@@ -313,9 +316,9 @@ BEGIN
     CREATE UNIQUE CLUSTERED INDEX IX_chg_provider ON #chg_provider(provider_id);
 
     UPDATE d
-        SET d.valid_to = DATEADD(DAY, -1, @AsOfDate),
+        SET d.valid_to   = DATEADD(DAY, -1, @AsOfDate),
             d.is_current = 0,
-            d.update_at = SYSUTCDATETIME()
+            d.update_at  = SYSUTCDATETIME()
     FROM dbo.dim_provider d
     JOIN #chg_provider c
         ON c.provider_id = d.provider_id
@@ -328,7 +331,7 @@ BEGIN
     )
     SELECT
         s.provider_id, s.organization_id, s.[name], s.gender, s.speciality, s.city, s.[state], s.zip, s.utilization,
-        @AsOfDate, @OpenEnded, 1, s.row_hash
+        @InitialValidFrom, @OpenEnded, 1, s.row_hash
     FROM #src_provider s
     LEFT JOIN dbo.dim_provider d
         ON d.provider_id = s.provider_id
@@ -353,7 +356,8 @@ BEGIN
     IF @AsOfDate IS NULL
         SET @AsOfDate = CONVERT(DATE, GETDATE());
 
-    DECLARE @OpenEnded DATE = '9999-12-31';
+    DECLARE @OpenEnded        DATE = '9999-12-31';
+    DECLARE @InitialValidFrom DATE = '1900-01-01';   -- Dùng cho Full Load
 
     BEGIN TRAN;
 
@@ -412,9 +416,9 @@ BEGIN
     CREATE UNIQUE CLUSTERED INDEX IX_chg_payer ON #chg_payer(payer_id);
 
     UPDATE d
-        SET d.valid_to = DATEADD(DAY, -1, @AsOfDate),
+        SET d.valid_to   = DATEADD(DAY, -1, @AsOfDate),
             d.is_current = 0,
-            d.update_at = SYSUTCDATETIME()
+            d.update_at  = SYSUTCDATETIME()
     FROM dbo.dim_payer d
     JOIN #chg_payer c
         ON c.payer_id = d.payer_id
@@ -429,7 +433,7 @@ BEGIN
     SELECT
         s.payer_id, s.[name], s.city, s.state_headquartered, s.zip, s.phone, s.ownership,
         s.amount_covered, s.amount_uncovered, s.revenue, s.unique_customers, s.member_months,
-        @AsOfDate, @OpenEnded, 1, s.row_hash
+        @InitialValidFrom, @OpenEnded, 1, s.row_hash
     FROM #src_payer s
     LEFT JOIN dbo.dim_payer d
         ON d.payer_id = s.payer_id
@@ -442,7 +446,7 @@ END;
 GO
 
 -- ============================================================================
--- 7) DIM ENCOUNTER (Type 1)
+-- 7) DIM ENCOUNTER (Type 1) - ĐÃ SỬA
 -- ============================================================================
 CREATE OR ALTER PROCEDURE dbo.usp_load_dim_encounter
     @FromDate DATE = NULL,
@@ -453,14 +457,11 @@ BEGIN
     SET XACT_ABORT ON;
 
     IF @FromDate IS NULL
-        SELECT @FromDate = MIN(CONVERT(DATE, [START]))
-        FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters];
+        SELECT @FromDate = MIN(CONVERT(DATE, [START])) FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters];
 
     IF @ToDate IS NULL
-        SELECT @ToDate = MAX(CONVERT(DATE, [START]))
-        FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters];
+        SELECT @ToDate = MAX(CONVERT(DATE, [START])) FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters];
 
-    -- ensure dim_date range exists
     EXEC dbo.usp_load_dim_date @FromDate, @ToDate;
 
     IF OBJECT_ID('tempdb..#resolved_encounter') IS NOT NULL DROP TABLE #resolved_encounter;
@@ -492,122 +493,95 @@ BEGIN
             dbo.fn_date_key(s.start_date) AS start_date_key,
             CASE WHEN s.stop_date IS NULL THEN NULL ELSE dbo.fn_date_key(s.stop_date) END AS stop_date_key,
 
+            -- SỬA LOGIC SCD2
             p.patient_key,
             pr.provider_key,
             pa.payer_key,
             o.organization_key,
 
-            s.encounter_class,
-            s.code,
-            s.[description],
-            s.base_encounter_cost,
-            s.total_claim_cost,
-            s.payer_coverage,
-            s.reason_code,
-            s.reason_description
+            s.encounter_class, s.code, s.[description],
+            s.base_encounter_cost, s.total_claim_cost, s.payer_coverage,
+            s.reason_code, s.reason_description
         FROM src s
         OUTER APPLY (
-            SELECT TOP (1) d.patient_key
-            FROM dbo.dim_patient d
-            WHERE d.patient_id = s.patient_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.patient_key 
+            FROM dbo.dim_patient d 
+            WHERE d.patient_id = s.patient_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) p
         OUTER APPLY (
-            SELECT TOP (1) d.provider_key
-            FROM dbo.dim_provider d
-            WHERE d.provider_id = s.provider_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.provider_key 
+            FROM dbo.dim_provider d 
+            WHERE d.provider_id = s.provider_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pr
         OUTER APPLY (
-            SELECT TOP (1) d.payer_key
-            FROM dbo.dim_payer d
-            WHERE d.payer_id = s.payer_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.payer_key 
+            FROM dbo.dim_payer d 
+            WHERE d.payer_id = s.payer_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pa
         OUTER APPLY (
-            SELECT TOP (1) d.organization_key
-            FROM dbo.dim_organization d
-            WHERE d.organization_id = s.organization_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.organization_key 
+            FROM dbo.dim_organization d 
+            WHERE d.organization_id = s.organization_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) o
     )
-    SELECT *
-    INTO #resolved_encounter
-    FROM resolved;
+    SELECT * INTO #resolved_encounter FROM resolved;
 
     CREATE UNIQUE CLUSTERED INDEX IX_resolved_encounter_id ON #resolved_encounter(encounter_id);
 
     -- Update existing
     UPDATE tgt
-        SET tgt.start_date_key = src.start_date_key,
-            tgt.stop_date_key = src.stop_date_key,
-            tgt.patient_key = src.patient_key,
-            tgt.provider_key = src.provider_key,
-            tgt.payer_key = src.payer_key,
-            tgt.organization_key = src.organization_key,
-            tgt.encounter_class = src.encounter_class,
-            tgt.code = src.code,
-            tgt.[description] = src.[description],
-            tgt.base_encounter_cost = src.base_encounter_cost,
-            tgt.total_claim_cost = src.total_claim_cost,
-            tgt.payer_coverage = src.payer_coverage,
-            tgt.reason_code = src.reason_code,
-            tgt.reason_description = src.reason_description,
-            tgt.update_at = SYSUTCDATETIME()
+    SET tgt.start_date_key     = src.start_date_key,
+        tgt.stop_date_key      = src.stop_date_key,
+        tgt.patient_key        = src.patient_key,
+        tgt.provider_key       = src.provider_key,
+        tgt.payer_key          = src.payer_key,
+        tgt.organization_key   = src.organization_key,
+        tgt.encounter_class    = src.encounter_class,
+        tgt.code               = src.code,
+        tgt.[description]      = src.[description],
+        tgt.base_encounter_cost= src.base_encounter_cost,
+        tgt.total_claim_cost   = src.total_claim_cost,
+        tgt.payer_coverage     = src.payer_coverage,
+        tgt.reason_code        = src.reason_code,
+        tgt.reason_description = src.reason_description,
+        tgt.update_at          = SYSUTCDATETIME()
     FROM dbo.dim_encounter tgt
-    JOIN #resolved_encounter src
-        ON src.encounter_id = tgt.encounter_id;
+    JOIN #resolved_encounter src ON src.encounter_id = tgt.encounter_id;
 
     -- Insert missing
     INSERT INTO dbo.dim_encounter
     (
-        encounter_id,
-        start_date_key,
-        stop_date_key,
-        patient_key,
-        provider_key,
-        payer_key,
-        organization_key,
-        encounter_class,
-        code,
-        [description],
-        base_encounter_cost,
-        total_claim_cost,
-        payer_coverage,
-        reason_code,
-        reason_description
+        encounter_id, start_date_key, stop_date_key,
+        patient_key, provider_key, payer_key, organization_key,
+        encounter_class, code, [description],
+        base_encounter_cost, total_claim_cost, payer_coverage,
+        reason_code, reason_description
     )
     SELECT
-        src.encounter_id,
-        src.start_date_key,
-        src.stop_date_key,
-        src.patient_key,
-        src.provider_key,
-        src.payer_key,
-        src.organization_key,
-        src.encounter_class,
-        src.code,
-        src.[description],
-        src.base_encounter_cost,
-        src.total_claim_cost,
-        src.payer_coverage,
-        src.reason_code,
-        src.reason_description
+        src.encounter_id, src.start_date_key, src.stop_date_key,
+        src.patient_key, src.provider_key, src.payer_key, src.organization_key,
+        src.encounter_class, src.code, src.[description],
+        src.base_encounter_cost, src.total_claim_cost, src.payer_coverage,
+        src.reason_code, src.reason_description
     FROM #resolved_encounter src
-    WHERE NOT EXISTS (
-        SELECT 1
-        FROM dbo.dim_encounter tgt
-        WHERE tgt.encounter_id = src.encounter_id
-    );
+    WHERE NOT EXISTS (SELECT 1 FROM dbo.dim_encounter tgt WHERE tgt.encounter_id = src.encounter_id);
 END;
 GO
 
 -- ============================================================================
--- 8) FACT UTILIZATION (daily rollup from encounters)
+-- 8) FACT UTILIZATION - ĐÃ SỬA
 -- ============================================================================
 CREATE OR ALTER PROCEDURE dbo.usp_load_fact_utilization
     @FromDate DATE,
@@ -622,9 +596,7 @@ BEGIN
 
     EXEC dbo.usp_load_dim_date @FromDate, @ToDate;
 
-    -- refresh window
-    DELETE f
-    FROM dbo.fact_utilization f
+    DELETE f FROM dbo.fact_utilization f
     WHERE f.date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);
 
     ;WITH src AS (
@@ -640,11 +612,7 @@ BEGIN
         FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters] e
         WHERE e.[START] IS NOT NULL
           AND CONVERT(DATE, e.[START]) BETWEEN @FromDate AND @ToDate
-        GROUP BY
-            CONVERT(DATE, e.[START]),
-            e.PROVIDER,
-            e.PAYER,
-            e.ORGANIZATION
+        GROUP BY CONVERT(DATE, e.[START]), e.PROVIDER, e.PAYER, e.ORGANIZATION
     ),
     resolved AS (
         SELECT
@@ -658,24 +626,24 @@ BEGIN
             s.payer_coverage
         FROM src s
         OUTER APPLY (
-            SELECT TOP (1) d.provider_key
-            FROM dbo.dim_provider d
-            WHERE d.provider_id = s.provider_id
-              AND s.d BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.provider_key 
+            FROM dbo.dim_provider d 
+            WHERE d.provider_id = s.provider_id 
+              AND s.d >= d.valid_from AND s.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pr
         OUTER APPLY (
-            SELECT TOP (1) d.payer_key
-            FROM dbo.dim_payer d
-            WHERE d.payer_id = s.payer_id
-              AND s.d BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.payer_key 
+            FROM dbo.dim_payer d 
+            WHERE d.payer_id = s.payer_id 
+              AND s.d >= d.valid_from AND s.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pa
         OUTER APPLY (
-            SELECT TOP (1) d.organization_key
-            FROM dbo.dim_organization d
-            WHERE d.organization_id = s.organization_id
-              AND s.d BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.organization_key 
+            FROM dbo.dim_organization d 
+            WHERE d.organization_id = s.organization_id 
+              AND s.d >= d.valid_from AND s.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) o
     )
@@ -695,7 +663,7 @@ END;
 GO
 
 -- ============================================================================
--- 9) FACT CONDITIONS (one row per condition event)
+-- 9) FACT CONDITIONS - ĐÃ SỬA (Phiên bản tốt nhất)
 -- ============================================================================
 CREATE OR ALTER PROCEDURE dbo.usp_load_fact_conditions
     @FromDate DATE,
@@ -712,8 +680,7 @@ BEGIN
     EXEC dbo.usp_load_dim_condition_code;
     EXEC dbo.usp_load_dim_encounter @FromDate, @ToDate;
 
-    DELETE f
-    FROM dbo.fact_conditions f
+    DELETE f FROM dbo.fact_conditions f
     WHERE f.condition_start_date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);
 
     ;WITH src AS (
@@ -726,10 +693,8 @@ BEGIN
             e.PROVIDER AS provider_id,
             e.ORGANIZATION AS organization_id
         FROM [DW_Synthea_Staging].[dbo].[Staging_Conditions] c
-        LEFT JOIN [DW_Synthea_Staging].[dbo].[Staging_Encounters] e
-            ON e.Id = c.ENCOUNTER
-        WHERE c.[START] IS NOT NULL
-          AND c.CODE IS NOT NULL
+        LEFT JOIN [DW_Synthea_Staging].[dbo].[Staging_Encounters] e ON e.Id = c.ENCOUNTER
+        WHERE c.[START] IS NOT NULL AND c.CODE IS NOT NULL
           AND c.[START] BETWEEN @FromDate AND @ToDate
     ),
     resolved AS (
@@ -737,70 +702,54 @@ BEGIN
             cc.condition_code_key,
             dbo.fn_date_key(s.start_date) AS condition_start_date_key,
             CASE WHEN s.stop_date IS NULL THEN NULL ELSE dbo.fn_date_key(s.stop_date) END AS condition_stop_date_key,
-            CASE
-                WHEN s.stop_date IS NULL THEN NULL
-                ELSE DATEDIFF(DAY, s.start_date, s.stop_date)
-            END AS duration_days,
+            CASE WHEN s.stop_date IS NULL THEN NULL ELSE DATEDIFF(DAY, s.start_date, s.stop_date) END AS duration_days,
 
             p.patient_key,
             pr.provider_key,
             o.organization_key,
             de.encounter_key
         FROM src s
-        JOIN dbo.dim_condition_code cc
-            ON cc.code = s.condition_code
+        JOIN dbo.dim_condition_code cc ON cc.code = s.condition_code
         OUTER APPLY (
-            SELECT TOP (1) d.patient_key
-            FROM dbo.dim_patient d
-            WHERE d.patient_id = s.patient_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.patient_key 
+            FROM dbo.dim_patient d 
+            WHERE d.patient_id = s.patient_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) p
         OUTER APPLY (
-            SELECT TOP (1) d.provider_key
-            FROM dbo.dim_provider d
-            WHERE d.provider_id = s.provider_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.provider_key 
+            FROM dbo.dim_provider d 
+            WHERE d.provider_id = s.provider_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pr
         OUTER APPLY (
-            SELECT TOP (1) d.organization_key
-            FROM dbo.dim_organization d
-            WHERE d.organization_id = s.organization_id
-              AND s.start_date BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.organization_key 
+            FROM dbo.dim_organization d 
+            WHERE d.organization_id = s.organization_id 
+              AND s.start_date >= d.valid_from 
+              AND s.start_date <= d.valid_to
             ORDER BY d.valid_from DESC
         ) o
-        LEFT JOIN dbo.dim_encounter de
-            ON de.encounter_id = s.encounter_id
+        LEFT JOIN dbo.dim_encounter de ON de.encounter_id = s.encounter_id
     )
     INSERT INTO dbo.fact_conditions
     (
-        condition_code_key,
-        patient_key,
-        provider_key,
-        organization_key,
-        encounter_key,
-        condition_start_date_key,
-        condition_stop_date_key,
-        duration_days,
-        condition_count
+        condition_code_key, patient_key, provider_key, organization_key, encounter_key,
+        condition_start_date_key, condition_stop_date_key, duration_days, condition_count
     )
     SELECT
-        r.condition_code_key,
-        r.patient_key,
-        r.provider_key,
-        r.organization_key,
-        r.encounter_key,
-        r.condition_start_date_key,
-        r.condition_stop_date_key,
-        r.duration_days,
-        1
+        r.condition_code_key, r.patient_key, r.provider_key, r.organization_key, r.encounter_key,
+        r.condition_start_date_key, r.condition_stop_date_key, r.duration_days, 1
     FROM resolved r;
 END;
 GO
 
 -- ============================================================================
--- 10) FACT CONDITION DAILY SNAPSHOT (daily rollup)
+-- 10) FACT CONDITION DAILY SNAPSHOT - ĐÃ SỬA
 -- ============================================================================
 CREATE OR ALTER PROCEDURE dbo.usp_load_fact_condition_daily_snapshot
     @FromDate DATE,
@@ -816,8 +765,7 @@ BEGIN
     EXEC dbo.usp_load_dim_date @FromDate, @ToDate;
     EXEC dbo.usp_load_dim_condition_code;
 
-    DELETE f
-    FROM dbo.fact_condition_daily_snapshot f
+    DELETE f FROM dbo.fact_condition_daily_snapshot f
     WHERE f.date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);
 
     ;WITH base_cond AS (
@@ -827,8 +775,7 @@ BEGIN
             CONVERT(DATE, c.[STOP]) AS stop_date,
             e.ORGANIZATION AS organization_id
         FROM [DW_Synthea_Staging].[dbo].[Staging_Conditions] c
-        LEFT JOIN [DW_Synthea_Staging].[dbo].[Staging_Encounters] e
-            ON e.Id = c.ENCOUNTER
+        LEFT JOIN [DW_Synthea_Staging].[dbo].[Staging_Encounters] e ON e.Id = c.ENCOUNTER
         WHERE c.CODE IS NOT NULL
           AND c.[START] IS NOT NULL
           AND CONVERT(DATE, c.[START]) <= @ToDate
@@ -867,15 +814,14 @@ BEGIN
             cc.condition_code_key,
             org.organization_key,
             CONVERT(INT, ne.new_cases) AS new_cases,
-            CONVERT(INT, 0) AS resolved_cases
+            0 AS resolved_cases
         FROM new_events ne
-        JOIN dbo.dim_condition_code cc
-            ON cc.code = ne.condition_code
+        JOIN dbo.dim_condition_code cc ON cc.code = ne.condition_code
         OUTER APPLY (
-            SELECT TOP (1) d.organization_key
-            FROM dbo.dim_organization d
-            WHERE d.organization_id = ne.organization_id
-              AND ne.d BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.organization_key 
+            FROM dbo.dim_organization d 
+            WHERE d.organization_id = ne.organization_id 
+              AND ne.d >= d.valid_from AND ne.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) org
     ),
@@ -884,16 +830,15 @@ BEGIN
             re.d,
             cc.condition_code_key,
             org.organization_key,
-            CONVERT(INT, 0) AS new_cases,
+            0 AS new_cases,
             CONVERT(INT, re.resolved_cases) AS resolved_cases
         FROM resolved_events re
-        JOIN dbo.dim_condition_code cc
-            ON cc.code = re.condition_code
+        JOIN dbo.dim_condition_code cc ON cc.code = re.condition_code
         OUTER APPLY (
-            SELECT TOP (1) d.organization_key
-            FROM dbo.dim_organization d
-            WHERE d.organization_id = re.organization_id
-              AND re.d BETWEEN d.valid_from AND d.valid_to
+            SELECT TOP (1) d.organization_key 
+            FROM dbo.dim_organization d 
+            WHERE d.organization_id = re.organization_id 
+              AND re.d >= d.valid_from AND re.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) org
     ),
@@ -989,6 +934,7 @@ GO
 
 -- ============================================================================
 -- 11) FACT COSTS (daily rollup across encounter + meds + procedures + immunizations)
+-- ĐÃ SỬA LOGIC RESOLVE SCD2 - SỬ DỤNG >= và <= 
 -- ============================================================================
 CREATE OR ALTER PROCEDURE dbo.usp_load_fact_costs
     @FromDate DATE,
@@ -1003,6 +949,7 @@ BEGIN
 
     EXEC dbo.usp_load_dim_date @FromDate, @ToDate;
 
+    -- Xóa dữ liệu cũ trong range
     DELETE f
     FROM dbo.fact_costs f
     WHERE f.date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);
@@ -1084,18 +1031,21 @@ BEGIN
             CAST(a.total_costs AS DECIMAL(18,2)) AS total_costs,
             CAST(a.total_costs - a.local_payer_coverage AS DECIMAL(18,2)) AS total_out_of_pocket
         FROM agg a
+        -- SỬA LOGIC SCD2: Dùng >= và <= thay vì BETWEEN để rõ ràng hơn
         OUTER APPLY (
             SELECT TOP (1) d.provider_key
             FROM dbo.dim_provider d
             WHERE d.provider_id = a.provider_id
-              AND a.d BETWEEN d.valid_from AND d.valid_to
+              AND a.d >= d.valid_from 
+              AND a.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) pr
         OUTER APPLY (
             SELECT TOP (1) d.organization_key
             FROM dbo.dim_organization d
             WHERE d.organization_id = a.organization_id
-              AND a.d BETWEEN d.valid_from AND d.valid_to
+              AND a.d >= d.valid_from 
+              AND a.d <= d.valid_to
             ORDER BY d.valid_from DESC
         ) org
     )
