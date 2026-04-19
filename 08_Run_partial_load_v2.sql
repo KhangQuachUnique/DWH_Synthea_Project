@@ -1,9 +1,8 @@
 USE DW_Synthea_DWH;
 GO
 
--- Chỉ lấy 2 năm (từ đầu 2018 đến cuối 2020)
-DECLARE @FromDate    DATE = '2018-01-01';
-DECLARE @ToDate      DATE = '2020-12-31';
+DECLARE @FromDate    DATE = '2019-01-01';
+DECLARE @ToDate      DATE = '2020-7-31';
 DECLARE @Today       DATE = CONVERT(DATE, GETDATE());
 DECLARE @batch_id    UNIQUEIDENTIFIER = NEWID();
 
