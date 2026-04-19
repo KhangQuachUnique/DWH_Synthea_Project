@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Load Facts"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{257B35F5-791E-41E9-803E-B39E4100DCFD}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{F27E0C38-0100-41B4-90A3-AFC9CF508DDA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -40,6 +40,18 @@
           DTS:ConnectionString="Data Source=DESKTOP-MG82CSN\SQLEXPRESS;Initial Catalog=DW_Synthea_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load Facts-{026B73E6-BFE7-476E-916F-CACB6485D163}DESKTOP-MG82CSN\SQLEXPRESS.DW_Synthea_DWH;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DW_Synthea_DWH]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+      DTS:ObjectName="LocalHost.DW_Synthea_DWH">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;User ID=;Initial Catalog=DW_Synthea_DWH;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Initial File Name=;Trust Server Certificate=True;Server SPN=;Authentication=;Access Token=;Application Name=SSIS-Load Facts-{890396BC-ED3F-466C-8394-8734D43F9C2B}LocalHost.DW_Synthea_DWH;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
@@ -51,7 +63,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="AsOfDate">
       <DTS:VariableValue
-        DTS:DataType="7">4/19/2026 5:31:06 PM</DTS:VariableValue>
+        DTS:DataType="7">4/19/2026 6:18:50 PM</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -96,7 +108,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_conditions ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -126,7 +138,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_condition_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -156,7 +168,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_encounter ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -186,7 +198,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_encounter_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -216,7 +228,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_medication_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -246,7 +258,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{026B73E6-BFE7-476E-916F-CACB6485D163}"
+          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_medications ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -319,29 +331,29 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="193.6,41.6"
-          Id="Package\Load Fact Encounter"
-          TopLeft="116.458326970331,55.4666662809584" />
-        <NodeLayout
           Size="188,41.6"
           Id="Package\Load Fact Condition"
           TopLeft="116.458326970331,157.066666280958" />
-        <NodeLayout
-          Size="186.4,41.6"
-          Id="Package\Load Fact Medications"
-          TopLeft="116.458326970331,258.666666280958" />
-        <NodeLayout
-          Size="200.8,41.6"
-          Id="Package\Load Fact Encounter Daily"
-          TopLeft="116.458326970331,360.266666280958" />
         <NodeLayout
           Size="200.8,41.6"
           Id="Package\Load Fact Condition Daily"
           TopLeft="116.458326970331,461.866666280958" />
         <NodeLayout
+          Size="193.6,41.6"
+          Id="Package\Load Fact Encounter"
+          TopLeft="116.458326970331,55.4666662809584" />
+        <NodeLayout
+          Size="200.8,41.6"
+          Id="Package\Load Fact Encounter Daily"
+          TopLeft="116.458326970331,360.266666280958" />
+        <NodeLayout
           Size="204,41.6"
           Id="Package\Load Fact Medication Daily"
           TopLeft="116.458326970331,563.466666280958" />
+        <NodeLayout
+          Size="186.4,41.6"
+          Id="Package\Load Fact Medications"
+          TopLeft="116.458326970331,258.666666280958" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="211.858326970331,97.0666662809584">
@@ -414,14 +426,14 @@
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,59.9999999999999"
               Start="0,0"
-              End="0,52.5">
+              End="0,52.4999999999999">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,52.4999999999999" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
