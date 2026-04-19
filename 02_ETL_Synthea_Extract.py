@@ -19,7 +19,7 @@ import pyodbc
 import logging
 from pathlib import Path
 from datetime import datetime
-from typing import Dict
+from typing import Dict, List
 import traceback
 from tqdm import tqdm
 
@@ -37,7 +37,6 @@ class Config:
     
     # Đường dẫn
     PROJECT_ROOT = Path(__file__).parent
-    CSV_DATA_PATH = PROJECT_ROOT / "data" / "raw" / "synthea" / "csv"
     LOG_PATH = PROJECT_ROOT / "logs"
     
     # SQL Server - Windows Authentication ONLY
@@ -59,6 +58,51 @@ class Config:
         'Payers': 'payers.csv',
         'Payer_Transitions': 'payer_transitions.csv'
     }
+
+    # Ưu tiên path mới, vẫn giữ fallback path cũ để tương thích ngược
+    CSV_PATH_CANDIDATES = [
+        PROJECT_ROOT / "data",
+        PROJECT_ROOT / "data" / "raw" / "synthea" / "csv",
+        PROJECT_ROOT / "data" / "raw" / "synthea",
+        PROJECT_ROOT / "data" / "csv"
+    ]
+    CSV_DATA_PATH = None
+
+
+def get_csv_search_paths() -> List[Path]:
+    """Danh sách path dùng để dò CSV (hỗ trợ override qua ENV)."""
+    paths: List[Path] = []
+
+    env_csv_path = os.getenv("SYNTHEA_CSV_PATH", "").strip()
+    if env_csv_path:
+        paths.append(Path(env_csv_path).expanduser())
+
+    paths.extend(Config.CSV_PATH_CANDIDATES)
+    return paths
+
+
+def resolve_csv_data_path() -> Path:
+    """Tự động chọn thư mục CSV hợp lệ theo danh sách ưu tiên."""
+    required_csv = {name.lower() for name in Config.CSV_FILES.values()}
+    search_paths = get_csv_search_paths()
+
+    # Ưu tiên thư mục có chứa ít nhất 1 file CSV cần dùng của pipeline.
+    for candidate in search_paths:
+        if candidate.exists() and candidate.is_dir():
+            available_csv = {p.name.lower() for p in candidate.glob("*.csv")}
+            if required_csv.intersection(available_csv):
+                return candidate
+
+    # Fallback: thư mục nào tồn tại thì dùng thư mục đó.
+    for candidate in search_paths:
+        if candidate.exists() and candidate.is_dir():
+            return candidate
+
+    # Nếu chưa có thư mục nào, giữ path đầu tiên để hiển thị thông báo lỗi rõ ràng.
+    return search_paths[0]
+
+
+Config.CSV_DATA_PATH = resolve_csv_data_path()
 
 
 # ============================================================================
@@ -354,7 +398,7 @@ def run_extract_pipeline():
     if failed_count > 0:
         logger.warning("MỘT SỐ TABLE LOAD LỖI - Kiểm tra log!")
         logger.info("\nNext steps:")
-        logger.info("  1. Kiểm tra file CSV trong thư mục data/raw/synthea/csv/")
+        logger.info(f"  1. Kiểm tra file CSV trong thư mục {Config.CSV_DATA_PATH}")
         logger.info("  2. Xem chi tiết lỗi trong log file")
         logger.info("  3. Sửa lỗi và chạy lại script")
         log_etl_run('extract_pipeline', batch_id, 'FAILED', total_rows, 'Some tables failed', f'Success={success_count};Failed={failed_count}')
@@ -372,10 +416,14 @@ def run_extract_pipeline():
 if __name__ == "__main__":
     print(f"--- PYTHON EXECUTABLE: {sys.executable} ---")
     try:
+        search_paths = get_csv_search_paths()
+
         # Kiểm tra CSV path
         if not Config.CSV_DATA_PATH.exists():
             logger.error(f"CSV folder không tồn tại: {Config.CSV_DATA_PATH}")
-            logger.error("Vui lòng tạo folder và copy CSV files vào đó")
+            logger.error("Các path đã thử:")
+            for p in search_paths:
+                logger.error(f"  - {p}")
             sys.exit(1)
         
         # Kiểm tra có file CSV
