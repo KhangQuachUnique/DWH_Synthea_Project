@@ -397,8 +397,6 @@ END;
 GO
 
 -- ============================================================================
--- BẢNG TRACKING - Ghi lại tiến độ load
--- ============================================================================
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[LoadLog]'))
 BEGIN
     CREATE TABLE [dbo].[LoadLog] (
@@ -411,6 +409,68 @@ BEGIN
         [ErrorMessage] VARCHAR(MAX),
         [CreatedDate] DATETIME DEFAULT GETDATE()
     );
+END;
+GO
+
+-- ============================================================================ 
+-- BƯỚC 2: Tạo bảng ETL_Control để lưu watermark/batch cho từng bảng Landing
+-- ============================================================================
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ETL_Control]'))
+BEGIN
+    CREATE TABLE dbo.ETL_Control (
+        ControlId       INT IDENTITY(1,1) PRIMARY KEY,
+        TableName       VARCHAR(100)  NOT NULL,
+        LastBatchId     VARCHAR(36)   NULL,
+        LastLoadedAt    DATETIME      NOT NULL DEFAULT GETDATE(),
+        RowsLoaded      INT           NOT NULL DEFAULT 0,
+        Status          VARCHAR(20)   NOT NULL DEFAULT 'SUCCESS', -- SUCCESS/FAILED
+        CONSTRAINT UQ_ETL_Control_Table UNIQUE (TableName)
+    );
+END;
+GO
+
+-- ============================================================================
+-- BƯỚC 1: Thêm cột batch_id vào tất cả bảng Landing (nếu chưa có)
+-- ============================================================================
+ALTER TABLE dbo.Landing_Patients           ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Encounters         ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Conditions         ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Medications        ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Observations       ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Procedures         ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Immunizations      ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Allergies          ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Careplans          ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Devices            ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Imaging_Studies    ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Supplies           ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Organizations      ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Providers          ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Payers             ADD batch_id VARCHAR(36) NULL;
+ALTER TABLE dbo.Landing_Payer_Transitions  ADD batch_id VARCHAR(36) NULL;
+
+-- ============================================================================ 
+-- BƯỚC 3: Khởi tạo 16 dòng cho 16 bảng Landing vào ETL_Control (nếu chưa có)
+-- ============================================================================
+IF NOT EXISTS (SELECT 1 FROM dbo.ETL_Control WHERE TableName = 'Landing_Patients')
+BEGIN
+    INSERT INTO dbo.ETL_Control (TableName, LastLoadedAt, RowsLoaded)
+    VALUES ('Landing_Patients', '1900-01-01', 0),
+           ('Landing_Encounters', '1900-01-01', 0),
+           ('Landing_Conditions', '1900-01-01', 0),
+           ('Landing_Medications', '1900-01-01', 0),
+           ('Landing_Observations', '1900-01-01', 0),
+           ('Landing_Procedures', '1900-01-01', 0),
+           ('Landing_Immunizations', '1900-01-01', 0),
+           ('Landing_Allergies', '1900-01-01', 0),
+           ('Landing_Careplans', '1900-01-01', 0),
+           ('Landing_Devices', '1900-01-01', 0),
+           ('Landing_Imaging_Studies', '1900-01-01', 0),
+           ('Landing_Supplies', '1900-01-01', 0),
+           ('Landing_Organizations', '1900-01-01', 0),
+           ('Landing_Providers', '1900-01-01', 0),
+           ('Landing_Payers', '1900-01-01', 0),
+           ('Landing_Payer_Transitions', '1900-01-01', 0);
 END;
 GO
 

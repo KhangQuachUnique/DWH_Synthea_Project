@@ -164,45 +164,58 @@ def create_connection(database: str = None):
 # RESET LANDING TABLES
 # ============================================================================
 
-def reset_landing_tables():
-    """TRUNCATE tất cả Landing tables"""
-    
-    logger.info("\nResetting Landing tables (TRUNCATE)...")
-    
-    try:
-        conn = create_connection(Config.LANDING_DB)
-        cursor = conn.cursor()
 
-        cursor.execute("SELECT @@SERVERNAME, DB_NAME()")
-        server, db = cursor.fetchone()
-        logger.info(f"  [DEBUG] Connected to server={server}, db={db}")
-        
-        tables = [f"Landing_{key}" for key in Config.CSV_FILES.keys()]
-        
-        for table in tables:
-            try:
-                cursor.execute(f"TRUNCATE TABLE dbo.{table}")
-                logger.info(f"  [OK] Truncated {table}")
-            except Exception as e:
-                logger.warning(f"  [SKIP] {table}: {str(e)}")
-        
-        conn.commit()
-        cursor.close()
-        conn.close()
-        
-        logger.info("Reset completed.")
-        
-    except Exception as e:
-        logger.error(f"Error resetting tables: {str(e)}")
-        raise
+# ============================================================================
+# WATERMARK & ETL CONTROL
+# ============================================================================
+
+import uuid
+
+def get_watermark(table_key: str):
+    """Đọc LastLoadedAt từ ETL_Control"""
+    conn = create_connection(Config.LANDING_DB)
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT ISNULL(LastLoadedAt, '1900-01-01') FROM dbo.ETL_Control WHERE TableName = ?",
+        [f'Landing_{table_key}']
+    )
+    row = cursor.fetchone()
+    cursor.close(); conn.close()
+    return row[0] if row else datetime(1900, 1, 1)
+
+def update_watermark(table_key: str, batch_id: str, rows: int):
+    conn = create_connection(Config.LANDING_DB)
+    cursor = conn.cursor()
+    cursor.execute(
+        """MERGE dbo.ETL_Control AS t
+           USING (SELECT ? AS TableName, ? AS LastBatchId,
+                         GETDATE() AS LastLoadedAt, ? AS RowsLoaded) AS s
+           ON t.TableName = s.TableName
+           WHEN MATCHED THEN
+             UPDATE SET LastBatchId=s.LastBatchId, LastLoadedAt=s.LastLoadedAt,
+                        RowsLoaded=s.RowsLoaded, Status='SUCCESS'
+           WHEN NOT MATCHED THEN
+             INSERT (TableName,LastBatchId,LastLoadedAt,RowsLoaded)
+             VALUES (s.TableName,s.LastBatchId,s.LastLoadedAt,s.RowsLoaded);""",
+        [f'Landing_{table_key}', batch_id, rows]
+    )
+    conn.commit(); cursor.close(); conn.close()
+
+def get_existing_count(table_name: str):
+    conn = create_connection(Config.LANDING_DB)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT COUNT(*) FROM dbo.{table_name}")
+    count = cursor.fetchone()[0]
+    cursor.close(); conn.close()
+    return count
 
 
 # ============================================================================
 # LOAD CSV TO LANDING
 # ============================================================================
 
+
 def load_to_landing(table_key: str, csv_filename: str) -> Dict:
-    
     result = {
         'table': f'Landing_{table_key}',
         'status': 'FAILED',
@@ -211,91 +224,100 @@ def load_to_landing(table_key: str, csv_filename: str) -> Dict:
         'start_time': datetime.now(),
         'end_time': None
     }
-    
     csv_path = Config.CSV_DATA_PATH / csv_filename
     table_name = f'Landing_{table_key}'
-    
     try:
         if not csv_path.exists():
             raise FileNotFoundError(f"File không tồn tại: {csv_path}")
-        
+
         logger.info(f"\n[Loading] {table_name}")
         logger.info(f"  File: {csv_filename}")
-        
+
         df = pd.read_csv(csv_path, dtype=str, keep_default_na=False)
         df = df.where(pd.notna(df), None)
 
         df['create_at'] = datetime.now()
         df['update_at'] = datetime.now()
-        
+        batch_id = str(uuid.uuid4())
+        df['batch_id'] = batch_id
+
         logger.info(f"  Rows in CSV: {len(df):,}")
         logger.info(f"  Columns: {len(df.columns)}")
-        
+
+        # So sánh số lượng dòng để xác định có cần load không
+        existing_count = get_existing_count(table_name)
+        if len(df) == existing_count:
+            logger.info(f"  [SKIP] {table_name}: no new rows (rowcount matches)")
+            result['status'] = 'SKIP'
+            result['rows_loaded'] = 0
+            update_watermark(table_key, batch_id, 0)
+            result['end_time'] = datetime.now()
+            return result
+
         conn = create_connection(Config.LANDING_DB)
         cursor = conn.cursor()
-
-        # 🔥 FIX: đảm bảo context đúng
-        cursor.execute("USE DW_Synthea_Landing")
-
-        # 🔥 DEBUG HARD CHECK
-        cursor.execute(f"SELECT TOP 1 * FROM dbo.{table_name}")
-        logger.info("  [DEBUG] Table accessible OK")
-
-        # 🔥 FIX: tăng tốc executemany
         cursor.fast_executemany = True
-        
+
         columns = list(df.columns)
         col_str = ", ".join(f"[{col}]" for col in columns)
         placeholders = ", ".join("?" * len(columns))
-        
-        # 🔥 FIX QUAN TRỌNG NHẤT
         insert_sql = f"INSERT INTO dbo.{table_name} ({col_str}) VALUES ({placeholders})"
-        
+
         total_rows = len(df)
         rows_inserted = 0
-        
+
         with tqdm(total=total_rows, desc="  Inserting", unit="rows") as pbar:
             for batch_start in range(0, total_rows, Config.BATCH_SIZE):
                 batch_end = min(batch_start + Config.BATCH_SIZE, total_rows)
                 batch_df = df.iloc[batch_start:batch_end]
-                
                 rows = [tuple(row) for row in batch_df.values]
-                
                 cursor.executemany(insert_sql, rows)
-                
                 rows_inserted += len(rows)
                 pbar.update(len(rows))
-        
+
         cursor.close()
         conn.close()
-        
+
         result['status'] = 'SUCCESS'
         result['rows_loaded'] = rows_inserted
-        
-        logger.info(f"  [OK] Loaded {rows_inserted:,} rows")
-        
+        logger.info(f"  [OK] Loaded {rows_inserted:,} rows (batch_id={batch_id})")
+        update_watermark(table_key, batch_id, rows_inserted)
+
     except Exception as e:
         result['error'] = str(e)
         logger.error(f"  [ERROR] {str(e)}")
         logger.error(traceback.format_exc())
-    
     finally:
         result['end_time'] = datetime.now()
-    
     return result
 
 
-# ============================================================================
-# MAIN PIPELINE
-# ============================================================================
+
+# ===================== MAIN PIPELINE + ETL_Run_Log =====================
+import uuid
+def log_etl_run(proc_name, batch_id, status, rows_affected, error_msg=None, params=None, db='DW_Synthea_Landing'):
+    try:
+        conn = create_connection(db)
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            INSERT INTO dbo.ETL_Run_Log(proc_name, batch_id, start_time, end_time, status, rows_affected, error_msg, params)
+            VALUES (?, ?, SYSUTCDATETIME(), SYSUTCDATETIME(), ?, ?, ?, ?)
+            """,
+            [proc_name, str(batch_id), status, rows_affected, error_msg, params]
+        )
+        conn.commit()
+        cursor.close(); conn.close()
+    except Exception as e:
+        logger.error(f"[ETL_Run_Log] {str(e)}")
 
 def run_extract_pipeline():
-    """Chạy toàn bộ Extract pipeline"""
-    
+    """Chạy toàn bộ Extract pipeline (incremental, không truncate) + log ETL_Run_Log"""
+    batch_id = uuid.uuid4()
     logger.info("\n" + "="*80)
-    logger.info("STARTING EXTRACT PIPELINE")
+    logger.info(f"STARTING EXTRACT PIPELINE (INCREMENTAL) | batch_id={batch_id}")
     logger.info("="*80)
-    
+
     # Step 0: Check connection
     logger.info("\n[STEP 0] Checking database connection...")
     try:
@@ -308,70 +330,56 @@ def run_extract_pipeline():
         logger.info(f"[OK] Connected to '{db_name}' on '{Config.SQL_SERVER}'")
     except Exception as e:
         logger.error(f"[ERROR] Cannot connect to database: {str(e)}")
-        logger.error("Vui lòng kiểm tra:")
-        logger.error("  1. SQL Server đang chạy")
-        logger.error("  2. Database DW_Synthea_Landing đã được tạo")
-        logger.error("  3. Windows Authentication có quyền truy cập")
+        log_etl_run('extract_pipeline', batch_id, 'FAILED', 0, str(e), 'Check connection')
         sys.exit(1)
-    
-    # Step 1: Reset tables
-    logger.info("\n[STEP 1] Resetting Landing tables...")
-    reset_landing_tables()
-    
-    # Step 2: Load CSV files
-    logger.info("\n[STEP 2] Loading CSV files to Landing...")
-    
+
+    # Step 1: Load CSV files (incremental)
+    logger.info("\n[STEP 1] Loading CSV files to Landing (incremental)...")
     results = []
-    
     for table_key, csv_file in Config.CSV_FILES.items():
         result = load_to_landing(table_key, csv_file)
         results.append(result)
-    
-    # Step 3: Summary
+
+    # Step 2: Summary
     logger.info("\n" + "="*80)
     logger.info("EXTRACT SUMMARY")
     logger.info("="*80)
-    
+
     success_count = len([r for r in results if r['status'] == 'SUCCESS'])
+    skipped_count = len([r for r in results if r['status'] == 'SKIP'])
     failed_count = len([r for r in results if r['status'] == 'FAILED'])
     total_rows = sum(r['rows_loaded'] for r in results if r['status'] == 'SUCCESS')
-    
+
     logger.info(f"\nSuccessful: {success_count}/{len(results)}")
+    logger.info(f"Skipped:    {skipped_count}/{len(results)}")
     logger.info(f"Failed:     {failed_count}/{len(results)}")
     logger.info(f"Total rows: {total_rows:,}\n")
-    
+
     logger.info(f"{'Table':<30} {'Rows':>15} {'Duration':>10} {'Status':>10}")
     logger.info("-" * 70)
-    
+
     for result in results:
         duration = (result['end_time'] - result['start_time']).total_seconds()
-        
-        if result['status'] == 'SUCCESS':
-            logger.info(
-                f"{result['table']:<30} {result['rows_loaded']:>15,} "
-                f"{duration:>9.2f}s {result['status']:>10}"
-            )
-        else:
-            logger.info(
-                f"{result['table']:<30} {'ERROR':>15} "
-                f"{duration:>9.2f}s {result['status']:>10}"
-            )
-    
+        logger.info(
+            f"{result['table']:<30} {result['rows_loaded']:>15,} "
+            f"{duration:>9.2f}s {result['status']:>10}"
+        )
+
     logger.info("\n" + "="*80)
-    
+
     if failed_count > 0:
         logger.warning("MỘT SỐ TABLE LOAD LỖI - Kiểm tra log!")
         logger.info("\nNext steps:")
         logger.info("  1. Kiểm tra file CSV trong thư mục data/raw/synthea/csv/")
         logger.info("  2. Xem chi tiết lỗi trong log file")
         logger.info("  3. Sửa lỗi và chạy lại script")
+        log_etl_run('extract_pipeline', batch_id, 'FAILED', total_rows, 'Some tables failed', f'Success={success_count};Failed={failed_count}')
     else:
         logger.info("EXTRACT COMPLETED SUCCESSFULLY!")
         logger.info("\nNext step:")
         logger.info("  Run: python 05_Transform_Landing_to_Staging.py")
-    
+        log_etl_run('extract_pipeline', batch_id, 'SUCCESS', total_rows, None, f'Success={success_count};Skipped={skipped_count}')
     logger.info("="*80)
-
 
 # ============================================================================
 # ENTRY POINT

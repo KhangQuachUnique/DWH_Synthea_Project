@@ -608,95 +608,167 @@ WITH (
             bulk_file.unlink()
 
 
+
+# ===================== INCREMENTAL UPSERT (MERGE) =====================
+def upsert_staging(staging_conn, staging_table: str, df: pd.DataFrame, key_cols: list[str]) -> int:
+    """
+    MERGE (upsert) DataFrame vào Staging table.
+    - INSERT nếu NK chưa tồn tại
+    - UPDATE nếu NK tồn tại và có column nào thay đổi (update_at mới hơn)
+    """
+    import uuid
+    temp_table = f"#tmp_{staging_table}_{uuid.uuid4().hex[:8]}"
+    cursor = staging_conn.cursor()
+    cursor.fast_executemany = True
+
+    # 1. Tạo temp table cùng schema
+    cursor.execute(f"SELECT TOP 0 * INTO {temp_table} FROM [{staging_table}]")
+
+    # 2. Bulk insert vào temp
+    # Get staging table schema to coerce types
+    schema_sql = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = 'dbo' ORDER BY ORDINAL_POSITION"
+    cursor2 = staging_conn.cursor()
+    cursor2.execute(schema_sql, staging_table)
+    schema = cursor2.fetchall()  # list of (COLUMN_NAME, DATA_TYPE)
+    cursor2.close()
+
+    # Build ordered column list based on staging schema intersection with df
+    schema_cols = [row[0] for row in schema]
+    columns = [c for c in schema_cols if c in df.columns]
+    if not columns:
+        raise RuntimeError(f"No matching columns between dataframe and target table {staging_table}")
+
+    col_str = ", ".join(f"[{c}]" for c in columns)
+    ph = ", ".join("?" * len(columns))
+
+    # helper to convert python values according to SQL data type
+    def _convert_value(val, sql_type):
+        if val is None:
+            return None
+        try:
+            if sql_type in ('int', 'bigint', 'smallint', 'tinyint'):
+                if pd.isna(val) or val == '':
+                    return None
+                return int(float(val))
+            if sql_type in ('decimal', 'numeric', 'money', 'smallmoney', 'float', 'real'):
+                if pd.isna(val) or val == '':
+                    return None
+                return float(val)
+            if sql_type in ('date', 'datetime', 'datetime2', 'smalldatetime', 'time'):
+                if pd.isna(val) or val == '':
+                    return None
+                # if already datetime/date, return as is
+                if isinstance(val, (datetime,)):
+                    return val
+                try:
+                    return pd.to_datetime(val)
+                except:
+                    return None
+            # default: text-like
+            s = str(val)
+            s = s.replace('\r', ' ').replace('\n', ' ').replace('\t', ' ')
+            if s == '':
+                return None
+            return s
+        except Exception:
+            return None
+
+    # build rows with conversions
+    # map column -> sql_type
+    type_map = {row[0]: row[1].lower() for row in schema}
+    rows = []
+    for _, r in df[columns].iterrows():
+        tup = []
+        for c in columns:
+            tup.append(_convert_value(r[c], type_map.get(c, 'varchar')))
+        rows.append(tuple(tup))
+
+    cursor.executemany(f"INSERT INTO {temp_table} ({col_str}) VALUES ({ph})", rows)
+
+    # 3. Build MERGE statement
+    on_clause    = " AND ".join(f"t.[{k}] = s.[{k}]" for k in key_cols)
+    update_cols  = [c for c in columns if c not in key_cols and c not in ("create_at",)]
+    update_clause= ", ".join(f"t.[{c}] = s.[{c}]" for c in update_cols)
+    insert_cols  = col_str
+    insert_vals  = ", ".join(f"s.[{c}]" for c in columns)
+
+    merge_sql = f"""
+        MERGE [{staging_table}] AS t
+        USING {temp_table}     AS s
+        ON ({on_clause})
+        WHEN MATCHED AND (
+            t.update_at < s.update_at
+        ) THEN
+            UPDATE SET {update_clause}
+        WHEN NOT MATCHED BY TARGET THEN
+            INSERT ({insert_cols})
+            VALUES ({insert_vals});
+    """
+    cursor.execute(merge_sql)
+    affected = cursor.rowcount
+    staging_conn.commit()
+    cursor.close()
+    return affected
+
+# Natural Key mapping cho từng bảng
+NK_MAP = {
+    'Staging_Patients':     ['Id'],
+    'Staging_Encounters':   ['Id'],
+    'Staging_Conditions':   ['PATIENT', 'START', 'CODE'],
+    'Staging_Medications':  ['PATIENT', 'START', 'CODE'],
+    'Staging_Observations': ['PATIENT', 'ENCOUNTER', 'CODE', 'DATE'],
+    'Staging_Procedures':   ['PATIENT', 'ENCOUNTER', 'CODE', 'DATE'],
+    'Staging_Immunizations':['PATIENT', 'ENCOUNTER', 'CODE', 'DATE'],
+    'Staging_Allergies':    ['PATIENT', 'CODE', 'START'],
+    'Staging_Careplans':    ['Id'],
+    'Staging_Devices':      ['PATIENT', 'CODE', 'START'],
+    'Staging_Imaging_Studies': ['Id'],
+    'Staging_Supplies':     ['PATIENT', 'ENCOUNTER', 'CODE', 'DATE'],
+    'Staging_Organizations':['Id'],
+    'Staging_Providers':    ['Id'],
+    'Staging_Payers':       ['Id'],
+    'Staging_Payer_Transitions': ['PATIENT', 'PAYER', 'START_YEAR'],
+}
+
 def transform_table(landing_table: str, staging_table: str, transform_func):
-    """Transform single table từ Landing sang Staging (chunk + batch insert)"""
-
+    """Transform single table từ Landing sang Staging (incremental upsert)"""
     start_time = datetime.now()
-
     try:
         logger.info(f"\n[Transform] {landing_table} -> {staging_table}")
-
         landing_conn = None
         staging_conn = None
-        cursor = None
-
         try:
-            # Open connections
             landing_conn = create_connection(Config.LANDING_DB)
             staging_conn = create_connection(Config.STAGING_DB)
-            cursor = staging_conn.cursor()
-            cursor.fast_executemany = True
-
-            # Truncate target once
-            cursor.execute(f"TRUNCATE TABLE [{staging_table}]")
-            staging_conn.commit()
-
             query = f"SELECT * FROM [{landing_table}]"
             chunk_iter = pd.read_sql(query, landing_conn, chunksize=Config.CHUNK_SIZE)
-
-            insert_sql = None
-            columns = None
-            rows_inserted = 0
-
-            logger.info(
-                f"  Chunk processing: chunksize={Config.CHUNK_SIZE:,} | insert_method={Config.INSERT_METHOD}"
-            )
-
+            rows_upserted = 0
+            logger.info(f"  Chunk processing: chunksize={Config.CHUNK_SIZE:,} | UPSERT (MERGE)")
             with tqdm(desc="  Processing", unit="rows") as pbar:
                 for df_chunk in chunk_iter:
                     if df_chunk is None or len(df_chunk) == 0:
                         continue
-
                     df_staging = transform_func(df_chunk)
-
-                    if columns is None:
-                        columns = list(df_staging.columns)
-
-                    df_staging = df_staging[columns]
-
-                    if Config.INSERT_METHOD == 'bulk_insert':
-                        rows_inserted += _bulk_insert_dataframe(staging_conn, staging_table, df_staging)
-                        pbar.update(len(df_staging))
-                        continue
-
-                    # Default: executemany (fast_executemany)
-                    if insert_sql is None:
-                        insert_sql = _build_insert_sql(staging_table, columns)
-
-                    total_rows = len(df_staging)
-                    for batch_start in range(0, total_rows, Config.BATCH_SIZE):
-                        batch_end = min(batch_start + Config.BATCH_SIZE, total_rows)
-                        batch = df_staging.iloc[batch_start:batch_end]
-
-                        rows = list(batch.itertuples(index=False, name=None))
-                        cursor.executemany(insert_sql, rows)
-                        staging_conn.commit()
-
-                        rows_inserted += len(rows)
-                        pbar.update(len(rows))
-
+                    key_cols = NK_MAP[staging_table]
+                    rows = upsert_staging(staging_conn, staging_table, df_staging, key_cols)
+                    rows_upserted += rows if rows else 0
+                    pbar.update(len(df_staging))
         finally:
-            if cursor is not None:
-                cursor.close()
             if staging_conn is not None:
                 staging_conn.close()
             if landing_conn is not None:
                 landing_conn.close()
-
         duration = (datetime.now() - start_time).total_seconds()
-        logger.info(f"  [OK] Inserted {rows_inserted:,} rows ({duration:.2f}s)")
-
+        logger.info(f"  [OK] Upserted {rows_upserted:,} rows ({duration:.2f}s)")
         return {
             'table': staging_table,
             'status': 'SUCCESS',
-            'rows': rows_inserted,
+            'rows': rows_upserted,
             'duration': duration
         }
-
     except Exception as e:
         logger.error(f"  [ERROR] {str(e)}")
         logger.error(traceback.format_exc())
-
         return {
             'table': staging_table,
             'status': 'FAILED',
