@@ -2,11 +2,11 @@
 Deploy all SQL transform procs to the target SQL Server using `sqlcmd`.
 Usage examples:
   # Windows integrated auth
-  .\deploy_transform_procs.ps1 -ServerInstance "localhost\\SQLEXPRESS"
-  .\deploy_transform_procs.ps1 -ServerInstance "."
+  .\04_deploy_transform_procs.ps1 -ServerInstance "localhost\\SQLEXPRESS"
+  .\04_deploy_transform_procs.ps1 -ServerInstance "."
 
   # SQL auth
-  .\deploy_transform_procs.ps1 -ServerInstance "myserver" -Username "sa" -Password "Secret123"
+  .\04_deploy_transform_procs.ps1 -ServerInstance "myserver" -Username "sa" -Password "Secret123"
 #>
 param(
     [Parameter(Mandatory=$true)]
