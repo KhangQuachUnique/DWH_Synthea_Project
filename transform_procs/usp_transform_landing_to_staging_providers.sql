@@ -5,6 +5,12 @@ BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
     BEGIN TRAN;
     BEGIN TRY
+        IF OBJECT_ID(N'DW_Synthea_Landing.dbo.Landing_Providers', N'U') IS NULL
+           OR OBJECT_ID(N'DW_Synthea_Staging.dbo.Staging_Providers', N'U') IS NULL
+            THROW 50001, 'Missing required table: Landing_Providers or Staging_Providers.', 1;
+
+        DROP TABLE IF EXISTS #src;
+
         SELECT
             LEFT(LTRIM(RTRIM(Id)),36) AS Id,
             NULLIF(LEFT(LTRIM(RTRIM(ORGANIZATION)),36),'') AS ORGANIZATION,

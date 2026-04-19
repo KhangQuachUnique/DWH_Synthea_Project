@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LocalHost.tempdb"
+  DTS:DTSID="{1894031A-DA07-46BE-B5EE-34AFF0A3F708}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=.;User ID=;Initial Catalog=tempdb;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Initial File Name=;Trust Server Certificate=True;Server SPN=;Authentication=;Access Token=;Application Name=SSIS-Integration Services Project1-{1894031A-DA07-46BE-B5EE-34AFF0A3F708}LocalHost.tempdb;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

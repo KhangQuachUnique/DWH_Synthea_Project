@@ -5,6 +5,12 @@ BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
     BEGIN TRAN;
     BEGIN TRY
+        IF OBJECT_ID(N'DW_Synthea_Landing.dbo.Landing_Payer_Transitions', N'U') IS NULL
+           OR OBJECT_ID(N'DW_Synthea_Staging.dbo.Staging_Payer_Transitions', N'U') IS NULL
+            THROW 50001, 'Missing required table: Landing_Payer_Transitions or Staging_Payer_Transitions.', 1;
+
+        DROP TABLE IF EXISTS #src;
+
         SELECT
             NULLIF(LEFT(LTRIM(RTRIM(PATIENT)),36),'') AS PATIENT,
             TRY_CAST(NULLIF(START_YEAR,'') AS INT) AS START_YEAR,

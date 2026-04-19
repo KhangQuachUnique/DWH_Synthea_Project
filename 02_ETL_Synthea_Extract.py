@@ -28,11 +28,6 @@ pd.options.mode.copy_on_write = True
 import warnings
 warnings.filterwarnings('ignore')
 
-# Load environment variables from .env (optional)
-from dotenv import load_dotenv
-load_dotenv()
-
-
 # ============================================================================
 # CONFIG
 # ============================================================================
@@ -46,30 +41,19 @@ class Config:
     LOG_PATH = PROJECT_ROOT / "logs"
     
     # SQL Server - Windows Authentication ONLY
-    SQL_SERVER = os.environ.get('SYNTHEA_SQL_SERVER')
-    if not SQL_SERVER:
-        raise RuntimeError("SYNTHEA_SQL_SERVER is not set. Copy .env.example -> .env and edit.")
+    SQL_SERVER = "localhost"
     
     LANDING_DB = "DW_Synthea_Landing"
     
     # Batch processing
-    CHUNK_SIZE = 200000  # 200K rows per chunk
-    BATCH_SIZE = 20000   # 20K rows per batch insert
-    
+    CHUNK_SIZE = 200000
+    BATCH_SIZE = 30000   
     # CSV Files mapping (table_key -> csv_filename)
     CSV_FILES = {
         'Patients': 'patients.csv',
         'Encounters': 'encounters.csv',
         'Conditions': 'conditions.csv',
         'Medications': 'medications.csv',
-        'Observations': 'observations.csv',
-        'Procedures': 'procedures.csv',
-        'Immunizations': 'immunizations.csv',
-        'Allergies': 'allergies.csv',
-        'Careplans': 'careplans.csv',
-        'Devices': 'devices.csv',
-        'Imaging_Studies': 'imaging_studies.csv',
-        'Supplies': 'supplies.csv',
         'Organizations': 'organizations.csv',
         'Providers': 'providers.csv',
         'Payers': 'payers.csv',
@@ -386,6 +370,7 @@ def run_extract_pipeline():
 # ============================================================================
 
 if __name__ == "__main__":
+    print(f"--- PYTHON EXECUTABLE: {sys.executable} ---")
     try:
         # Kiểm tra CSV path
         if not Config.CSV_DATA_PATH.exists():

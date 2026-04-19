@@ -5,6 +5,12 @@ BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
     BEGIN TRAN;
     BEGIN TRY
+        IF OBJECT_ID(N'DW_Synthea_Landing.dbo.Landing_Patients', N'U') IS NULL
+           OR OBJECT_ID(N'DW_Synthea_Staging.dbo.Staging_Patients', N'U') IS NULL
+            THROW 50001, 'Missing required table: Landing_Patients or Staging_Patients.', 1;
+
+        DROP TABLE IF EXISTS #src;
+
         SELECT
             LEFT(LTRIM(RTRIM(Id)),36) AS Id,
             TRY_CAST(BIRTHDATE AS DATE) AS BIRTHDATE,

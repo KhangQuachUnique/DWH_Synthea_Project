@@ -321,45 +321,111 @@ GO
 -- ============================================================================
 
 -- Fact Encounter
-ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_date FOREIGN KEY (encounter_date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
-ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_provider FOREIGN KEY (provider_key) REFERENCES dbo.dim_provider(provider_key);
-ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
-ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+IF OBJECT_ID(N'dbo.fact_encounter', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter'))
+    ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_date FOREIGN KEY (encounter_date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_patient' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter'))
+    ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_provider' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter'))
+    ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_provider FOREIGN KEY (provider_key) REFERENCES dbo.dim_provider(provider_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_payer' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter'))
+    ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter'))
+    ALTER TABLE dbo.fact_encounter WITH CHECK ADD CONSTRAINT FK_enc_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
 GO
 
 -- Fact Encounter Daily
-ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
-ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
+IF OBJECT_ID(N'dbo.fact_encounter_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_daily_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter_daily'))
+    ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_daily_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter_daily'))
+    ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+
+IF OBJECT_ID(N'dbo.fact_encounter_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_enc_daily_payer' AND parent_object_id = OBJECT_ID(N'dbo.fact_encounter_daily'))
+    ALTER TABLE dbo.fact_encounter_daily WITH CHECK ADD CONSTRAINT FK_enc_daily_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
 GO
 
 -- Fact Condition (Fixing naming consistency)
-ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
-ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_start_date FOREIGN KEY (start_date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_code_dim FOREIGN KEY (condition_code_key) REFERENCES dbo.dim_condition_code(condition_code_key);
-ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+IF OBJECT_ID(N'dbo.fact_condition', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_patient' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition'))
+    ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
+
+IF OBJECT_ID(N'dbo.fact_condition', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_start_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition'))
+    ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_start_date FOREIGN KEY (start_date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_condition', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_code_dim' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition'))
+    ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_code_dim FOREIGN KEY (condition_code_key) REFERENCES dbo.dim_condition_code(condition_code_key);
+
+IF OBJECT_ID(N'dbo.fact_condition', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition'))
+    ALTER TABLE dbo.fact_condition WITH CHECK ADD CONSTRAINT FK_cond_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
 GO
 
 -- Fact Condition Daily
-ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_code FOREIGN KEY (condition_code_key) REFERENCES dbo.dim_condition_code(condition_code_key);
-ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+IF OBJECT_ID(N'dbo.fact_condition_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_daily_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition_daily'))
+    ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_condition_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_daily_code' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition_daily'))
+    ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_code FOREIGN KEY (condition_code_key) REFERENCES dbo.dim_condition_code(condition_code_key);
+
+IF OBJECT_ID(N'dbo.fact_condition_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_cond_daily_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_condition_daily'))
+    ALTER TABLE dbo.fact_condition_daily WITH CHECK ADD CONSTRAINT FK_cond_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
 GO
 
 -- Fact Medications
-ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
-ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_medication FOREIGN KEY (medication_key) REFERENCES dbo.dim_medication(medication_key);
-ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_start_date FOREIGN KEY (start_date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
-ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
+IF OBJECT_ID(N'dbo.fact_medications', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_patient' AND parent_object_id = OBJECT_ID(N'dbo.fact_medications'))
+    ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_patient FOREIGN KEY (patient_key) REFERENCES dbo.dim_patient(patient_key);
+
+IF OBJECT_ID(N'dbo.fact_medications', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_medication' AND parent_object_id = OBJECT_ID(N'dbo.fact_medications'))
+    ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_medication FOREIGN KEY (medication_key) REFERENCES dbo.dim_medication(medication_key);
+
+IF OBJECT_ID(N'dbo.fact_medications', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_start_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_medications'))
+    ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_start_date FOREIGN KEY (start_date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_medications', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_medications'))
+    ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+
+IF OBJECT_ID(N'dbo.fact_medications', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_payer' AND parent_object_id = OBJECT_ID(N'dbo.fact_medications'))
+    ALTER TABLE dbo.fact_medications WITH CHECK ADD CONSTRAINT FK_med_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
 GO
 
 -- Fact Medication Daily
-ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
-ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_med FOREIGN KEY (medication_key) REFERENCES dbo.dim_medication(medication_key);
-ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
-ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
+IF OBJECT_ID(N'dbo.fact_medication_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_daily_date' AND parent_object_id = OBJECT_ID(N'dbo.fact_medication_daily'))
+    ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_date FOREIGN KEY (date_key) REFERENCES dbo.dim_date(date_key);
+
+IF OBJECT_ID(N'dbo.fact_medication_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_daily_med' AND parent_object_id = OBJECT_ID(N'dbo.fact_medication_daily'))
+    ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_med FOREIGN KEY (medication_key) REFERENCES dbo.dim_medication(medication_key);
+
+IF OBJECT_ID(N'dbo.fact_medication_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_daily_org' AND parent_object_id = OBJECT_ID(N'dbo.fact_medication_daily'))
+    ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_org FOREIGN KEY (organization_key) REFERENCES dbo.dim_organization(organization_key);
+
+IF OBJECT_ID(N'dbo.fact_medication_daily', N'U') IS NOT NULL
+   AND NOT EXISTS (SELECT 1 FROM sys.foreign_keys WHERE name = 'FK_med_daily_payer' AND parent_object_id = OBJECT_ID(N'dbo.fact_medication_daily'))
+    ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
 GO
 
 -- ============================================================================

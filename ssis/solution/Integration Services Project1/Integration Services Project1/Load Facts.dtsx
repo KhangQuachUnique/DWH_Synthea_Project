@@ -11,24 +11,10 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Load Facts"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{8889D735-CDF6-4DB9-99A7-22C237E1DAAE}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{E3C1619B-5F5F-4611-86D7-71197079150B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[LocalHost.DW_Synthea_DWH]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
-      DTS:ObjectName="LocalHost.DW_Synthea_DWH">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=.;User ID=;Initial Catalog=DW_Synthea_DWH;Provider=MSOLEDBSQL.1;Persist Security Info=False;Integrated Security=SSPI;Initial File Name=;Trust Server Certificate=True;Server SPN=;Authentication=;Access Token=;Application Name=SSIS-Load Facts-{890396BC-ED3F-466C-8394-8734D43F9C2B}LocalHost.DW_Synthea_DWH;Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-  </DTS:ConnectionManagers>
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
@@ -39,7 +25,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="AsOfDate">
       <DTS:VariableValue
-        DTS:DataType="7">4/19/2026 6:23:26 PM</DTS:VariableValue>
+        DTS:DataType="7">4/19/2026 6:35:05 PM</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
@@ -84,7 +70,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_conditions ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -114,7 +100,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_condition_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -144,7 +130,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_encounter ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -174,7 +160,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_encounter_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -204,7 +190,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_medication_daily ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -234,7 +220,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{890396BC-ED3F-466C-8394-8734D43F9C2B}"
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
           SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_medications ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"

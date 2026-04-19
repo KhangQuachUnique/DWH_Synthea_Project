@@ -131,172 +131,7 @@ END;
 GO
 
 -- ============================================================================
--- 5. BẢNG OBSERVATIONS - 1,659,750 dòng (RẤT LỚN - 58% dữ liệu)
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Observations]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Observations] (
-        [DATE] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [VALUE] VARCHAR(255),
-        [UNITS] VARCHAR(20),
-        [TYPE] VARCHAR(50),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Observations_Patient] ON [dbo].[Landing_Observations]([PATIENT]);
-    CREATE NONCLUSTERED INDEX [IX_Landing_Observations_Date] ON [dbo].[Landing_Observations]([DATE]);
-END;
-GO
-
--- ============================================================================
--- 6. BẢNG PROCEDURES - 100,427 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Procedures]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Procedures] (
-        [DATE] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [BASE_COST] VARCHAR(20),
-        [REASONCODE] VARCHAR(20),
-        [REASONDESCRIPTION] VARCHAR(255),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Procedures_Patient] ON [dbo].[Landing_Procedures]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 7. BẢNG IMMUNIZATIONS - 16,481 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Immunizations]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Immunizations] (
-        [DATE] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [BASE_COST] VARCHAR(20),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Immunizations_Patient] ON [dbo].[Landing_Immunizations]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 8. BẢNG ALLERGIES - 5,417 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Allergies]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Allergies] (
-        [START] VARCHAR(10),
-        [STOP] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Allergies_Patient] ON [dbo].[Landing_Allergies]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 9. BẢNG CAREPLANS - 37,715 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Careplans]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Careplans] (
-        [Id] VARCHAR(36),
-        [START] VARCHAR(10),
-        [STOP] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [REASONCODE] VARCHAR(20),
-        [REASONDESCRIPTION] VARCHAR(255),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Careplans_Patient] ON [dbo].[Landing_Careplans]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 10. BẢNG DEVICES - 2,360 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Devices]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Devices] (
-        [START] VARCHAR(10),
-        [STOP] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [UDI] VARCHAR(500),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Devices_Patient] ON [dbo].[Landing_Devices]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 11. BẢNG IMAGING_STUDIES - 4,504 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Imaging_Studies]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Imaging_Studies] (
-        [Id] VARCHAR(36),
-        [DATE] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [BODYSITE_CODE] VARCHAR(20),
-        [BODYSITE_DESCRIPTION] VARCHAR(255),
-        [MODALITY_CODE] VARCHAR(5),
-        [MODALITY_DESCRIPTION] VARCHAR(50),
-        [SOP_CODE] VARCHAR(64),
-        [SOP_DESCRIPTION] VARCHAR(255),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Imaging_Studies_Patient] ON [dbo].[Landing_Imaging_Studies]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 12. BẢNG SUPPLIES - 143,110 dòng
--- ============================================================================
-IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Supplies]'))
-BEGIN
-    CREATE TABLE [dbo].[Landing_Supplies] (
-        [DATE] VARCHAR(10),
-        [PATIENT] VARCHAR(36),
-        [ENCOUNTER] VARCHAR(36),
-        [CODE] VARCHAR(20),
-        [DESCRIPTION] VARCHAR(255),
-        [QUANTITY] VARCHAR(10),
-        [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
-        [update_at] DATETIME NOT NULL DEFAULT GETDATE()
-    );
-    CREATE NONCLUSTERED INDEX [IX_Landing_Supplies_Patient] ON [dbo].[Landing_Supplies]([PATIENT]);
-END;
-GO
-
--- ============================================================================
--- 13. BẢNG ORGANIZATIONS - 5,499 dòng
+-- 5. BẢNG ORGANIZATIONS - 5,499 dòng
 -- ============================================================================
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Organizations]'))
 BEGIN
@@ -320,7 +155,7 @@ END;
 GO
 
 -- ============================================================================
--- 14. BẢNG PROVIDERS - 31,764 dòng
+-- 6. BẢNG PROVIDERS - 31,764 dòng
 -- ============================================================================
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Providers]'))
 BEGIN
@@ -345,7 +180,7 @@ END;
 GO
 
 -- ============================================================================
--- 15. BẢNG PAYERS - 10 dòng
+-- 7. BẢNG PAYERS - 10 dòng
 -- ============================================================================
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Payers]'))
 BEGIN
@@ -379,7 +214,7 @@ END;
 GO
 
 -- ============================================================================
--- 16. BẢNG PAYER_TRANSITIONS - 41,392 dòng
+-- 8. BẢNG PAYER_TRANSITIONS - 41,392 dòng
 -- ============================================================================
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Landing_Payer_Transitions]'))
 BEGIN
@@ -430,48 +265,61 @@ END;
 GO
 
 -- ============================================================================
--- BƯỚC 1: Thêm cột batch_id vào tất cả bảng Landing (nếu chưa có)
+-- BƯỚC 1: Thêm cột batch_id vào các bảng Landing đang dùng (nếu chưa có)
 -- ============================================================================
-ALTER TABLE dbo.Landing_Patients           ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Encounters         ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Conditions         ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Medications        ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Observations       ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Procedures         ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Immunizations      ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Allergies          ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Careplans          ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Devices            ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Imaging_Studies    ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Supplies           ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Organizations      ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Providers          ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Payers             ADD batch_id VARCHAR(36) NULL;
-ALTER TABLE dbo.Landing_Payer_Transitions  ADD batch_id VARCHAR(36) NULL;
+IF OBJECT_ID(N'dbo.Landing_Patients', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Patients', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Patients ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Encounters', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Encounters', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Encounters ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Conditions', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Conditions', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Conditions ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Medications', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Medications', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Medications ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Organizations', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Organizations', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Organizations ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Providers', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Providers', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Providers ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Payers', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Payers', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Payers ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Landing_Payer_Transitions', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Landing_Payer_Transitions', 'batch_id') IS NULL
+    ALTER TABLE dbo.Landing_Payer_Transitions ADD batch_id VARCHAR(36) NULL;
+GO
 
 -- ============================================================================ 
--- BƯỚC 3: Khởi tạo 16 dòng cho 16 bảng Landing vào ETL_Control (nếu chưa có)
+-- BƯỚC 3: Khởi tạo 8 dòng cho 8 bảng Landing vào ETL_Control (nếu chưa có)
 -- ============================================================================
-IF NOT EXISTS (SELECT 1 FROM dbo.ETL_Control WHERE TableName = 'Landing_Patients')
-BEGIN
-    INSERT INTO dbo.ETL_Control (TableName, LastLoadedAt, RowsLoaded)
-    VALUES ('Landing_Patients', '1900-01-01', 0),
-           ('Landing_Encounters', '1900-01-01', 0),
-           ('Landing_Conditions', '1900-01-01', 0),
-           ('Landing_Medications', '1900-01-01', 0),
-           ('Landing_Observations', '1900-01-01', 0),
-           ('Landing_Procedures', '1900-01-01', 0),
-           ('Landing_Immunizations', '1900-01-01', 0),
-           ('Landing_Allergies', '1900-01-01', 0),
-           ('Landing_Careplans', '1900-01-01', 0),
-           ('Landing_Devices', '1900-01-01', 0),
-           ('Landing_Imaging_Studies', '1900-01-01', 0),
-           ('Landing_Supplies', '1900-01-01', 0),
-           ('Landing_Organizations', '1900-01-01', 0),
-           ('Landing_Providers', '1900-01-01', 0),
-           ('Landing_Payers', '1900-01-01', 0),
-           ('Landing_Payer_Transitions', '1900-01-01', 0);
-END;
+INSERT INTO dbo.ETL_Control (TableName, LastLoadedAt, RowsLoaded)
+SELECT src.TableName, CAST('1900-01-01' AS DATETIME), 0
+FROM (
+    VALUES ('Landing_Patients'),
+           ('Landing_Encounters'),
+           ('Landing_Conditions'),
+           ('Landing_Medications'),
+           ('Landing_Organizations'),
+           ('Landing_Providers'),
+           ('Landing_Payers'),
+           ('Landing_Payer_Transitions')
+) AS src(TableName)
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM dbo.ETL_Control ctl
+    WHERE ctl.TableName = src.TableName
+);
 GO
 
 PRINT 'Landing Database Schema Created Successfully!';

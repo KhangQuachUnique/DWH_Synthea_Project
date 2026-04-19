@@ -5,6 +5,12 @@ BEGIN
     SET NOCOUNT ON; SET XACT_ABORT ON;
     BEGIN TRAN;
     BEGIN TRY
+        IF OBJECT_ID(N'DW_Synthea_Landing.dbo.Landing_Conditions', N'U') IS NULL
+           OR OBJECT_ID(N'DW_Synthea_Staging.dbo.Staging_Conditions', N'U') IS NULL
+            THROW 50001, 'Missing required table: Landing_Conditions or Staging_Conditions.', 1;
+
+        DROP TABLE IF EXISTS #src;
+
         SELECT
             TRY_CAST(START AS DATE) AS START,
             TRY_CAST(STOP AS DATE) AS STOP,
