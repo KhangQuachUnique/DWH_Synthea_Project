@@ -11,35 +11,11 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Load Facts"
   DTS:PackageType="5"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{F27E0C38-0100-41B4-90A3-AFC9CF508DDA}">
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{8889D735-CDF6-4DB9-99A7-22C237E1DAAE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DESKTOP-MG82CSN\SQLEXPRESS]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{82D29502-8105-4484-B637-0588C0AA0BC0}"
-      DTS:ObjectName="DESKTOP-MG82CSN\SQLEXPRESS">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-MG82CSN\SQLEXPRESS;Provider=MSOLEDBSQL19.1;Integrated Security=SSPI;Application Name=SSIS-Load Facts-{82D29502-8105-4484-B637-0588C0AA0BC0}DESKTOP-MG82CSN\SQLEXPRESS;Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[DESKTOP-MG82CSN\SQLEXPRESS.DW_Synthea_DWH]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{026B73E6-BFE7-476E-916F-CACB6485D163}"
-      DTS:ObjectName="DESKTOP-MG82CSN\SQLEXPRESS.DW_Synthea_DWH">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=DESKTOP-MG82CSN\SQLEXPRESS;Initial Catalog=DW_Synthea_DWH;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Load Facts-{026B73E6-BFE7-476E-916F-CACB6485D163}DESKTOP-MG82CSN\SQLEXPRESS.DW_Synthea_DWH;Auto Translate=False;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.DW_Synthea_DWH]"
       DTS:CreationName="OLEDB"
@@ -63,7 +39,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="AsOfDate">
       <DTS:VariableValue
-        DTS:DataType="7">4/19/2026 6:18:50 PM</DTS:VariableValue>
+        DTS:DataType="7">4/19/2026 6:23:26 PM</DTS:VariableValue>
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
