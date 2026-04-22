@@ -33,6 +33,7 @@ BEGIN
             TRY_CAST(NULLIF(UNIQUE_CUSTOMERS,'') AS INT) AS UNIQUE_CUSTOMERS,
             TRY_CAST(NULLIF(QOLS_AVG,'') AS DECIMAL(18,4)) AS QOLS_AVG,
             TRY_CAST(NULLIF(MEMBER_MONTHS,'') AS INT) AS MEMBER_MONTHS,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Payers

@@ -231,4 +231,36 @@ END;
 GO
 
 PRINT 'Staging Database Schema Created Successfully!';
- 
+
+IF OBJECT_ID(N'dbo.Staging_Patients', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Patients', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Patients ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Encounters', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Encounters', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Encounters ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Conditions', N'U') IS NOT NULL   
+   AND COL_LENGTH('dbo.Staging_Conditions', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Conditions ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Medications', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Medications', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Medications ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Organizations', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Organizations', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Organizations ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Providers', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Providers', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Providers ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Payers', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Payers', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Payers ADD batch_id VARCHAR(36) NULL;
+
+IF OBJECT_ID(N'dbo.Staging_Payer_Transitions', N'U') IS NOT NULL
+   AND COL_LENGTH('dbo.Staging_Payer_Transitions', 'batch_id') IS NULL
+    ALTER TABLE dbo.Staging_Payer_Transitions ADD batch_id VARCHAR(36) NULL;
+GO

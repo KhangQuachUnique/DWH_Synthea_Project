@@ -37,6 +37,7 @@ BEGIN
             TRY_CAST(NULLIF(LON,'') AS DECIMAL(18,2)) AS LON,
             TRY_CAST(NULLIF(HEALTHCARE_EXPENSES,'') AS DECIMAL(18,2)) AS HEALTHCARE_EXPENSES,
             TRY_CAST(NULLIF(HEALTHCARE_COVERAGE,'') AS DECIMAL(18,2)) AS HEALTHCARE_COVERAGE,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Patients

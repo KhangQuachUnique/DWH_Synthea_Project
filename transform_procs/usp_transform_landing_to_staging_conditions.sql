@@ -18,6 +18,7 @@ BEGIN
             NULLIF(LEFT(LTRIM(RTRIM(ENCOUNTER)),36),'') AS ENCOUNTER,
             NULLIF(LEFT(LTRIM(RTRIM(CODE)),20),'') AS CODE,
             NULLIF(LEFT(REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(DESCRIPTION)),'\r',' '),'\n',' '),'\t',' '),255),'') AS DESCRIPTION,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Conditions

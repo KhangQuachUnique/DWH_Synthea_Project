@@ -24,6 +24,7 @@ BEGIN
             TRY_CAST(NULLIF(LAT,'') AS DECIMAL(18,10)) AS LAT,
             TRY_CAST(NULLIF(LON,'') AS DECIMAL(18,10)) AS LON,
             TRY_CAST(NULLIF(UTILIZATION,'') AS INT) AS UTILIZATION,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Providers

@@ -17,6 +17,7 @@ BEGIN
             TRY_CAST(NULLIF(END_YEAR,'') AS INT) AS END_YEAR,
             NULLIF(LEFT(LTRIM(RTRIM(PAYER)),36),'') AS PAYER,
             NULLIF(LEFT(LTRIM(RTRIM(OWNERSHIP)),50),'') AS OWNERSHIP,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Payer_Transitions

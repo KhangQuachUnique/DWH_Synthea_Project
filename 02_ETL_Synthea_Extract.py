@@ -243,7 +243,7 @@ def get_existing_count(table_name: str):
 # ============================================================================
 
 
-def load_to_landing(table_key: str, csv_filename: str) -> Dict:
+def load_to_landing(table_key: str, csv_filename: str, batch_id: str = None) -> Dict:
     result = {
         'table': f'Landing_{table_key}',
         'status': 'FAILED',
@@ -266,7 +266,8 @@ def load_to_landing(table_key: str, csv_filename: str) -> Dict:
 
         df['create_at'] = datetime.now()
         df['update_at'] = datetime.now()
-        batch_id = str(uuid.uuid4())
+        if batch_id is None:
+            batch_id = str(uuid.uuid4())
         df['batch_id'] = batch_id
 
         logger.info(f"  Rows in CSV: {len(df):,}")
@@ -364,8 +365,9 @@ def run_extract_pipeline():
     # Step 1: Load CSV files (incremental)
     logger.info("\n[STEP 1] Loading CSV files to Landing (incremental)...")
     results = []
+    pipeline_batch_id_str = str(batch_id)
     for table_key, csv_file in Config.CSV_FILES.items():
-        result = load_to_landing(table_key, csv_file)
+        result = load_to_landing(table_key, csv_file, pipeline_batch_id_str)
         results.append(result)
 
     # Step 2: Summary

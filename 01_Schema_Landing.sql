@@ -265,7 +265,7 @@ END;
 GO
 
 -- ============================================================================
--- BƯỚC 1: Thêm cột batch_id vào các bảng Landing đang dùng (nếu chưa có)
+-- Thêm cột batch_id vào các bảng Landing đang dùng (nếu chưa có)
 -- ============================================================================
 IF OBJECT_ID(N'dbo.Landing_Patients', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Landing_Patients', 'batch_id') IS NULL

@@ -27,6 +27,7 @@ BEGIN
             TRY_CAST(NULLIF(PAYER_COVERAGE,'') AS DECIMAL(18,2)) AS PAYER_COVERAGE,
             NULLIF(LEFT(LTRIM(RTRIM(REASONCODE)),20),'') AS REASONCODE,
             NULLIF(LEFT(REPLACE(REPLACE(REPLACE(LTRIM(RTRIM(REASONDESCRIPTION)),'\r',' '),'\n',' '),'\t',' '),255),'') AS REASONDESCRIPTION,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Encounters

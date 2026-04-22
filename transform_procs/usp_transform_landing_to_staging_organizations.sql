@@ -23,6 +23,7 @@ BEGIN
             NULLIF(LEFT(LTRIM(RTRIM(PHONE)),20),'') AS PHONE,
             TRY_CAST(NULLIF(REVENUE,'') AS DECIMAL(18,2)) AS REVENUE,
             TRY_CAST(NULLIF(UTILIZATION,'') AS INT) AS UTILIZATION,
+            batch_id,
             update_at
         INTO #src
         FROM DW_Synthea_Landing.dbo.Landing_Organizations
