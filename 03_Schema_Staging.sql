@@ -25,27 +25,27 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Patients]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Patients] (
-        [Id] NVARCHAR(100) NOT NULL,
+        [Id] VARCHAR(100) NOT NULL,
         [BIRTHDATE] DATE NULL,
         [DEATHDATE] DATE NULL,
-        [SSN] NVARCHAR(11) NULL,
-        [DRIVERS] NVARCHAR(50) NULL,
-        [PASSPORT] NVARCHAR(50) NULL,
-        [PREFIX] NVARCHAR(10) NULL,
-        [FIRST] NVARCHAR(100) NULL,
-        [LAST] NVARCHAR(100) NULL,
-        [SUFFIX] NVARCHAR(10) NULL,
-        [MAIDEN] NVARCHAR(100) NULL,
-        [MARITAL] NVARCHAR(20) NULL,
-        [RACE] NVARCHAR(50) NULL,
-        [ETHNICITY] NVARCHAR(50) NULL,
+        [SSN] VARCHAR(11) NULL,
+        [DRIVERS] VARCHAR(50) NULL,
+        [PASSPORT] VARCHAR(50) NULL,
+        [PREFIX] VARCHAR(10) NULL,
+        [FIRST] VARCHAR(100) NULL,
+        [LAST] VARCHAR(100) NULL,
+        [SUFFIX] VARCHAR(10) NULL,
+        [MAIDEN] VARCHAR(100) NULL,
+        [MARITAL] VARCHAR(20) NULL,
+        [RACE] VARCHAR(50) NULL,
+        [ETHNICITY] VARCHAR(50) NULL,
         [GENDER] CHAR(1) NULL,
-        [BIRTHPLACE] NVARCHAR(255) NULL,
-        [ADDRESS] NVARCHAR(255) NULL,
-        [CITY] NVARCHAR(100) NULL,
-        [STATE] NVARCHAR(100) NULL,
-        [COUNTY] NVARCHAR(100) NULL,
-        [ZIP] NVARCHAR(100) NULL,
+        [BIRTHPLACE] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(100) NULL,
+        [COUNTY] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,2) NULL,
         [LON] DECIMAL(18,2) NULL,
         [HEALTHCARE_EXPENSES] DECIMAL(18,2) NULL,
@@ -63,21 +63,21 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Encounters]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Encounters] (
-        [Id] NVARCHAR(36) NULL,
+        [Id] VARCHAR(36) NULL,
         [START] DATETIME NULL,
         [STOP] DATETIME NULL,
-        [PATIENT] NVARCHAR(36) NULL,
-        [ORGANIZATION] NVARCHAR(36) NULL,
-        [PROVIDER] NVARCHAR(36) NULL,
-        [PAYER] NVARCHAR(36) NULL,
-        [ENCOUNTERCLASS] NVARCHAR(50) NULL,
-        [CODE] NVARCHAR(20) NULL,
-        [DESCRIPTION] NVARCHAR(255) NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ORGANIZATION] VARCHAR(36) NULL,
+        [PROVIDER] VARCHAR(36) NULL,
+        [PAYER] VARCHAR(36) NULL,
+        [ENCOUNTERCLASS] VARCHAR(50) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
         [BASE_ENCOUNTER_COST] DECIMAL(18,2) NULL,
         [TOTAL_CLAIM_COST] DECIMAL(18,2) NULL,
         [PAYER_COVERAGE] DECIMAL(18,2) NULL,
-        [REASONCODE] NVARCHAR(20) NULL,
-        [REASONDESCRIPTION] NVARCHAR(255) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -93,10 +93,10 @@ BEGIN
     CREATE TABLE [dbo].[Staging_Conditions] (
         [START] DATE NULL,
         [STOP] DATE NULL,
-        [PATIENT] NVARCHAR(36) NULL,
-        [ENCOUNTER] NVARCHAR(36) NULL,
-        [CODE] NVARCHAR(20) NULL,
-        [DESCRIPTION] NVARCHAR(255) NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -112,17 +112,17 @@ BEGIN
     CREATE TABLE [dbo].[Staging_Medications] (
         [START] DATE NULL,
         [STOP] DATE NULL,
-        [PATIENT] NVARCHAR(36) NULL,
-        [PAYER] NVARCHAR(36) NULL,
-        [ENCOUNTER] NVARCHAR(36) NULL,
-        [CODE] NVARCHAR(20) NULL,
-        [DESCRIPTION] NVARCHAR(255) NULL,
+        [PATIENT] VARCHAR(36) NULL,
+        [PAYER] VARCHAR(36) NULL,
+        [ENCOUNTER] VARCHAR(36) NULL,
+        [CODE] VARCHAR(20) NULL,
+        [DESCRIPTION] VARCHAR(255) NULL,
         [BASE_COST] DECIMAL(18,2) NULL,
         [PAYER_COVERAGE] DECIMAL(18,2) NULL,
         [DISPENSES] INT NULL,
         [TOTALCOST] DECIMAL(18,2) NULL,
-        [REASONCODE] NVARCHAR(20) NULL,
-        [REASONDESCRIPTION] NVARCHAR(255) NULL,
+        [REASONCODE] VARCHAR(20) NULL,
+        [REASONDESCRIPTION] VARCHAR(255) NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -136,15 +136,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Organizations]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Organizations] (
-        [Id] NVARCHAR(100) NULL,
-        [NAME] NVARCHAR(255) NULL,
-        [ADDRESS] NVARCHAR(255) NULL,
-        [CITY] NVARCHAR(100) NULL,
-        [STATE] NVARCHAR(100) NULL,
-        [ZIP] NVARCHAR(100) NULL,
+        [Id] VARCHAR(100) NULL,
+        [NAME] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,10) NULL,
         [LON] DECIMAL(18,10) NULL,
-        [PHONE] NVARCHAR(100) NULL,
+        [PHONE] VARCHAR(100) NULL,
         [REVENUE] DECIMAL(18,2) NULL,
         [UTILIZATION] INT NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
@@ -160,15 +160,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Providers]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Providers] (
-        [Id] NVARCHAR(100) NULL,
-        [ORGANIZATION] NVARCHAR(100) NULL,
-        [NAME] NVARCHAR(255) NULL,
+        [Id] VARCHAR(100) NULL,
+        [ORGANIZATION] VARCHAR(100) NULL,
+        [NAME] VARCHAR(255) NULL,
         [GENDER] CHAR(1) NULL,
-        [SPECIALITY] NVARCHAR(100) NULL,
-        [ADDRESS] NVARCHAR(255) NULL,
-        [CITY] NVARCHAR(100) NULL,
-        [STATE] NVARCHAR(100) NULL,
-        [ZIP] NVARCHAR(100) NULL,
+        [SPECIALITY] VARCHAR(100) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,10) NULL,
         [LON] DECIMAL(18,10) NULL,
         [UTILIZATION] INT NULL,
@@ -185,13 +185,13 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payers]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Payers] (
-        [Id] NVARCHAR(100) NULL,
-        [NAME] NVARCHAR(255) NULL,
-        [ADDRESS] NVARCHAR(255) NULL,
-        [CITY] NVARCHAR(100) NULL,
-        [STATE_HEADQUARTERED] NVARCHAR(50) NULL,
-        [ZIP] NVARCHAR(100) NULL,
-        [PHONE] NVARCHAR(100) NULL,
+        [Id] VARCHAR(100) NULL,
+        [NAME] VARCHAR(255) NULL,
+        [ADDRESS] VARCHAR(255) NULL,
+        [CITY] VARCHAR(100) NULL,
+        [STATE_HEADQUARTERED] VARCHAR(50) NULL,
+        [ZIP] VARCHAR(100) NULL,
+        [PHONE] VARCHAR(100) NULL,
         [AMOUNT_COVERED] DECIMAL(18,2) NULL,
         [AMOUNT_UNCOVERED] DECIMAL(18,2) NULL,
         [REVENUE] DECIMAL(18,2) NULL,
@@ -219,11 +219,11 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payer_Transitions]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Payer_Transitions] (
-        [PATIENT] NVARCHAR(100) NULL,
+        [PATIENT] VARCHAR(100) NULL,
         [START_YEAR] INT NULL,
         [END_YEAR] INT NULL,
-        [PAYER] NVARCHAR(100) NULL,
-        [OWNERSHIP] NVARCHAR(50) NULL,
+        [PAYER] VARCHAR(100) NULL,
+        [OWNERSHIP] VARCHAR(50) NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
     );
@@ -235,33 +235,33 @@ PRINT 'Staging Database Schema Created Successfully!';
 
 IF OBJECT_ID(N'dbo.Staging_Patients', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Patients', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Patients ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Patients ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Encounters', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Encounters', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Encounters ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Encounters ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Conditions', N'U') IS NOT NULL   
    AND COL_LENGTH('dbo.Staging_Conditions', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Conditions ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Conditions ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Medications', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Medications', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Medications ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Medications ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Organizations', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Organizations', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Organizations ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Organizations ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Providers', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Providers', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Providers ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Providers ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Payers', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Payers', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Payers ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Payers ADD batch_id VARCHAR(36) NULL;
 
 IF OBJECT_ID(N'dbo.Staging_Payer_Transitions', N'U') IS NOT NULL
    AND COL_LENGTH('dbo.Staging_Payer_Transitions', 'batch_id') IS NULL
-    ALTER TABLE dbo.Staging_Payer_Transitions ADD batch_id NVARCHAR(36) NULL;
+    ALTER TABLE dbo.Staging_Payer_Transitions ADD batch_id VARCHAR(36) NULL;
 GO
