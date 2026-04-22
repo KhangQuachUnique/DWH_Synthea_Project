@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Staging_to_DWH"
   DTS:PackageType="5"
-  DTS:VersionBuild="77"
-  DTS:VersionGUID="{31A06AEA-67F2-4F99-A47B-5D976757757C}">
+  DTS:VersionBuild="79"
+  DTS:VersionGUID="{57970D04-7A58-486E-861E-17A9C6B9B723}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -8543,6 +8543,23 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           DTS:To="Package\Load Fact\Load Fact_Encounters" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Set ValidFrom"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1D6D586D-B23B-401A-910F-287348BA38C0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Set ValidFrom"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
+          SQLTask:SqlStatementSource="-- 1. Cập nhật Dim_Patient&#xA;UPDATE dbo.dim_patient &#xA;SET valid_from = '1900-01-01' &#xA;WHERE patient_key != -1 AND valid_from = CONVERT(DATE, GETDATE());&#xA;&#xA;-- 2. Cập nhật Dim_Provider&#xA;UPDATE dbo.dim_provider &#xA;SET valid_from = '1900-01-01' &#xA;WHERE provider_key != -1 AND valid_from = CONVERT(DATE, GETDATE());&#xA;&#xA;-- 3. Cập nhật Dim_Organization&#xA;UPDATE dbo.dim_organization &#xA;SET valid_from = '1900-01-01' &#xA;WHERE organization_key != -1 AND valid_from = CONVERT(DATE, GETDATE());&#xA;&#xA;-- 4. Cập nhật Dim_Payer&#xA;UPDATE dbo.dim_payer &#xA;SET valid_from = '1900-01-01' &#xA;WHERE payer_key != -1 AND valid_from = CONVERT(DATE, GETDATE());" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -8556,10 +8573,18 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{E7B06ECC-F52C-4189-98DA-E1C8F13A69BA}"
+      DTS:DTSID="{DF890E2E-60E2-47D6-B96D-9F33CBB7AF82}"
       DTS:From="Package\Load Dim"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Set ValidFrom" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8B1DDF6F-4CFF-42FA-AA75-CB879FB1ED0D}"
+      DTS:From="Package\Set ValidFrom"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
       DTS:To="Package\Load Fact" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
@@ -8667,33 +8692,47 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           PanelSize="193.6,204"
           Size="193.6,247.2"
           Id="Package\Load Fact"
-          TopLeft="248.412698941504,485.163398267546" />
+          TopLeft="262.698413257629,561.633986435811" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Set ValidFrom"
+          TopLeft="275.341270415691,476.862545787244" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="363.542857370936,440.976470500427">
+          TopLeft="360.042063893314,440.976470500427">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-18.330158429432,44.1869277671188"
+              EndConnector="0,35.8860752868171"
               Start="0,0"
-              End="-18.330158429432,36.6869277671188">
+              End="0,28.3860752868171">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,18.0934638835594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,18.0934638835594"
-                    Point2="0,22.0934638835594"
-                    Point3="-4,22.0934638835594" />
+                    End="0,28.3860752868171" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="358.01984183666,518.462545787244">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.1714406485665"
+              Start="0,0"
+              End="0,35.6714406485665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
                   <mssgle:LineSegment
-                    End="-14.330158429432,22.0934638835594" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-14.330158429432,22.0934638835594"
-                    Point2="-18.330158429432,22.0934638835594"
-                    Point3="-18.330158429432,26.0934638835594" />
-                  <mssgle:LineSegment
-                    End="-18.330158429432,36.6869277671188" />
+                    End="0,35.6714406485665" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
