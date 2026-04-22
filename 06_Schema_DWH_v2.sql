@@ -510,6 +510,43 @@ IF OBJECT_ID(N'dbo.fact_medication_daily', N'U') IS NOT NULL
     ALTER TABLE dbo.fact_medication_daily WITH CHECK ADD CONSTRAINT FK_med_daily_payer FOREIGN KEY (payer_key) REFERENCES dbo.dim_payer(payer_key);
 GO
 
+-- 1. Cho Dim_Provider
+SET IDENTITY_INSERT dbo.dim_provider ON;
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_provider WHERE provider_key = -1)
+    INSERT INTO dbo.dim_provider (provider_key, provider_id, [name], is_current, valid_from, valid_to, row_hash)
+    VALUES (-1, 'UNKNOWN', 'Unknown Provider', 1, '1900-01-01', '9999-12-31', 0x00);
+SET IDENTITY_INSERT dbo.dim_provider OFF;
+
+-- 2. Cho Dim_Patient
+SET IDENTITY_INSERT dbo.dim_patient ON;
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_patient WHERE patient_key = -1)
+    INSERT INTO dbo.dim_patient (patient_key, patient_id, first_name, last_name, is_current, valid_from, valid_to, row_hash)
+    VALUES (-1, 'UNKNOWN', 'Unknown', 'Patient', 1, '1900-01-01', '9999-12-31', 0x00);
+SET IDENTITY_INSERT dbo.dim_patient OFF;
+
+-- 3. Cho Dim_Organization
+SET IDENTITY_INSERT dbo.dim_organization ON;
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_organization WHERE organization_key = -1)
+    INSERT INTO dbo.dim_organization (organization_key, organization_id, [name], is_current, valid_from, valid_to, row_hash)
+    VALUES (-1, 'UNKNOWN', 'Unknown Organization', 1, '1900-01-01', '9999-12-31', 0x00);
+SET IDENTITY_INSERT dbo.dim_organization OFF;
+
+-- 4. Cho Dim_Payer
+SET IDENTITY_INSERT dbo.dim_payer ON;
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_payer WHERE payer_key = -1)
+    INSERT INTO dbo.dim_payer (payer_key, payer_id, [name], is_current, valid_from, valid_to, row_hash)
+    VALUES (-1, 'UNKNOWN', 'Unknown Payer', 1, '1900-01-01', '9999-12-31', 0x00);
+SET IDENTITY_INSERT dbo.dim_payer OFF;
+
+-- Chèn cho các bảng Dim SCD0 (Code)
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_condition_code WHERE code = 'UNKNOWN')
+    INSERT INTO dbo.dim_condition_code (code, description) VALUES ('UNKNOWN', 'Unknown Condition');
+
+IF NOT EXISTS (SELECT 1 FROM dbo.dim_medication WHERE medication_code = 'UNKNOWN')
+    INSERT INTO dbo.dim_medication (medication_code, medication_description) VALUES ('UNKNOWN', 'Unknown Medication');
+
+GO
+
 -- ============================================================================
 -- END OF SCHEMA v5.1
 -- ============================================================================
