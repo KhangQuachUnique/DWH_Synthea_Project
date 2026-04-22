@@ -5,21 +5,21 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="AKUMA"
   DTS:CreatorName="AKUMA\lenovo"
-  DTS:DTSID="{108EE018-1301-4CC9-A5EA-BCCAC4053931}"
+  DTS:DTSID="{2A381E93-E8E2-48F0-8F55-DEFB2A1AFD38}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="17.0.1016.0"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Package1"
+  DTS:ObjectName="CSV_to_Landing"
   DTS:PackageType="5"
-  DTS:VersionBuild="26"
-  DTS:VersionGUID="{15C95F2E-1A57-4963-B5A2-D8C53025BC8F}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{4B4D4082-2402-4DC4-B8EF-F1BD0079F5BA}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[conditions]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{41A3E7B2-F0AD-4434-BFB2-70D50BDD370D}"
+      DTS:DTSID="{649EF14F-A20D-489D-95A5-36C4EA3B4853}"
       DTS:ObjectName="conditions">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -39,7 +39,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="START"
-              DTS:DTSID="{BA1CED9E-759E-45ED-9CF2-046976AFC69A}"
+              DTS:DTSID="{BDDB3F2B-EED3-4A8F-BA2C-D56C7118979B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -48,7 +48,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STOP"
-              DTS:DTSID="{FE09BB60-F257-4391-B272-015F33270409}"
+              DTS:DTSID="{5BAAAC75-02FB-4695-B830-AC1CEE3173FD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -57,7 +57,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PATIENT"
-              DTS:DTSID="{A8C10281-30BF-4553-A88A-AE5AD1EF5B83}"
+              DTS:DTSID="{CB82E029-A1CD-4D7C-9969-638571291862}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -66,7 +66,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ENCOUNTER"
-              DTS:DTSID="{39DB85AA-7707-4614-80F8-2ECBCED08360}"
+              DTS:DTSID="{F1BC04DA-6D0F-4DFB-9AA0-5360B504D22E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -75,7 +75,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CODE"
-              DTS:DTSID="{02CA4BB4-FF82-48D4-A26A-EC67073E1A79}"
+              DTS:DTSID="{3B1F059E-A121-44F9-949E-67619BB91882}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -84,7 +84,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DESCRIPTION"
-              DTS:DTSID="{52CD1317-BF13-4BB7-95B4-D6E19E69A148}"
+              DTS:DTSID="{E7513765-14D2-4A17-A04B-6A1F57195A91}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -93,7 +93,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[encouter]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{216D8AC4-75E0-4D1A-A544-11B722B198CD}"
+      DTS:DTSID="{100C4FD1-21EF-42C5-847A-0F08CB9D458E}"
       DTS:ObjectName="encouter">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -113,7 +113,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{47D8623B-79FB-4CDC-A3D2-A0D825341032}"
+              DTS:DTSID="{868FF82D-2ED6-4ECA-A607-9ADBF3BB8101}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -122,7 +122,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="START"
-              DTS:DTSID="{4F710CDF-EF57-49F9-B4AF-ACEED3AF3823}"
+              DTS:DTSID="{40EFC2D4-DA3C-4E69-AA25-6B45C2F86C0E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -131,7 +131,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STOP"
-              DTS:DTSID="{14826043-F337-48D1-936F-6654FDA5F867}"
+              DTS:DTSID="{4A870802-8E7B-4AD3-B845-9D7A326E0EDC}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -140,7 +140,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PATIENT"
-              DTS:DTSID="{B6D7AA23-0DA5-4F8A-A386-9E1F89E0B64D}"
+              DTS:DTSID="{A15827FE-22C4-48BA-A4CB-4F447212323D}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -149,7 +149,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ORGANIZATION"
-              DTS:DTSID="{17CC81CD-9087-4FFE-89CA-850DA5577BD2}"
+              DTS:DTSID="{AF62710B-8A0C-4E28-A8F4-2D3FFBB5B354}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -158,7 +158,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PROVIDER"
-              DTS:DTSID="{B3DAB1CE-DB6B-4AE5-851E-94DCCA1AC448}"
+              DTS:DTSID="{8CA52787-62BD-415D-8BFC-1167564FD3A2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -167,7 +167,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PAYER"
-              DTS:DTSID="{28AA636B-D629-4CCE-9064-22E2426B586D}"
+              DTS:DTSID="{461D8554-ACC4-4D4E-907B-5A6918CC0C31}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -176,7 +176,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ENCOUNTERCLASS"
-              DTS:DTSID="{8AA0F405-0C80-4CD5-B781-09D0B0972749}"
+              DTS:DTSID="{0868E572-7AA7-4787-9842-F086B562080E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -185,7 +185,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CODE"
-              DTS:DTSID="{B26397A8-0708-4EBA-B642-DA07D594BD58}"
+              DTS:DTSID="{F659B72B-A05E-440E-9DE6-E8E0FD7F7171}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -194,7 +194,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DESCRIPTION"
-              DTS:DTSID="{2D2A1FCB-3EAD-4EAA-ADA3-B87E71F9EC04}"
+              DTS:DTSID="{AA5052EF-FCE8-4A58-9A8F-CEF357405D3F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -203,7 +203,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="BASE_ENCOUNTER_COST"
-              DTS:DTSID="{EE788762-09AD-4587-9763-B499B29082D3}"
+              DTS:DTSID="{8D507EC5-A86D-4D19-9081-4AB16338A28B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -212,7 +212,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="TOTAL_CLAIM_COST"
-              DTS:DTSID="{702D04C9-04E8-4DE9-8EE7-24354D5C6059}"
+              DTS:DTSID="{9A66F236-EFE8-4F69-8477-F4770E1A4C09}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -221,7 +221,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PAYER_COVERAGE"
-              DTS:DTSID="{7A28F67E-A9E6-439F-B9C1-62F37986C0D6}"
+              DTS:DTSID="{5CDFDC4F-79E4-473A-8F2F-A9F2D6BEAB3B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -230,7 +230,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REASONCODE"
-              DTS:DTSID="{39D5C8C2-9D61-46C9-908B-A11D9D27FCEA}"
+              DTS:DTSID="{0158DB5F-2D46-41B2-ACBD-EC323D07C30C}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -239,7 +239,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REASONDESCRIPTION"
-              DTS:DTSID="{1434CF58-8149-4DF9-8C5B-84BC4C60666E}"
+              DTS:DTSID="{7D0F8898-66E5-49FA-A5E9-F9A6BD2E2B4D}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -248,19 +248,19 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.DW_Synthea_Landing]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{E414FF09-54F2-4422-9871-A97E15B1B50E}"
+      DTS:DTSID="{C1081D03-E7DB-401E-955C-1D245E7C2768}"
       DTS:ObjectName="LocalHost.DW_Synthea_Landing">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=.;Initial Catalog=DW_Synthea_Landing;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{E414FF09-54F2-4422-9871-A97E15B1B50E}LocalHost.DW_Synthea_Landing;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DW_Synthea_Landing;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{C1081D03-E7DB-401E-955C-1D245E7C2768}LocalHost.DW_Synthea_Landing;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[medications]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{3DD8129B-B2C9-4C07-9795-DA2D2C105E1E}"
+      DTS:DTSID="{AF07BE03-AF25-4830-B136-04ED84BE62C7}"
       DTS:ObjectName="medications">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -280,7 +280,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="START"
-              DTS:DTSID="{C00B68A8-20CF-4402-BA25-DC367B80380E}"
+              DTS:DTSID="{C5774E5D-2B87-44CF-B7FA-328466A62ED6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -289,7 +289,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STOP"
-              DTS:DTSID="{DD3741F9-ED4A-4474-821D-404560BF4EAB}"
+              DTS:DTSID="{9D70753E-5378-40F4-86F2-571B71D072C7}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -298,7 +298,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PATIENT"
-              DTS:DTSID="{5F2C3761-74CA-4CE1-864C-22A5E65C6AEC}"
+              DTS:DTSID="{D5CEDC0C-81F4-4902-A801-4743D5381E6B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -307,7 +307,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PAYER"
-              DTS:DTSID="{0E747643-187C-47F6-A508-0367CCF3AA3C}"
+              DTS:DTSID="{A9E7CA22-BFFD-4DBB-9C36-A78CCBEFAE59}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -316,7 +316,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ENCOUNTER"
-              DTS:DTSID="{8328E50B-2912-479E-97F4-EFBE2CDED972}"
+              DTS:DTSID="{B3A71472-6ADA-4C06-A8E8-0024490B5689}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -325,7 +325,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CODE"
-              DTS:DTSID="{A0785EE4-1AC3-4683-8E8C-019245EE27B3}"
+              DTS:DTSID="{A86D4682-BF5D-4133-A951-08C4357F0ECC}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -334,7 +334,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DESCRIPTION"
-              DTS:DTSID="{FE9B9AD3-9678-4127-98D8-8D46A1B1C6BC}"
+              DTS:DTSID="{2B8BB23E-9A56-4777-94AD-C2F374688141}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -343,7 +343,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="BASE_COST"
-              DTS:DTSID="{9C212482-F6AA-4655-A3CD-C20EA745AE64}"
+              DTS:DTSID="{0BE7102C-334E-4D0B-8A09-F86C65EDA4D5}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -352,7 +352,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PAYER_COVERAGE"
-              DTS:DTSID="{481C6FE5-ABAA-4031-A599-E35B6D8F4B87}"
+              DTS:DTSID="{D0A4DAAC-4B20-4462-9A2D-A8F8DD2C97BB}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -361,7 +361,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DISPENSES"
-              DTS:DTSID="{7A15B854-D0F8-4355-A8D5-54D1C01E9A13}"
+              DTS:DTSID="{F59890F0-580A-4BAC-89DE-776E96C2CDBE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -370,7 +370,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="TOTALCOST"
-              DTS:DTSID="{D0F6756D-8B40-400C-AC48-A5A880F7FBD7}"
+              DTS:DTSID="{ABA6B6F6-3FB9-40E2-AD6C-8925434DC0C9}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -379,7 +379,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REASONCODE"
-              DTS:DTSID="{B386675E-E69C-4E14-874D-04AF8AE347BE}"
+              DTS:DTSID="{8AD81A66-75E1-4E5C-9597-B0589F1ED367}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -388,7 +388,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REASONDESCRIPTION"
-              DTS:DTSID="{48295147-46E1-4666-8214-5B6EFA1AFAB0}"
+              DTS:DTSID="{83E518C3-05D0-4E22-9180-E4D59790BBF9}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -397,7 +397,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[organizations]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{E5734C31-3D67-4053-BE62-DFE2C322F28E}"
+      DTS:DTSID="{0EC82BED-BA5C-4C4B-841D-567C0C072A0E}"
       DTS:ObjectName="organizations">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -417,7 +417,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{3348E989-709E-458E-88D3-B4602C5AC6BB}"
+              DTS:DTSID="{0C183DF4-F299-40DA-ACFE-47DA81DA8C5A}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -426,7 +426,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="NAME"
-              DTS:DTSID="{2E65313A-78BE-42AD-B694-46FB48E9C761}"
+              DTS:DTSID="{D386790D-FECB-4B45-BB82-25E9DC0F00E8}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -435,7 +435,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ADDRESS"
-              DTS:DTSID="{8DA12F7B-5476-49EF-8679-A7AE94BAAD55}"
+              DTS:DTSID="{0EDE675D-F84A-402B-A3D0-91F5D501F731}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -444,7 +444,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CITY"
-              DTS:DTSID="{03314177-FA08-42B4-AA34-453129E333BA}"
+              DTS:DTSID="{36333A91-E6E4-4E45-B5C8-FAF935F8A219}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -453,7 +453,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STATE"
-              DTS:DTSID="{6AFFD773-35EB-4519-9ECB-7070D9FD79D0}"
+              DTS:DTSID="{354F9547-FD46-4268-A377-230957B802D7}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -462,7 +462,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ZIP"
-              DTS:DTSID="{E50CF873-79B0-49F3-A020-B88039E843A7}"
+              DTS:DTSID="{5716B248-B0C5-494D-9831-6887FEB4B5F0}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -471,7 +471,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LAT"
-              DTS:DTSID="{0758698C-BFF1-4DAF-BF98-198B87EBC308}"
+              DTS:DTSID="{A68FA335-B1FA-4D41-BD8E-C8243A4E5E52}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -480,7 +480,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LON"
-              DTS:DTSID="{1FB90150-CE4A-468E-BFD9-BBEF1F0746D8}"
+              DTS:DTSID="{F115D32B-4F0E-4347-A972-895BC64E0D11}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -489,7 +489,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PHONE"
-              DTS:DTSID="{66B01B76-7B25-48EA-AC9B-178D5938FE46}"
+              DTS:DTSID="{8EF4269B-FFE7-4E43-B1A5-8349CA283801}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -498,7 +498,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REVENUE"
-              DTS:DTSID="{DB6D7E55-7B12-4389-AD7B-342C8B417176}"
+              DTS:DTSID="{4636B53B-406C-4848-B4BF-1CA49497647F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -507,7 +507,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UTILIZATION"
-              DTS:DTSID="{2068E515-EBEB-441F-9B61-08D1A21B0F91}"
+              DTS:DTSID="{67E7EBEC-3686-4DCE-93FE-E19DCB1761D4}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -516,7 +516,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[patient]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{7C3CC95E-7515-4953-B30D-8AD4A62B6253}"
+      DTS:DTSID="{40B3068F-CC0F-4747-86C3-FD397D9AE014}"
       DTS:ObjectName="patient">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -536,7 +536,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{437C9E76-09BC-4129-BEF8-5A57CA52C209}"
+              DTS:DTSID="{37FEA34D-63F5-467B-B944-25D4D164EED3}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -545,7 +545,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="BIRTHDATE"
-              DTS:DTSID="{B7FE1A03-15BB-41B5-8763-6967211DE8C7}"
+              DTS:DTSID="{7810ED6F-2392-44BF-BA17-C207972E8C3F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -554,7 +554,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DEATHDATE"
-              DTS:DTSID="{C923B53F-2F34-4EA0-9BD7-685CC555C018}"
+              DTS:DTSID="{88EDA1CF-2D12-4153-A19E-DC21B3033A86}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -563,7 +563,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="SSN"
-              DTS:DTSID="{3D4CC6B4-F412-4328-88DD-7B6DDFA499F8}"
+              DTS:DTSID="{FB3B7655-C8B3-4BD1-AB5F-F4DC43F1BBF0}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -572,7 +572,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="DRIVERS"
-              DTS:DTSID="{A024B1FD-6C2F-4A32-ADAB-92122ED8C89C}"
+              DTS:DTSID="{069F230B-197A-4CFD-AE68-A197A2E5C573}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -581,7 +581,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PASSPORT"
-              DTS:DTSID="{8E04A29C-27D7-4CB0-96BE-47D664A54F4F}"
+              DTS:DTSID="{E7F1BD45-1BEE-4F84-ABCF-FB5A132430FD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -590,7 +590,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PREFIX"
-              DTS:DTSID="{8CD04713-9822-429A-BA0F-FEABEABCCF0B}"
+              DTS:DTSID="{9D580E59-9336-4F92-8E16-E4A09D245506}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -599,7 +599,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="FIRST"
-              DTS:DTSID="{3413F3A8-384B-48B0-87C5-CA0EA6E7ACC4}"
+              DTS:DTSID="{61F7874E-3662-4C6B-8AE4-F2E39D277707}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -608,7 +608,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LAST"
-              DTS:DTSID="{95AFB274-9282-47AD-93BE-B7BA3964CD22}"
+              DTS:DTSID="{0429F8C5-9B95-4E19-BEEB-AE05DB1FA2BD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -617,7 +617,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="SUFFIX"
-              DTS:DTSID="{4E7C381E-5C07-466C-89BB-AAA8CB91CC7D}"
+              DTS:DTSID="{B25FBE61-2B19-45E2-9A7E-97941C691699}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -626,7 +626,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="MAIDEN"
-              DTS:DTSID="{15E67CCC-5A22-4F62-9929-A9B80B83EB1F}"
+              DTS:DTSID="{345AA896-E9BC-4EF9-99A7-6B8BD067CFF1}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -635,7 +635,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="MARITAL"
-              DTS:DTSID="{D32DF8F3-5394-4425-A6B6-EFA425F3C90A}"
+              DTS:DTSID="{AA3C62AF-5F05-4587-9567-524E4813EE81}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -644,7 +644,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="RACE"
-              DTS:DTSID="{ABA49736-27A3-4AFF-A891-31A947653D84}"
+              DTS:DTSID="{9B1C9F65-0FAB-43F4-BCC9-4881DD4C7FBD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -653,7 +653,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ETHNICITY"
-              DTS:DTSID="{31591CC3-94DA-40F5-85BF-5DE72FD3B0FF}"
+              DTS:DTSID="{DC3A7DBD-ACC2-49A5-B9E3-13C541013983}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -662,7 +662,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="GENDER"
-              DTS:DTSID="{382DC58F-89B8-49F3-9426-FC4912CDFEA5}"
+              DTS:DTSID="{2BDE9D62-15C7-49B4-87C3-FBEC479F3957}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -671,7 +671,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="BIRTHPLACE"
-              DTS:DTSID="{FB289E30-9DD7-4917-84D1-BDE6FC69E863}"
+              DTS:DTSID="{5CBEE7D3-6840-4F40-AC40-074661E04001}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -680,7 +680,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ADDRESS"
-              DTS:DTSID="{83087423-14F9-4E13-A18E-3BD1F30E9AB5}"
+              DTS:DTSID="{E6BDC684-3B61-4D1D-AE9F-A90E4D7B963D}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -689,7 +689,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CITY"
-              DTS:DTSID="{03F7B19E-610E-4810-A6C6-F99FFA2E93DF}"
+              DTS:DTSID="{7E5D2505-15AD-4D3D-BDDF-B12F8E1ADE67}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -698,7 +698,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STATE"
-              DTS:DTSID="{C4A23E88-E60D-47FE-A6CE-140D40DA81AB}"
+              DTS:DTSID="{DBD488DA-1548-4878-AA59-AC531A59DA12}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -707,7 +707,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="COUNTY"
-              DTS:DTSID="{9861F60D-7CAB-427C-BA6F-59F15E016129}"
+              DTS:DTSID="{A1FA4B5F-6809-49B9-9BCD-B79B3A7D485C}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -716,7 +716,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ZIP"
-              DTS:DTSID="{9E47FFC9-8896-4935-80AA-790EDA3A55C9}"
+              DTS:DTSID="{05358ED8-ACD1-4872-BD8B-34447AE49E6E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -725,7 +725,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LAT"
-              DTS:DTSID="{F47508F6-1F87-4FD1-96B8-03E32F76A70B}"
+              DTS:DTSID="{92AEC322-CD43-457A-B2EA-F226863C5AFA}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -734,7 +734,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LON"
-              DTS:DTSID="{9B4DCF46-5920-4216-A583-7F28419310BE}"
+              DTS:DTSID="{82B13443-B475-40F0-B22C-B9B6FD343B20}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -743,7 +743,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="HEALTHCARE_EXPENSES"
-              DTS:DTSID="{17D278F3-A311-4E8A-BF4D-5B9A0A370670}"
+              DTS:DTSID="{F79D4AF3-6B5A-4E00-B5CA-B3EC96A28888}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -752,7 +752,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="HEALTHCARE_COVERAGE"
-              DTS:DTSID="{7610FE41-53BF-42D9-8A0C-01BCF74E472D}"
+              DTS:DTSID="{637AE4DE-0C64-4342-90C7-75DE2B52AA55}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -761,7 +761,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[payer]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{F399A398-362D-486A-9E7B-5CEF458A4266}"
+      DTS:DTSID="{83D96CE9-CE86-4DDF-A9A6-F0483BEA8AAB}"
       DTS:ObjectName="payer">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -781,7 +781,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{C1155233-9A34-46F7-A599-DF3CD7B164C1}"
+              DTS:DTSID="{02A13955-8893-41CE-80A3-6F5E000A4098}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -790,7 +790,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="NAME"
-              DTS:DTSID="{19A514FF-E396-4903-ABCD-3120ECB1093D}"
+              DTS:DTSID="{0D39DAD0-7156-4E13-91D8-8B0A12B7E4BE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -799,7 +799,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ADDRESS"
-              DTS:DTSID="{9E153F36-E7C1-4D81-AE68-0F3329C88437}"
+              DTS:DTSID="{E9354F42-DDEA-42A2-BC60-2FADE7E74A33}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -808,7 +808,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CITY"
-              DTS:DTSID="{E62CE1AE-D002-4F1C-A8E9-6CF574FD8389}"
+              DTS:DTSID="{5804C3DC-840E-450E-8C5D-C0D57F647441}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -817,7 +817,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STATE_HEADQUARTERED"
-              DTS:DTSID="{BCBE14A2-4496-4C59-B596-46C1131AA991}"
+              DTS:DTSID="{E33CC15B-7465-4C81-AA86-FC25ED344439}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -826,7 +826,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ZIP"
-              DTS:DTSID="{B585D581-0729-4A3E-B92D-ACC0434B328A}"
+              DTS:DTSID="{F49E38CE-E9B0-4753-993E-C2621E68BE15}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -835,7 +835,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PHONE"
-              DTS:DTSID="{16D2551F-8B96-4CD4-9843-518A69782799}"
+              DTS:DTSID="{005212DF-B822-446B-B7AB-AEDE1F4EC176}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -844,7 +844,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="AMOUNT_COVERED"
-              DTS:DTSID="{E1A02E48-88FF-426F-A3BD-AEB82F7165A6}"
+              DTS:DTSID="{7BFC8579-ACAA-46D8-B80B-C3A5292700A3}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -853,7 +853,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="AMOUNT_UNCOVERED"
-              DTS:DTSID="{C99F69B2-FAF8-4E75-BD1A-F0399932D56E}"
+              DTS:DTSID="{D1136A1B-799B-4FF1-AFE4-01A7145968A4}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -862,7 +862,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="REVENUE"
-              DTS:DTSID="{DD431680-0E7A-4F0E-93FF-ECA705F523A3}"
+              DTS:DTSID="{F289B3D8-D99A-488F-8936-73B0A29194F5}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -871,7 +871,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="COVERED_ENCOUNTERS"
-              DTS:DTSID="{D212D0A4-5ACC-4339-8E56-4844F908A9B7}"
+              DTS:DTSID="{CE2786A1-4B73-46B2-BBEA-2B064E3659AE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -880,7 +880,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UNCOVERED_ENCOUNTERS"
-              DTS:DTSID="{38B6FC00-4144-4F60-A703-D35D45C8C921}"
+              DTS:DTSID="{71253CB5-B8CB-4CF6-8F1D-339B1088A5C4}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -889,7 +889,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="COVERED_MEDICATIONS"
-              DTS:DTSID="{70FDCB6E-04C3-40E2-B534-59B25BE697DB}"
+              DTS:DTSID="{6EE843FF-FB7D-407D-BAF7-D74F1E140FDE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -898,7 +898,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UNCOVERED_MEDICATIONS"
-              DTS:DTSID="{7DE0622E-98D8-4EE6-B7DD-353D9278B88A}"
+              DTS:DTSID="{CF9AC40C-3B42-408C-BF86-04BDF698EA61}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -907,7 +907,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="COVERED_PROCEDURES"
-              DTS:DTSID="{81793DA4-CF87-478E-AC4D-DC1ADE7B5936}"
+              DTS:DTSID="{C8771EC1-26C0-4DFD-81C5-31F27831B174}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -916,7 +916,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UNCOVERED_PROCEDURES"
-              DTS:DTSID="{3C497864-370D-4F97-A541-D1AAFF965E42}"
+              DTS:DTSID="{29D4494B-1589-44BD-BB73-A2FDAFF7380E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -925,7 +925,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="COVERED_IMMUNIZATIONS"
-              DTS:DTSID="{60C6BA8A-9DF9-4831-96B2-6F941B3CA20C}"
+              DTS:DTSID="{1CE4B934-02EF-4855-BE8C-88007B0F9C94}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -934,7 +934,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UNCOVERED_IMMUNIZATIONS"
-              DTS:DTSID="{9C046371-1C13-4EAE-BC6E-0416A71C7441}"
+              DTS:DTSID="{71D97506-33B9-403A-A991-7E2B53A8ED5B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -943,7 +943,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UNIQUE_CUSTOMERS"
-              DTS:DTSID="{99D9DDE0-0C9C-49F5-AF97-06DBF03B90E0}"
+              DTS:DTSID="{B91D4A39-B6B5-4746-A30D-EA3078AEFCBD}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -952,7 +952,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="QOLS_AVG"
-              DTS:DTSID="{8829D61F-18B3-498F-BB66-DF2100C95E13}"
+              DTS:DTSID="{68486772-77E6-485E-A4A6-EB4EE49D82CE}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -961,7 +961,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="MEMBER_MONTHS"
-              DTS:DTSID="{102CE21C-9173-4BE4-84B6-EB9DBF647504}"
+              DTS:DTSID="{85108D57-7A89-42D9-845F-95817751B53E}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -970,7 +970,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[payer_transitions]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{A451E212-89B0-4E62-9AA8-24F94CAF0327}"
+      DTS:DTSID="{2D48648D-F74A-4DDA-B7CA-DB3205A09618}"
       DTS:ObjectName="payer_transitions">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -990,7 +990,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PATIENT"
-              DTS:DTSID="{29504D85-DB6D-4FE5-A18D-E91F5A31F58A}"
+              DTS:DTSID="{FB3F4EB4-B9E7-490B-894C-F7C71A1599BA}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -999,7 +999,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="START_YEAR"
-              DTS:DTSID="{90FC5327-2B7D-4D29-916E-4F42A6219156}"
+              DTS:DTSID="{6A47FB4C-5DC3-4A5D-8AC5-483EB60FDBB6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1008,7 +1008,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="END_YEAR"
-              DTS:DTSID="{546944C3-97DE-4398-A721-8E6D5240E36F}"
+              DTS:DTSID="{62C0A96F-58FE-4175-9B18-0FBF5A5820C9}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1017,7 +1017,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="PAYER"
-              DTS:DTSID="{132136B9-C88E-4174-9DF3-9F520E4CC9BE}"
+              DTS:DTSID="{1E0CB46C-3AF6-40C5-B46F-192C567F15F6}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1026,7 +1026,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="OWNERSHIP"
-              DTS:DTSID="{903F61B9-DCC0-4E3A-8F57-71DDAECAE892}"
+              DTS:DTSID="{17F0E181-E595-4D7D-90B0-07BADCC5DFE8}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -1035,7 +1035,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[providers]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{3D71F424-6FE2-4B98-8557-9619CCEF4D78}"
+      DTS:DTSID="{36E68B6D-FEC3-47B9-BCF4-52DA33A54A49}"
       DTS:ObjectName="providers">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -1055,7 +1055,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{FE58ACCA-DBCC-4236-97AE-8BFA87FADE18}"
+              DTS:DTSID="{995CBCD0-F0EA-4000-BCBE-914842F5AC83}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1064,7 +1064,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ORGANIZATION"
-              DTS:DTSID="{A48AB268-21B1-45DF-B9F5-D302DF50F526}"
+              DTS:DTSID="{814A4D3B-1586-4A36-9903-E82578A33762}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1073,7 +1073,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="NAME"
-              DTS:DTSID="{CBBD146A-FD5B-4235-B312-607056446D68}"
+              DTS:DTSID="{4ED5A35D-D57D-4367-B794-62DAE8570E95}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1082,7 +1082,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="GENDER"
-              DTS:DTSID="{F0C9E518-ACFD-40C8-9034-7FAD76A81018}"
+              DTS:DTSID="{1837EC53-84F4-4C53-A4EB-3CDAFAB8829E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1091,7 +1091,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="SPECIALITY"
-              DTS:DTSID="{EBA2AFBA-4A75-49C7-A33B-FDC7F932717D}"
+              DTS:DTSID="{D3411903-5F7E-4651-954B-DE501DBAECB2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1100,7 +1100,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ADDRESS"
-              DTS:DTSID="{0A706918-0D21-42F7-9DDD-D60D88BAE6B0}"
+              DTS:DTSID="{B67B6195-23BD-4448-B278-041EE8B5D554}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1109,7 +1109,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CITY"
-              DTS:DTSID="{863A5C79-BEDA-4508-9F20-0C7F02F402E8}"
+              DTS:DTSID="{0404C173-827C-41C3-9478-0592E2F08984}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1118,7 +1118,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STATE"
-              DTS:DTSID="{02261988-6069-4A65-A23E-F5637A5BC354}"
+              DTS:DTSID="{E086B975-F246-42BB-B6A1-4EC3F2863E14}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1127,7 +1127,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ZIP"
-              DTS:DTSID="{33727BF0-2711-4D72-AC62-43C14DCD0329}"
+              DTS:DTSID="{18CA48C0-9B27-4F0D-A0AD-E223930F7AF3}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1136,7 +1136,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LAT"
-              DTS:DTSID="{4F89BEEB-15D4-41BF-9AA3-121AC40CDF3E}"
+              DTS:DTSID="{43EB555C-207E-4DE1-B794-C3023E0ADF6F}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1145,7 +1145,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LON"
-              DTS:DTSID="{3C684E40-2FFF-4ED5-A024-A4C54244EECE}"
+              DTS:DTSID="{ACC2102F-2CC0-46E6-B0DA-FAD77968710E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1154,7 +1154,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UTILIZATION"
-              DTS:DTSID="{927072AD-9D8A-4CD1-9344-EF7EED11B859}"
+              DTS:DTSID="{FC5EFE64-7462-41E3-9B66-3435BE4F2A09}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -1167,7 +1167,7 @@
       DTS:refId="Package\conditions data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{A050F958-B62B-4784-A104-BAA68FE36745}"
+      DTS:DTSID="{0D81B497-D30E-44E8-806A-944D71859C61}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="conditions data flow"
@@ -1626,7 +1626,7 @@
       DTS:refId="Package\encouter data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{2704ecde-e8c7-4b79-be6a-8eb63b587f85}"
+      DTS:DTSID="{A30FC459-5DA5-4241-B90E-4E61104F3F50}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="encouter data flow"
@@ -2463,7 +2463,7 @@
       DTS:refId="Package\medications data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{6C98589F-4DBF-4943-A214-B0B4C5289912}"
+      DTS:DTSID="{C77AB540-662B-48CC-A1E5-A51D40634452}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="medications data flow"
@@ -3216,7 +3216,7 @@
       DTS:refId="Package\organizations data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{3132E2A9-AC50-467D-A1DB-4B48A02DB388}"
+      DTS:DTSID="{109907F1-FC0E-4731-AC8C-31FCC780F182}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="organizations data flow"
@@ -3885,7 +3885,7 @@
       DTS:refId="Package\patient data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{04B1F254-572E-4370-ACF8-CC95272DE01A}"
+      DTS:DTSID="{0B417D9F-B879-4DE0-97A1-B9C1FD859F62}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="patient data flow"
@@ -5142,7 +5142,7 @@
       DTS:refId="Package\payers data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{0C93266A-AF7E-4275-B863-A165BBB46A42}"
+      DTS:DTSID="{724B30AB-5F76-4B54-A22E-839680D921C5}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="payers data flow"
@@ -6231,7 +6231,7 @@
       DTS:refId="Package\payer_transitions data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{FB704AAA-FC7B-4AEF-93BF-DCF1556B089B}"
+      DTS:DTSID="{4421E6D4-B906-4649-86BA-76062AA08606}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="payer_transitions data flow"
@@ -6648,7 +6648,7 @@
       DTS:refId="Package\providers data flow"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{04C24161-8C45-40BA-9D89-6C32AD51D58E}"
+      DTS:DTSID="{3F08495A-43F6-4F0C-A758-0D981B31479E}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="providers data flow"
@@ -7369,17 +7369,13 @@
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="157.6,41.6"
-          Id="Package\patient data flow"
-          TopLeft="199.285714709941,23.705882332162" />
+          Size="172.8,41.6"
+          Id="Package\conditions data flow"
+          TopLeft="199.285714709941,162.882352798404" />
         <NodeLayout
           Size="166.4,41.6"
           Id="Package\encouter data flow"
           TopLeft="199.285714709941,91.6588235381255" />
-        <NodeLayout
-          Size="172.8,41.6"
-          Id="Package\conditions data flow"
-          TopLeft="199.285714709941,162.882352798404" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\medications data flow"
@@ -7389,122 +7385,24 @@
           Id="Package\organizations data flow"
           TopLeft="491.428572474694,24.4705882138447" />
         <NodeLayout
-          Size="168.8,41.6"
-          Id="Package\providers data flow"
-          TopLeft="492.1428581905,90.2352940385523" />
+          Size="157.6,41.6"
+          Id="Package\patient data flow"
+          TopLeft="199.285714709941,23.705882332162" />
+        <NodeLayout
+          Size="206.4,41.6"
+          Id="Package\payer_transitions data flow"
+          TopLeft="492.1428581905,227.882352741429" />
         <NodeLayout
           Size="156,41.6"
           Id="Package\payers data flow"
           TopLeft="490.000001043082,162.882352798404" />
         <NodeLayout
-          Size="206.4,41.6"
-          Id="Package\payer_transitions data flow"
-          TopLeft="492.1428581905,227.882352741429" />
+          Size="168.8,41.6"
+          Id="Package\providers data flow"
+          TopLeft="492.1428581905,90.2352940385523" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
-  <TaskHost
-    design-time-name="Package\patient data flow">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\patient data flow\csv patient"
-          TopLeft="249.285714816378,61.9411764162944" />
-        <NodeLayout
-          Size="151.2,41.6"
-          Id="Package\patient data flow\landing_patient"
-          TopLeft="520.71428682275,66.5294117063903" />
-        <EdgeLayout
-          Id="Package\patient data flow.Paths[Flat File Source Output]"
-          TopLeft="378.885714816378,85.0352940613423">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="141.828572006372,0"
-              Start="0,0"
-              End="134.328572006372,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="134.328572006372,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <TaskHost
-    design-time-name="Package\encouter data flow">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="162.4,58.4"
-          Id="Package\encouter data flow\csv encouter"
-          TopLeft="159.952382814215,88.2745093572305" />
-        <NodeLayout
-          Size="160,41.6"
-          Id="Package\encouter data flow\landing_encouter"
-          TopLeft="465.999993056059,96.7999985496204" />
-        <EdgeLayout
-          Id="Package\encouter data flow.Paths[Flat File Source Output]"
-          TopLeft="322.352382814215,117.537253953425">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="143.647610241844,0"
-              Start="0,0"
-              End="136.147610241844,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="136.147610241844,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\patient data flow\landing_patient">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\encouter data flow\landing_encouter">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\conditions data flow">
     <LayoutInfo>
@@ -7557,6 +7455,57 @@
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
+    design-time-name="Package\encouter data flow">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="162.4,58.4"
+          Id="Package\encouter data flow\csv encouter"
+          TopLeft="159.952382814215,88.2745093572305" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\encouter data flow\landing_encouter"
+          TopLeft="465.999993056059,96.7999985496204" />
+        <EdgeLayout
+          Id="Package\encouter data flow.Paths[Flat File Source Output]"
+          TopLeft="322.352382814215,117.537253953425">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="143.647610241844,0"
+              Start="0,0"
+              End="136.147610241844,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="136.147610241844,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\encouter data flow\landing_encouter">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
     design-time-name="Package\medications data flow">
     <LayoutInfo>
       <GraphLayout
@@ -7594,6 +7543,19 @@
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\medications data flow\landing_medications">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\organizations data flow">
     <LayoutInfo>
@@ -7632,33 +7594,46 @@
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\organizations data flow\landing_organizations">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\providers data flow">
+    design-time-name="Package\patient data flow">
     <LayoutInfo>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="140,41.6"
-          Id="Package\providers data flow\csv providers"
-          TopLeft="364.999994561076,170.999997451901" />
+          Size="129.6,41.6"
+          Id="Package\patient data flow\csv patient"
+          TopLeft="249.285714816378,61.9411764162944" />
         <NodeLayout
-          Size="161.6,41.6"
-          Id="Package\providers data flow\landing_providers"
-          TopLeft="701.999989539385,170.999997451901" />
+          Size="151.2,41.6"
+          Id="Package\patient data flow\landing_patient"
+          TopLeft="520.71428682275,66.5294117063903" />
         <EdgeLayout
-          Id="Package\providers data flow.Paths[Flat File Source Output]"
-          TopLeft="504.999994561076,191.799997451901">
+          Id="Package\patient data flow.Paths[Flat File Source Output]"
+          TopLeft="378.885714816378,85.0352940613423">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="196.999994978308,0"
+              EndConnector="141.828572006372,0"
               Start="0,0"
-              End="189.499994978308,0">
+              End="134.328572006372,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="189.499994978308,0" />
+                    End="134.328572006372,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -7670,44 +7645,19 @@
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <TaskHost
-    design-time-name="Package\payers data flow">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
-        <NodeLayout
-          Size="128,41.6"
-          Id="Package\payers data flow\csv payers"
-          TopLeft="386.999994233251,134.999997988343" />
-        <NodeLayout
-          Size="149.6,41.6"
-          Id="Package\payers data flow\landing_payers"
-          TopLeft="709.999989420176,139.999997913837" />
-        <EdgeLayout
-          Id="Package\payers data flow.Paths[Flat File Source Output]"
-          TopLeft="514.999994233251,158.29999795109">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="194.999995186925,0"
-              Start="0,0"
-              End="187.499995186925,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="187.499995186925,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\patient data flow\landing_patient">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <TaskHost
     design-time-name="Package\payer_transitions data flow">
     <LayoutInfo>
@@ -7747,7 +7697,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\medications data flow\landing_medications">
+    design-time-name="Package\payer_transitions data flow\landing_payer_transitions">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -7759,32 +7709,44 @@
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\organizations data flow\landing_organizations">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\providers data flow\landing_providers">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\payers data flow">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="128,41.6"
+          Id="Package\payers data flow\csv payers"
+          TopLeft="386.999994233251,134.999997988343" />
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\payers data flow\landing_payers"
+          TopLeft="709.999989420176,139.999997913837" />
+        <EdgeLayout
+          Id="Package\payers data flow.Paths[Flat File Source Output]"
+          TopLeft="514.999994233251,158.29999795109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="194.999995186925,0"
+              Start="0,0"
+              End="187.499995186925,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="187.499995186925,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\payers data flow\landing_payers">
     <Properties>
@@ -7798,8 +7760,46 @@
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\providers data flow">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\providers data flow\csv providers"
+          TopLeft="364.999994561076,170.999997451901" />
+        <NodeLayout
+          Size="161.6,41.6"
+          Id="Package\providers data flow\landing_providers"
+          TopLeft="701.999989539385,170.999997451901" />
+        <EdgeLayout
+          Id="Package\providers data flow.Paths[Flat File Source Output]"
+          TopLeft="504.999994561076,191.799997451901">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="196.999994978308,0"
+              Start="0,0"
+              End="189.499994978308,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="189.499994978308,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\payer_transitions data flow\landing_payer_transitions">
+    design-time-name="Package\providers data flow\landing_providers">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
