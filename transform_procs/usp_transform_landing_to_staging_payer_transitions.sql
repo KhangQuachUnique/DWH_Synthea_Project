@@ -30,10 +30,11 @@ BEGIN
             UPDATE SET
                 END_YEAR = s.END_YEAR,
                 OWNERSHIP = s.OWNERSHIP,
-                update_at = s.update_at
+                update_at = s.update_at,
+                batch_id = s.batch_id
         WHEN NOT MATCHED BY TARGET THEN
-            INSERT (PATIENT,START_YEAR,END_YEAR,PAYER,OWNERSHIP,create_at,update_at)
-            VALUES (s.PATIENT,s.START_YEAR,s.END_YEAR,s.PAYER,s.OWNERSHIP,SYSUTCDATETIME(),s.update_at);
+            INSERT (PATIENT,START_YEAR,END_YEAR,PAYER,OWNERSHIP,create_at,update_at,batch_id)
+            VALUES (s.PATIENT,s.START_YEAR,s.END_YEAR,s.PAYER,s.OWNERSHIP,SYSUTCDATETIME(),s.update_at,s.batch_id);
 
         DROP TABLE IF EXISTS #src;
         COMMIT;

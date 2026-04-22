@@ -32,10 +32,11 @@ BEGIN
                 STOP = s.STOP,
                 ENCOUNTER = s.ENCOUNTER,
                 DESCRIPTION = s.DESCRIPTION,
-                update_at = s.update_at
+                update_at = s.update_at,
+                batch_id = s.batch_id
         WHEN NOT MATCHED BY TARGET THEN
-            INSERT (START,STOP,PATIENT,ENCOUNTER,CODE,DESCRIPTION,create_at,update_at)
-            VALUES (s.START,s.STOP,s.PATIENT,s.ENCOUNTER,s.CODE,s.DESCRIPTION,SYSUTCDATETIME(),s.update_at);
+            INSERT (START,STOP,PATIENT,ENCOUNTER,CODE,DESCRIPTION,create_at,update_at,batch_id)
+            VALUES (s.START,s.STOP,s.PATIENT,s.ENCOUNTER,s.CODE,s.DESCRIPTION,SYSUTCDATETIME(),s.update_at,s.batch_id);
 
         DROP TABLE IF EXISTS #src;
         COMMIT;

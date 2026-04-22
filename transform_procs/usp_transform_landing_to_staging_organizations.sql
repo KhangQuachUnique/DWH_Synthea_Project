@@ -44,10 +44,11 @@ BEGIN
                 PHONE = s.PHONE,
                 REVENUE = s.REVENUE,
                 UTILIZATION = s.UTILIZATION,
-                update_at = s.update_at
+                update_at = s.update_at,
+                batch_id = s.batch_id
         WHEN NOT MATCHED BY TARGET THEN
-            INSERT (Id,NAME,ADDRESS,CITY,STATE,ZIP,LAT,LON,PHONE,REVENUE,UTILIZATION,create_at,update_at)
-            VALUES (s.Id,s.NAME,s.ADDRESS,s.CITY,s.STATE,s.ZIP,s.LAT,s.LON,s.PHONE,s.REVENUE,s.UTILIZATION,SYSUTCDATETIME(),s.update_at);
+            INSERT (Id,NAME,ADDRESS,CITY,STATE,ZIP,LAT,LON,PHONE,REVENUE,UTILIZATION,create_at,update_at,batch_id)
+            VALUES (s.Id,s.NAME,s.ADDRESS,s.CITY,s.STATE,s.ZIP,s.LAT,s.LON,s.PHONE,s.REVENUE,s.UTILIZATION,SYSUTCDATETIME(),s.update_at,s.batch_id);
 
         DROP TABLE IF EXISTS #src;
         COMMIT;
