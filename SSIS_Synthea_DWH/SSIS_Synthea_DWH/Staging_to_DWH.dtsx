@@ -11,11 +11,30 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Staging_to_DWH"
   DTS:PackageType="5"
-  DTS:VersionBuild="79"
-  DTS:VersionGUID="{57970D04-7A58-486E-861E-17A9C6B9B723}">
+  DTS:VersionBuild="91"
+  DTS:VersionGUID="{B6E9A2E0-BB68-4F62-82F6-36D88E8CE0F3}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
-  <DTS:Variables />
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{31384DBB-C561-4F95-9A75-B0A91148937E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="FromDate">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/2019 9:37:03 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C1C79201-E3BF-480D-ABB3-2847611B935C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ToDate">
+      <DTS:VariableValue
+        DTS:DataType="7">12/31/2020 9:37:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
       DTS:refId="Package\Load Dim"
@@ -7807,7 +7826,20 @@ WHERE Id IS NOT NULL;</property>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
-          SQLTask:SqlStatementSource="EXEC dbo.usp_load_dim_date @StartDate = '1900-01-01', @EndDate = '2026-12-31';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="EXEC dbo.usp_load_dim_date &#xA;@StartDate = ?, @EndDate = ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::FromDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::ToDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -7820,6 +7852,36 @@ WHERE Id IS NOT NULL;</property>
       DTS:ObjectName="Load Fact">
       <DTS:Variables />
       <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Load Fact\Execute SQL Task"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9246B7AC-9F81-406E-9069-D01521C01BF9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Execute SQL Task"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
+              SQLTask:SqlStatementSource="EXEC dbo.usp_load_fact_encounter_daily ?, ?;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::FromDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::ToDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
         <DTS:Executable
           DTS:refId="Package\Load Fact\Load Fact_Encounters"
           DTS:CreationName="Microsoft.Pipeline"
@@ -8154,11 +8216,23 @@ WHERE Id IS NOT NULL;</property>
     ISNULL(e.TOTAL_CLAIM_COST, 0) AS total_claim_cost,
     ISNULL(e.PAYER_COVERAGE, 0) AS payer_coverage
 FROM [DW_Synthea_Staging].[dbo].[Staging_Encounters] e
-OUTER APPLY (SELECT TOP 1 patient_key FROM dbo.dim_patient d WHERE d.patient_id = e.PATIENT AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to ORDER BY d.valid_from DESC) p
-OUTER APPLY (SELECT TOP 1 provider_key FROM dbo.dim_provider d WHERE d.provider_id = e.PROVIDER AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to ORDER BY d.valid_from DESC) pr
+OUTER APPLY (
+    SELECT TOP 1 patient_key FROM dbo.dim_patient d 
+    WHERE d.patient_id = e.PATIENT 
+      AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to 
+    ORDER BY d.valid_from DESC
+) p
+OUTER APPLY (
+    SELECT TOP 1 provider_key FROM dbo.dim_provider d 
+    WHERE d.provider_id = e.PROVIDER 
+      AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to 
+    ORDER BY d.valid_from DESC
+) pr
 OUTER APPLY (SELECT TOP 1 organization_key FROM dbo.dim_organization d WHERE d.organization_id = e.ORGANIZATION AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to) o
 OUTER APPLY (SELECT TOP 1 payer_key FROM dbo.dim_payer d WHERE d.payer_id = e.PAYER AND CONVERT(DATE, e.[START]) BETWEEN d.valid_from AND d.valid_to) pa
-WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
+WHERE e.Id IS NOT NULL 
+  -- QUAN TRỌNG: Lọc đúng khoảng ngày đã nạp trong Dim_Date
+  AND CONVERT(DATE, e.[START]) BETWEEN ? AND ?;</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."
@@ -8179,7 +8253,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
                     <property
                       dataType="System.String"
                       description="The mappings between the parameters in the SQL command and variables."
-                      name="ParameterMapping"></property>
+                      name="ParameterMapping">"Parameter0:Input",{31384DBB-C561-4F95-9A75-B0A91148937E};"Parameter1:Input",{C1C79201-E3BF-480D-ABB3-2847611B935C};</property>
                   </properties>
                   <connections>
                     <connection
@@ -8515,6 +8589,23 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
+          DTS:refId="Package\Load Fact\Load Fact_Encounter_Daily"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0E152698-0611-4088-A849-D746C6677724}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Fact_Encounter_Daily"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
+              SQLTask:SqlStatementSource="CREATE OR ALTER PROCEDURE dbo.usp_load_fact_encounter_daily&#xA;    @FromDate DATE, &#xA;    @ToDate   DATE&#xA;AS&#xA;BEGIN&#xA;    SET NOCOUNT ON; SET XACT_ABORT ON;&#xA;&#xA;    -- Xóa dữ liệu cũ để nạp đè (Idempotent)&#xA;    DELETE FROM dbo.fact_encounter_daily &#xA;    WHERE date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate);&#xA;&#xA;    INSERT INTO dbo.fact_encounter_daily (&#xA;        date_key, organization_key, payer_key, encounter_class,&#xA;        encounter_count, unique_patient_count,&#xA;        total_base_cost, total_claim_cost, total_payer_coverage, total_out_of_pocket,&#xA;        total_los_days&#xA;    )&#xA;    SELECT &#xA;        encounter_date_key AS date_key,&#xA;        ISNULL(organization_key, -1), -- Đảm bảo không bị lọt NULL phá vỡ model&#xA;        ISNULL(payer_key, -1), &#xA;        encounter_class,&#xA;        &#xA;        COUNT(*) AS encounter_count,&#xA;        COUNT(DISTINCT patient_key) AS unique_patient_count, -- Nhớ lưu ý khi lên Dashboard&#xA;        &#xA;        SUM(base_cost) AS total_base_cost,&#xA;        SUM(total_claim_cost) AS total_claim_cost,&#xA;        SUM(payer_coverage) AS total_payer_coverage,&#xA;        SUM(out_of_pocket) AS total_out_of_pocket,&#xA;        &#xA;        0 AS total_los_days -- Tạm thời giữ số 0 chờ nâng cấp version&#xA;    FROM dbo.fact_encounter&#xA;    WHERE encounter_date_key BETWEEN dbo.fn_date_key(@FromDate) AND dbo.fn_date_key(@ToDate)&#xA;    GROUP BY &#xA;        encounter_date_key, &#xA;        ISNULL(organization_key, -1), &#xA;        ISNULL(payer_key, -1), &#xA;        encounter_class;&#xA;END;&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
           DTS:refId="Package\Load Fact\TRUNCATE TABLE"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
@@ -8528,7 +8619,20 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{9A9EF1FD-ACD8-4CFD-BF17-E39723C0FFD0}"
-              SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.fact_encounter;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="DELETE FROM dbo.fact_encounter &#xA;WHERE encounter_date_key BETWEEN dbo.fn_date_key(?) AND dbo.fn_date_key(?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::FromDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="User::ToDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -8541,6 +8645,22 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
           DTS:To="Package\Load Fact\Load Fact_Encounters" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Load Fact.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{0D72CCE8-0F2E-49F5-B421-0FD513CC32D4}"
+          DTS:From="Package\Load Fact\Load Fact_Encounters"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Load Fact\Load Fact_Encounter_Daily" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Load Fact.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{324D6ED6-3219-4C19-8A4A-9D925B74C9B3}"
+          DTS:From="Package\Load Fact\Load Fact_Encounter_Daily"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Load Fact\Execute SQL Task" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
@@ -8598,75 +8718,30 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="150.4,41.6"
           Id="Package\Load Dim_Date"
-          TopLeft="293.277778390381,19.5653594640162" />
+          TopLeft="722.642858669466,10.2189542434505" />
         <NodeLayout
-          Size="188,41.6"
-          Id="Package\Load Dim\Load Dim_Organization"
-          TopLeft="239.228572166027,105.32941154686" />
+          Size="162.4,41.6"
+          Id="Package\Load Fact\Execute SQL Task"
+          TopLeft="27.5,310.3" />
         <NodeLayout
-          Size="160,41.6"
-          Id="Package\Load Dim\Load Dim_Payers"
-          TopLeft="234.942857871189,186.870588031525" />
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Load Dim\Load Dim_Providers"
-          TopLeft="17.8000002660923,191.847058531951" />
-        <NodeLayout
-          Size="204.8,41.6"
-          Id="Package\Load Dim\Load_Dim_Condition_Code"
-          TopLeft="6.2142857158062,109.394117645048" />
-        <NodeLayout
-          Size="181.6,41.6"
-          Id="Package\Load Dim\Load_Dim_Medication"
-          TopLeft="229.7,5.49999999999995" />
-        <NodeLayout
-          Size="164,41.6"
-          Id="Package\Load Dim\Load_Dim_Patient"
-          TopLeft="3.35714285258126,5.49999999999994" />
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="512.8,297.6"
-          Size="512.8,340.8"
-          Id="Package\Load Dim"
-          TopLeft="107.142857370936,100.176470500427" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="366.010317880658,61.1653594640162">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,39.0111110364108"
-              Start="0,0"
-              End="0,31.5111110364108">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,31.5111110364108" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="206.4,41.6"
+          Id="Package\Load Fact\Load Fact_Encounter_Daily"
+          TopLeft="5.50000000000003,208.7" />
         <NodeLayout
           Size="182.4,41.6"
           Id="Package\Load Fact\Load Fact_Encounters"
-          TopLeft="5.50000000000001,107.1" />
+          TopLeft="17.5,107.1" />
         <NodeLayout
           Size="164,41.6"
           Id="Package\Load Fact\TRUNCATE TABLE"
-          TopLeft="14.7,5.49999999999995" />
+          TopLeft="26.7,5.49999999999995" />
         <EdgeLayout
           Id="Package\Load Fact.PrecedenceConstraints[Constraint]"
-          TopLeft="96.7,47.1">
+          TopLeft="108.7,47.1">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -8686,31 +8761,97 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <ContainerLayout
-          HeaderHeight="43"
-          IsExpanded="True"
-          PanelSize="193.6,204"
-          Size="193.6,247.2"
-          Id="Package\Load Fact"
-          TopLeft="262.698413257629,561.633986435811" />
-        <NodeLayout
-          Size="162.4,41.6"
-          Id="Package\Set ValidFrom"
-          TopLeft="275.341270415691,476.862545787244" />
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="360.042063893314,440.976470500427">
+          Id="Package\Load Fact.PrecedenceConstraints[Constraint 1]"
+          TopLeft="108.7,148.7">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35.8860752868171"
+              EndConnector="0,60"
               Start="0,0"
-              End="0,28.3860752868171">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28.3860752868171" />
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Fact.PrecedenceConstraints[Constraint 2]"
+          TopLeft="108.7,250.3">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="217.6,407.2"
+          Size="217.6,450.4"
+          Id="Package\Load Fact"
+          TopLeft="560.337302723347,431.25163360892" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Set ValidFrom"
+          TopLeft="713.436509443519,280.588036155365" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="798.692858020201,51.8189542434505">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.3575162569765"
+              Start="0,0"
+              End="0,40.8575162569765">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.8575162569765" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="797.089683407228,245.776470500427">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.8115656549377"
+              Start="0,0"
+              End="0,27.3115656549377">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.3115656549377" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8721,18 +8862,30 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="358.01984183666,518.462545787244">
+          TopLeft="794.636509443519,322.188036155365">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43.1714406485665"
+              EndConnector="-125.499206720173,109.063597453555"
               Start="0,0"
-              End="0,35.6714406485665">
+              End="-125.499206720173,101.563597453555">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,35.6714406485665" />
+                    End="0,50.5317987267775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50.5317987267775"
+                    Point2="0,54.5317987267775"
+                    Point3="-4,54.5317987267775" />
+                  <mssgle:LineSegment
+                    End="-121.499206720173,54.5317987267775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-121.499206720173,54.5317987267775"
+                    Point2="-125.499206720173,54.5317987267775"
+                    Point3="-125.499206720173,58.5317987267775" />
+                  <mssgle:LineSegment
+                    End="-125.499206720173,101.563597453555" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -8741,6 +8894,37 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <NodeLayout
+          Size="188,41.6"
+          Id="Package\Load Dim\Load Dim_Organization"
+          TopLeft="5.5,5.50000000000007" />
+        <NodeLayout
+          Size="160,41.6"
+          Id="Package\Load Dim\Load Dim_Payers"
+          TopLeft="254.5,5.50000000000007" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Load Dim\Load Dim_Providers"
+          TopLeft="475.5,5.50000000000007" />
+        <NodeLayout
+          Size="204.8,41.6"
+          Id="Package\Load Dim\Load_Dim_Condition_Code"
+          TopLeft="708.1,5.50000000000007" />
+        <NodeLayout
+          Size="181.6,41.6"
+          Id="Package\Load Dim\Load_Dim_Medication"
+          TopLeft="973.7,5.49999999999995" />
+        <NodeLayout
+          Size="164,41.6"
+          Id="Package\Load Dim\Load_Dim_Patient"
+          TopLeft="1215.5,5.49999999999995" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="1384.8,102.4"
+          Size="1384.8,145.6"
+          Id="Package\Load Dim"
+          TopLeft="107.142857370936,100.176470500427" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -9878,7 +10062,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-134.836620263094,20.0866886249739,96.3827734375,11.609375"
+              BoundingBox="-134.836620263095,20.0866886249739,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -9901,9 +10085,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9949,9 +10131,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9973,9 +10153,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9997,9 +10175,7 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -10093,14 +10269,6 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Fact\Load Fact_Encounters\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Load Fact\Load Fact_Encounters\OLE DB Destination">
     <Properties>
       <Property>
@@ -10110,6 +10278,14 @@ WHERE e.Id IS NOT NULL; -- ĐÃ BỎ LỌC NGÀY</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fact\Load Fact_Encounters\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
