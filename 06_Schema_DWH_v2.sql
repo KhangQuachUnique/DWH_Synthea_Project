@@ -316,6 +316,87 @@ BEGIN
 END;
 GO
 
+-- ETL_Run_Log table (nếu chưa có)
+IF OBJECT_ID('dbo.ETL_Run_Log', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.ETL_Run_Log (
+        log_id INT IDENTITY(1,1) PRIMARY KEY,
+        proc_name NVARCHAR(128),
+        batch_id UNIQUEIDENTIFIER,
+        start_time DATETIME2,
+        end_time DATETIME2,
+        status NVARCHAR(20),
+        rows_affected INT,
+        error_msg NVARCHAR(MAX),
+        params NVARCHAR(4000),
+        created_at DATETIME2 DEFAULT SYSUTCDATETIME()
+    );
+END
+GO
+
+CREATE OR ALTER FUNCTION dbo.fn_date_key (@d DATE)
+RETURNS INT
+AS
+BEGIN
+    RETURN (CONVERT(INT, CONVERT(CHAR(8), @d, 112)));
+END;
+GO
+
+-- ============================================================================
+-- 1. DIM_DATE
+-- ============================================================================
+CREATE OR ALTER PROCEDURE dbo.usp_load_dim_date
+    @StartDate DATE, 
+    @EndDate   DATE, 
+    @batch_id  UNIQUEIDENTIFIER = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @log_id INT, @start_time DATETIME2 = SYSUTCDATETIME();
+    IF @batch_id IS NULL SET @batch_id = NEWID();
+
+    BEGIN TRY
+        IF @StartDate IS NULL OR @EndDate IS NULL OR @EndDate < @StartDate
+            THROW 50000, 'Invalid date range', 1;
+
+        ;WITH n AS (
+            SELECT TOP (DATEDIFF(DAY, @StartDate, @EndDate) + 1)
+                ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) - 1 AS n
+            FROM sys.all_objects a CROSS JOIN sys.all_objects b
+        ),
+        d AS (SELECT DATEADD(DAY, n.n, @StartDate) AS full_date FROM n)
+        INSERT INTO dbo.dim_date 
+            (date_key, full_date, [year], [quarter], [month], month_name, 
+             [week_of_year], day_of_month, day_of_week, day_name, is_weekend)
+        SELECT
+            dbo.fn_date_key(d.full_date), 
+            d.full_date,
+            DATEPART(YEAR, d.full_date), 
+            DATEPART(QUARTER, d.full_date), 
+            DATEPART(MONTH, d.full_date),
+            DATENAME(MONTH, d.full_date), 
+            DATEPART(ISOWK, d.full_date), 
+            DATEPART(DAY, d.full_date),
+            ((DATEPART(WEEKDAY, d.full_date) + @@DATEFIRST - 2) % 7) + 1,
+            DATENAME(WEEKDAY, d.full_date),
+            CASE WHEN (((DATEPART(WEEKDAY, d.full_date) + @@DATEFIRST - 2) % 7) + 1) IN (6,7) 
+                 THEN 1 ELSE 0 END
+        FROM d
+        WHERE NOT EXISTS (SELECT 1 FROM dbo.dim_date x WHERE x.full_date = d.full_date);
+
+        INSERT INTO dbo.ETL_Run_Log(proc_name, batch_id, start_time, end_time, status, rows_affected, params)
+        VALUES ('usp_load_dim_date', @batch_id, @start_time, SYSUTCDATETIME(), 'SUCCESS', @@ROWCOUNT, 
+                CONCAT('StartDate=',@StartDate,';EndDate=',@EndDate));
+    END TRY
+    BEGIN CATCH
+        INSERT INTO dbo.ETL_Run_Log(proc_name, batch_id, start_time, end_time, status, error_msg, params)
+        VALUES ('usp_load_dim_date', @batch_id, @start_time, SYSUTCDATETIME(), 'FAILED', ERROR_MESSAGE(), 
+                CONCAT('StartDate=',@StartDate,';EndDate=',@EndDate));
+        THROW;
+    END CATCH
+END;
+GO
+
 -- ============================================================================
 -- SECTION 3: FOREIGN KEY CONSTRAINTS
 -- ============================================================================
