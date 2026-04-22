@@ -10,7 +10,8 @@ USE [master];
 GO
 
 IF DB_ID(N'DW_Synthea_DWH') IS NULL
-    CREATE DATABASE [DW_Synthea_DWH];
+    CREATE DATABASE [DW_Synthea_DWH]
+    COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE [DW_Synthea_DWH];
@@ -28,11 +29,11 @@ BEGIN
         [year]              SMALLINT    NOT NULL,
         [quarter]           TINYINT     NOT NULL,
         [month]             TINYINT     NOT NULL,
-        month_name          VARCHAR(10) NOT NULL,
+        month_name          NVARCHAR(10) NOT NULL,
         [week_of_year]      TINYINT     NOT NULL,
         day_of_month        TINYINT     NOT NULL,
         day_of_week         TINYINT     NOT NULL,
-        day_name            VARCHAR(10) NOT NULL,
+        day_name            NVARCHAR(10) NOT NULL,
         is_weekend          BIT         NOT NULL,
         fiscal_year         SMALLINT    NULL,
         fiscal_quarter      TINYINT     NULL,
@@ -48,18 +49,18 @@ IF OBJECT_ID(N'dbo.dim_patient', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_patient (
         patient_key             INT             IDENTITY(1,1) NOT NULL,
-        patient_id              VARCHAR(36)     NOT NULL,
-        first_name              VARCHAR(100)    NULL,
-        last_name               VARCHAR(100)    NULL,
+        patient_id              NVARCHAR(36)     NOT NULL,
+        first_name              NVARCHAR(100)    NULL,
+        last_name               NVARCHAR(100)    NULL,
         birthdate               DATE            NULL,
         deathdate               DATE            NULL,
         gender                  CHAR(1)         NULL,
-        race                    VARCHAR(50)     NULL,
-        ethnicity               VARCHAR(50)     NULL,
-        city                    VARCHAR(100)    NULL,
-        [state]                 VARCHAR(50)     NULL,
-        zip                     VARCHAR(10)     NULL,
-        county                  VARCHAR(100)    NULL,
+        race                    NVARCHAR(50)     NULL,
+        ethnicity               NVARCHAR(50)     NULL,
+        city                    NVARCHAR(100)    NULL,
+        [state]                 NVARCHAR(50)     NULL,
+        zip                     NVARCHAR(10)     NULL,
+        county                  NVARCHAR(100)    NULL,
         healthcare_expenses     DECIMAL(18,2)   NULL,
         healthcare_coverage     DECIMAL(18,2)   NULL,
         birth_year              AS YEAR(birthdate) PERSISTED,
@@ -79,12 +80,12 @@ IF OBJECT_ID(N'dbo.dim_organization', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_organization (
         organization_key        INT             IDENTITY(1,1) NOT NULL,
-        organization_id         VARCHAR(36)     NOT NULL,
-        [name]                  VARCHAR(255)    NULL,
-        city                    VARCHAR(100)    NULL,
-        [state]                 VARCHAR(50)     NULL,
-        zip                     VARCHAR(10)     NULL,
-        phone                   VARCHAR(20)     NULL,
+        organization_id         NVARCHAR(36)     NOT NULL,
+        [name]                  NVARCHAR(255)    NULL,
+        city                    NVARCHAR(100)    NULL,
+        [state]                 NVARCHAR(50)     NULL,
+        zip                     NVARCHAR(10)     NULL,
+        phone                   NVARCHAR(20)     NULL,
         revenue                 DECIMAL(18,2)   NULL,
         utilization             INT             NULL,
         valid_from              DATE            NOT NULL,
@@ -102,14 +103,14 @@ IF OBJECT_ID(N'dbo.dim_provider', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_provider (
         provider_key            INT             IDENTITY(1,1) NOT NULL,
-        provider_id             VARCHAR(36)     NOT NULL,
-        organization_id         VARCHAR(36)     NULL,
-        [name]                  VARCHAR(255)    NULL,
+        provider_id             NVARCHAR(36)     NOT NULL,
+        organization_id         NVARCHAR(36)     NULL,
+        [name]                  NVARCHAR(255)    NULL,
         gender                  CHAR(1)         NULL,
-        speciality              VARCHAR(100)    NULL,
-        city                    VARCHAR(100)    NULL,
-        [state]                 VARCHAR(50)     NULL,
-        zip                     VARCHAR(10)     NULL,
+        speciality              NVARCHAR(100)    NULL,
+        city                    NVARCHAR(100)    NULL,
+        [state]                 NVARCHAR(50)     NULL,
+        zip                     NVARCHAR(10)     NULL,
         utilization             INT             NULL,
         valid_from              DATE            NOT NULL,
         valid_to                DATE            NOT NULL,
@@ -126,13 +127,13 @@ IF OBJECT_ID(N'dbo.dim_payer', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_payer (
         payer_key               INT             IDENTITY(1,1) NOT NULL,
-        payer_id                VARCHAR(36)     NOT NULL,
-        [name]                  VARCHAR(255)    NULL,
-        city                    VARCHAR(100)    NULL,
-        state_headquartered     VARCHAR(50)     NULL,
-        zip                     VARCHAR(10)     NULL,
-        phone                   VARCHAR(20)     NULL,
-        ownership               VARCHAR(50)     NULL,
+        payer_id                NVARCHAR(36)     NOT NULL,
+        [name]                  NVARCHAR(255)    NULL,
+        city                    NVARCHAR(100)    NULL,
+        state_headquartered     NVARCHAR(50)     NULL,
+        zip                     NVARCHAR(10)     NULL,
+        phone                   NVARCHAR(20)     NULL,
+        ownership               NVARCHAR(50)     NULL,
         amount_covered          DECIMAL(18,2)   NULL,
         amount_uncovered        DECIMAL(18,2)   NULL,
         revenue                 DECIMAL(18,2)   NULL,
@@ -153,10 +154,10 @@ IF OBJECT_ID(N'dbo.dim_condition_code', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_condition_code (
         condition_code_key      INT             IDENTITY(1,1) NOT NULL,
-        code                    VARCHAR(20)     NOT NULL,
-        [description]           VARCHAR(500)    NULL,
-        body_system             VARCHAR(100)    NULL,
-        condition_category      VARCHAR(100)    NULL,
+        code                    NVARCHAR(20)     NOT NULL,
+        [description]           NVARCHAR(500)    NULL,
+        body_system             NVARCHAR(100)    NULL,
+        condition_category      NVARCHAR(100)    NULL,
         is_chronic              BIT             NULL,
         is_infectious           BIT             NULL,
         create_at               DATETIME2       NOT NULL CONSTRAINT DF_dim_cond_code_create_at DEFAULT SYSUTCDATETIME(),
@@ -171,8 +172,8 @@ IF OBJECT_ID(N'dbo.dim_medication', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_medication (
         medication_key        INT IDENTITY(1,1) NOT NULL,
-        medication_code       VARCHAR(20)     NOT NULL,
-        medication_description VARCHAR(255)   NULL,
+        medication_code       NVARCHAR(20)     NOT NULL,
+        medication_description NVARCHAR(255)   NULL,
         CONSTRAINT PK_dim_medication PRIMARY KEY CLUSTERED (medication_key),
         CONSTRAINT UQ_dim_medication_code UNIQUE (medication_code)
     );
@@ -194,11 +195,11 @@ BEGIN
         provider_key            INT          NULL,
         organization_key        INT          NULL,
         payer_key               INT          NULL,
-        encounter_id            VARCHAR(36)  NOT NULL,
-        encounter_code          VARCHAR(20)  NULL,
-        encounter_class         VARCHAR(50)  NULL,
-        encounter_description   VARCHAR(255) NULL,
-        reason_code             VARCHAR(20)  NULL,
+        encounter_id            NVARCHAR(36)  NOT NULL,
+        encounter_code          NVARCHAR(20)  NULL,
+        encounter_class         NVARCHAR(50)  NULL,
+        encounter_description   NVARCHAR(255) NULL,
+        reason_code             NVARCHAR(20)  NULL,
         base_cost               DECIMAL(18,2) NULL,
         total_claim_cost        DECIMAL(18,2) NULL,
         payer_coverage          DECIMAL(18,2) NULL,
@@ -217,7 +218,7 @@ BEGIN
         date_key                INT             NOT NULL,
         organization_key        INT             NULL,
         payer_key               INT             NULL,
-        encounter_class         VARCHAR(50)     NULL,
+        encounter_class         NVARCHAR(50)     NULL,
         encounter_count         INT             NOT NULL DEFAULT 0,
         unique_patient_count    INT             NOT NULL DEFAULT 0,
         total_base_cost         DECIMAL(18,2)   NOT NULL DEFAULT 0,
@@ -242,9 +243,9 @@ BEGIN
         condition_code_key      INT          NULL, -- Thêm key để join dim_condition_code
         provider_key            INT          NULL,
         organization_key        INT          NULL,
-        encounter_id            VARCHAR(36)  NULL,
-        condition_code          VARCHAR(20)  NOT NULL,
-        condition_description   VARCHAR(255) NULL,
+        encounter_id            NVARCHAR(36)  NULL,
+        condition_code          NVARCHAR(20)  NOT NULL,
+        condition_description   NVARCHAR(255) NULL,
         is_active AS CASE WHEN stop_date_key IS NULL THEN 1 ELSE 0 END PERSISTED,
         load_dts DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
     );
@@ -281,8 +282,8 @@ BEGIN
         provider_key            INT NULL,
         organization_key        INT NULL,
         payer_key               INT NULL,
-        encounter_id            VARCHAR(36) NULL,
-        reason_code             VARCHAR(20) NULL,
+        encounter_id            NVARCHAR(36) NULL,
+        reason_code             NVARCHAR(20) NULL,
         base_cost               DECIMAL(18,2) NULL,
         payer_coverage          DECIMAL(18,2) NULL,
         dispense_count          INT NULL,
