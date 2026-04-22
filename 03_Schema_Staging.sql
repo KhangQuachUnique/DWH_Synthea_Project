@@ -24,7 +24,7 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Patients]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Patients] (
-        [Id] VARCHAR(36) NOT NULL,
+        [Id] VARCHAR(100) NOT NULL,
         [BIRTHDATE] DATE NULL,
         [DEATHDATE] DATE NULL,
         [SSN] VARCHAR(11) NULL,
@@ -42,9 +42,9 @@ BEGIN
         [BIRTHPLACE] VARCHAR(255) NULL,
         [ADDRESS] VARCHAR(255) NULL,
         [CITY] VARCHAR(100) NULL,
-        [STATE] VARCHAR(50) NULL,
+        [STATE] VARCHAR(100) NULL,
         [COUNTY] VARCHAR(100) NULL,
-        [ZIP] VARCHAR(10) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,2) NULL,
         [LON] DECIMAL(18,2) NULL,
         [HEALTHCARE_EXPENSES] DECIMAL(18,2) NULL,
@@ -135,15 +135,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Organizations]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Organizations] (
-        [Id] VARCHAR(36) NULL,
+        [Id] VARCHAR(100) NULL,
         [NAME] VARCHAR(255) NULL,
         [ADDRESS] VARCHAR(255) NULL,
         [CITY] VARCHAR(100) NULL,
-        [STATE] VARCHAR(50) NULL,
-        [ZIP] VARCHAR(10) NULL,
+        [STATE] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,10) NULL,
         [LON] DECIMAL(18,10) NULL,
-        [PHONE] VARCHAR(20) NULL,
+        [PHONE] VARCHAR(100) NULL,
         [REVENUE] DECIMAL(18,2) NULL,
         [UTILIZATION] INT NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
@@ -159,15 +159,15 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Providers]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Providers] (
-        [Id] VARCHAR(36) NULL,
-        [ORGANIZATION] VARCHAR(36) NULL,
+        [Id] VARCHAR(100) NULL,
+        [ORGANIZATION] VARCHAR(100) NULL,
         [NAME] VARCHAR(255) NULL,
         [GENDER] CHAR(1) NULL,
         [SPECIALITY] VARCHAR(100) NULL,
         [ADDRESS] VARCHAR(255) NULL,
         [CITY] VARCHAR(100) NULL,
-        [STATE] VARCHAR(50) NULL,
-        [ZIP] VARCHAR(10) NULL,
+        [STATE] VARCHAR(100) NULL,
+        [ZIP] VARCHAR(100) NULL,
         [LAT] DECIMAL(18,10) NULL,
         [LON] DECIMAL(18,10) NULL,
         [UTILIZATION] INT NULL,
@@ -184,13 +184,13 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payers]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Payers] (
-        [Id] VARCHAR(36) NULL,
+        [Id] VARCHAR(100) NULL,
         [NAME] VARCHAR(255) NULL,
         [ADDRESS] VARCHAR(255) NULL,
         [CITY] VARCHAR(100) NULL,
         [STATE_HEADQUARTERED] VARCHAR(50) NULL,
-        [ZIP] VARCHAR(10) NULL,
-        [PHONE] VARCHAR(20) NULL,
+        [ZIP] VARCHAR(100) NULL,
+        [PHONE] VARCHAR(100) NULL,
         [AMOUNT_COVERED] DECIMAL(18,2) NULL,
         [AMOUNT_UNCOVERED] DECIMAL(18,2) NULL,
         [REVENUE] DECIMAL(18,2) NULL,
@@ -218,10 +218,10 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Staging_Payer_Transitions]'))
 BEGIN
     CREATE TABLE [dbo].[Staging_Payer_Transitions] (
-        [PATIENT] VARCHAR(36) NULL,
+        [PATIENT] VARCHAR(100) NULL,
         [START_YEAR] INT NULL,
         [END_YEAR] INT NULL,
-        [PAYER] VARCHAR(36) NULL,
+        [PAYER] VARCHAR(100) NULL,
         [OWNERSHIP] VARCHAR(50) NULL,
         [create_at] DATETIME NOT NULL DEFAULT GETDATE(),
         [update_at] DATETIME NOT NULL DEFAULT GETDATE()
