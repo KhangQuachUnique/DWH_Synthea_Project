@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CSV_to_Landing"
   DTS:PackageType="5"
-  DTS:VersionBuild="69"
-  DTS:VersionGUID="{C0308819-DF23-4196-B2EE-5FE6EC4C3767}">
+  DTS:VersionBuild="71"
+  DTS:VersionGUID="{EE9936F4-00E3-4E55-93B7-0949F18F567D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1055,7 +1055,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="Id"
-              DTS:DTSID="{E5596FCE-942A-4D81-8302-C0E0F6F77409}"
+              DTS:DTSID="{964134BA-4E4A-425E-A848-9A39C99308D2}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1064,7 +1064,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ORGANIZATION"
-              DTS:DTSID="{9FB8A9D8-51B4-42BE-AC9E-D2B3B941F34B}"
+              DTS:DTSID="{B317AE47-9610-45DA-9FAB-8BCB5E9B07A3}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1073,7 +1073,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="NAME"
-              DTS:DTSID="{8701D7CF-6F1B-4B8A-9C20-2AC0AFF387D4}"
+              DTS:DTSID="{CDBC2466-F5F7-4332-AC8F-25F684CB2794}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1082,7 +1082,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="GENDER"
-              DTS:DTSID="{A074BAC3-C89C-4100-8302-53D1348B96FE}"
+              DTS:DTSID="{2F341FAD-0AB9-4084-8A03-558DFCA50962}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1091,7 +1091,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="SPECIALITY"
-              DTS:DTSID="{BFBB9E26-3D75-42F4-B5F0-F398AB11587E}"
+              DTS:DTSID="{0A32FA59-8C10-4D78-BCB0-8FAE9E1BF4F0}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1100,7 +1100,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ADDRESS"
-              DTS:DTSID="{EF9BCAF3-5840-4132-A714-E4544513795F}"
+              DTS:DTSID="{2946FEE9-9123-4717-973C-80AE82BE883B}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1109,7 +1109,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="CITY"
-              DTS:DTSID="{EA5C7CC6-6539-4DB8-A219-B865E2218F90}"
+              DTS:DTSID="{B58E111E-EFDF-4657-A1AE-E80355438C6E}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1118,7 +1118,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="STATE"
-              DTS:DTSID="{B0A64E3D-9781-4B83-8CD2-BDD833CF671D}"
+              DTS:DTSID="{CE8FABFB-D2AF-4054-A398-3A03D2C837FC}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1127,7 +1127,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ZIP"
-              DTS:DTSID="{404EDA89-8A21-472F-9C7D-41DFA1F6EF01}"
+              DTS:DTSID="{1975FD95-C377-4137-A03B-60F252013290}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1136,7 +1136,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LAT"
-              DTS:DTSID="{A82FD7AC-8809-40DF-8586-84BB5B070DD5}"
+              DTS:DTSID="{D27D990A-0063-44C1-A883-F84C965F6108}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1145,7 +1145,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="LON"
-              DTS:DTSID="{465D629B-5BA2-4FFC-B16F-FC4F14B3E42E}"
+              DTS:DTSID="{BC6B7BF6-5DA9-479E-8155-AC01E17715CF}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -1154,7 +1154,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="UTILIZATION"
-              DTS:DTSID="{273633B3-E0FC-447D-9FC0-45EAFA5F9B62}"
+              DTS:DTSID="{CC9916DF-047F-4364-BDD9-3836F8CF9C4A}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -2795,7 +2795,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="6">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2825,7 +2825,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 1"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2855,7 +2855,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 2"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="5">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2885,7 +2885,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 3"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="4">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2915,7 +2915,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 4"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="4">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2945,7 +2945,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 5"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="5">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -2975,7 +2975,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 6"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="7">
+          DTS:ThreadHint="6">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -3005,7 +3005,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="Execute SQL Task 7"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="7">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -8763,10 +8763,6 @@
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="149.6,41.6"
-          Id="Package\Truncate Table"
-          TopLeft="720.551021930319,14.2394957906588" />
-        <NodeLayout
           Size="172.8,41.6"
           Id="Package\Sequence Container\conditions data flow"
           TopLeft="5.50000000000009,5.50000000000007" />
@@ -8774,6 +8770,38 @@
           Size="166.4,41.6"
           Id="Package\Sequence Container\encouter data flow"
           TopLeft="238.7,5.50000000000007" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Sequence Container\Execute SQL Task"
+          TopLeft="10.7000000000001,107.1" />
+        <NodeLayout
+          Size="162.4,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 1"
+          TopLeft="240.7,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 2"
+          TopLeft="470.9,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 3"
+          TopLeft="715.9,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 4"
+          TopLeft="948.9,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 5"
+          TopLeft="1191.9,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 6"
+          TopLeft="1433.9,107.1" />
+        <NodeLayout
+          Size="172,41.6"
+          Id="Package\Sequence Container\Execute SQL Task 7"
+          TopLeft="1666.9,107.1" />
         <NodeLayout
           Size="181.6,41.6"
           Id="Package\Sequence Container\medications data flow"
@@ -8798,10 +8826,6 @@
           Size="168.8,41.6"
           Id="Package\Sequence Container\providers data flow"
           TopLeft="1668.5,5.49999999999984" />
-        <NodeLayout
-          Size="162.4,41.6"
-          Id="Package\Sequence Container\Execute SQL Task"
-          TopLeft="10.7000000000001,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
           TopLeft="91.9000000000001,47.1000000000001">
@@ -8824,10 +8848,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="162.4,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 1"
-          TopLeft="240.7,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
           TopLeft="321.9,47.1000000000001">
@@ -8850,10 +8870,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 2"
-          TopLeft="470.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
           TopLeft="556.9,47.1">
@@ -8876,10 +8892,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 3"
-          TopLeft="715.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 3]"
           TopLeft="801.9,47.1">
@@ -8902,10 +8914,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 4"
-          TopLeft="948.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 4]"
           TopLeft="1034.9,47.1">
@@ -8928,10 +8936,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 6"
-          TopLeft="1433.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 5]"
           TopLeft="1519.9,47.0999999999998">
@@ -8954,10 +8958,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 5"
-          TopLeft="1191.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 6]"
           TopLeft="1277.9,47.1">
@@ -8980,10 +8980,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="172,41.6"
-          Id="Package\Sequence Container\Execute SQL Task 7"
-          TopLeft="1666.9,107.1" />
         <EdgeLayout
           Id="Package\Sequence Container.PrecedenceConstraints[Constraint 7]"
           TopLeft="1752.9,47.0999999999998">
@@ -9013,6 +9009,10 @@
           Size="1844.8,247.2"
           Id="Package\Sequence Container"
           TopLeft="24.7857143267686,90.5941175766779" />
+        <NodeLayout
+          Size="149.6,41.6"
+          Id="Package\Truncate Table"
+          TopLeft="720.551021930319,14.2394957906588" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="795.351021930319,55.8394957906588">
@@ -9054,11 +9054,15 @@
     design-time-name="Package\Sequence Container\conditions data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="165.6,41.6"
           Id="Package\Sequence Container\conditions data flow\landing_conditions"
           TopLeft="618.171418082227,87.8823508165488" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\conditions data flow\Row Count"
+          TopLeft="262.642857690247,88.8529411034085" />
         <NodeLayout
           Size="144,41.6"
           Id="Package\Sequence Container\conditions data flow\csv conditions"
@@ -9067,54 +9071,6 @@
           Size="152.8,58.4"
           Id="Package\Sequence Container\conditions data flow\Derived Column"
           TopLeft="425.185715114402,78.1470587598513" />
-        <EdgeLayout
-          Id="Package\Sequence Container\conditions data flow.Paths[Derived Column Output]"
-          TopLeft="577.985715114402,108.0147047882">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="40.1857029678247,0"
-              Start="0,0"
-              End="32.6857029678247,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="32.6857029678247,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\conditions data flow\Row Count"
-          TopLeft="262.642857690247,88.8529411034085" />
-        <EdgeLayout
-          Id="Package\Sequence Container\conditions data flow.Paths[Flat File Source Output]"
-          TopLeft="228.857136958108,108.197057760597">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="33.7857207321385,0"
-              Start="0,0"
-              End="26.2857207321385,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="26.2857207321385,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\conditions data flow.Paths[Row Count Output 1]"
           TopLeft="392.242857690247,108.49999993163">
@@ -9134,7 +9090,57 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\conditions data flow.Paths[Flat File Source Output]"
+          TopLeft="228.857136958108,108.197057760597">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.7857207321385,0"
+              Start="0,0"
+              End="26.2857207321385,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26.2857207321385,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\conditions data flow.Paths[Derived Column Output]"
+          TopLeft="577.985715114402,108.0147047882">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40.1857029678247,0"
+              Start="0,0"
+              End="32.6857029678247,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="32.6857029678247,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9157,7 +9163,11 @@
     design-time-name="Package\Sequence Container\encouter data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\encouter data flow\Row Count"
+          TopLeft="74.1190507598981,194.880392036064" />
         <NodeLayout
           Size="160,41.6"
           Id="Package\Sequence Container\encouter data flow\landing_encouter"
@@ -9166,10 +9176,6 @@
           Size="162.4,58.4"
           Id="Package\Sequence Container\encouter data flow\csv encouter"
           TopLeft="74.1190507598981,65.7745096925066" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\encouter data flow\Row Count"
-          TopLeft="74.1190507598981,194.880392036064" />
         <NodeLayout
           Size="152.8,58.4"
           Id="Package\Sequence Container\encouter data flow\Derived Column"
@@ -9193,41 +9199,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\encouter data flow.Paths[Derived Column Output]"
-          TopLeft="313.061908184053,184.174509692507">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="260.438084462224,-62.4411775612002"
-              Start="0,0"
-              End="260.438084462224,-54.9411775612002">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-27.2205887806001" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-27.2205887806001"
-                    Point2="0,-31.2205887806001"
-                    Point3="4,-31.2205887806001" />
-                  <mssgle:LineSegment
-                    End="256.438084462224,-31.2205887806001" />
-                  <mssgle:CubicBezierSegment
-                    Point1="256.438084462224,-31.2205887806001"
-                    Point2="260.438084462224,-31.2205887806001"
-                    Point3="260.438084462224,-35.2205887806001" />
-                  <mssgle:LineSegment
-                    End="260.438084462224,-54.9411775612002" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9261,7 +9235,45 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\encouter data flow.Paths[Derived Column Output]"
+          TopLeft="313.061908184053,184.174509692507">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="260.438084462224,-62.4411775612002"
+              Start="0,0"
+              End="260.438084462224,-54.9411775612002">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-27.2205887806001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-27.2205887806001"
+                    Point2="0,-31.2205887806001"
+                    Point3="4,-31.2205887806001" />
+                  <mssgle:LineSegment
+                    End="256.438084462224,-31.2205887806001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="256.438084462224,-31.2205887806001"
+                    Point2="260.438084462224,-31.2205887806001"
+                    Point3="260.438084462224,-35.2205887806001" />
+                  <mssgle:LineSegment
+                    End="260.438084462224,-54.9411775612002" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9284,7 +9296,11 @@
     design-time-name="Package\Sequence Container\medications data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\medications data flow\Row Count"
+          TopLeft="116.999998256564,209.305880898144" />
         <NodeLayout
           Size="174.4,41.6"
           Id="Package\Sequence Container\medications data flow\landing_medications"
@@ -9293,10 +9309,6 @@
           Size="152.8,41.6"
           Id="Package\Sequence Container\medications data flow\csv medications"
           TopLeft="118.999998226762,92.9999986141921" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\medications data flow\Row Count"
-          TopLeft="116.999998256564,209.305880898144" />
         <NodeLayout
           Size="152.8,58.4"
           Id="Package\Sequence Container\medications data flow\Derived Column"
@@ -9320,7 +9332,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9354,7 +9368,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9388,7 +9404,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9411,7 +9429,15 @@
     design-time-name="Package\Sequence Container\organizations data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="152.8,58.4"
+          Id="Package\Sequence Container\organizations data flow\Derived Column"
+          TopLeft="330.54285492076,254.599997720122" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\organizations data flow\Row Count"
+          TopLeft="167.999997496605,268.305880018976" />
         <NodeLayout
           Size="159.2,41.6"
           Id="Package\Sequence Container\organizations data flow\csv organizations"
@@ -9420,70 +9446,6 @@
           Size="180.8,41.6"
           Id="Package\Sequence Container\organizations data flow\landing_organizations"
           TopLeft="642.999990418554,147.999997794628" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\organizations data flow\Row Count"
-          TopLeft="167.999997496605,268.305880018976" />
-        <NodeLayout
-          Size="152.8,58.4"
-          Id="Package\Sequence Container\organizations data flow\Derived Column"
-          TopLeft="330.54285492076,254.599997720122" />
-        <EdgeLayout
-          Id="Package\Sequence Container\organizations data flow.Paths[Flat File Source Output]"
-          TopLeft="247.599997496605,194.599997720122">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-14.8000000000001,73.7058822988537"
-              Start="0,0"
-              End="-14.8000000000001,66.2058822988537">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,32.8529411494269" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,32.8529411494269"
-                    Point2="0,36.8529411494269"
-                    Point3="-4,36.8529411494269" />
-                  <mssgle:LineSegment
-                    End="-10.8000000000001,36.8529411494269" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-10.8000000000001,36.8529411494269"
-                    Point2="-14.8000000000001,36.8529411494269"
-                    Point3="-14.8000000000001,40.8529411494269" />
-                  <mssgle:LineSegment
-                    End="-14.8000000000001,66.2058822988537" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\organizations data flow.Paths[Row Count Output 1]"
-          TopLeft="297.599997496605,286.452938869549">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="32.942857424155,0"
-              Start="0,0"
-              End="25.442857424155,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="25.442857424155,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\organizations data flow.Paths[Derived Column Output]"
           TopLeft="406.94285492076,254.599997720122">
@@ -9515,7 +9477,69 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\organizations data flow.Paths[Row Count Output 1]"
+          TopLeft="297.599997496605,286.452938869549">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.942857424155,0"
+              Start="0,0"
+              End="25.442857424155,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="25.442857424155,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\organizations data flow.Paths[Flat File Source Output]"
+          TopLeft="247.599997496605,194.599997720122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.8000000000001,73.7058822988537"
+              Start="0,0"
+              End="-14.8000000000001,66.2058822988537">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,32.8529411494269" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,32.8529411494269"
+                    Point2="0,36.8529411494269"
+                    Point3="-4,36.8529411494269" />
+                  <mssgle:LineSegment
+                    End="-10.8000000000001,36.8529411494269" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.8000000000001,36.8529411494269"
+                    Point2="-14.8000000000001,36.8529411494269"
+                    Point3="-14.8000000000001,40.8529411494269" />
+                  <mssgle:LineSegment
+                    End="-14.8000000000001,66.2058822988537" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9538,7 +9562,15 @@
     design-time-name="Package\Sequence Container\patient data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="152.8,58.4"
+          Id="Package\Sequence Container\patient data flow\Derived Column"
+          TopLeft="411.828572240533,168.12941170639" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\patient data flow\Row Count"
+          TopLeft="249.285714816378,178.835294049947" />
         <NodeLayout
           Size="129.6,41.6"
           Id="Package\Sequence Container\patient data flow\csv patient"
@@ -9547,36 +9579,6 @@
           Size="151.2,41.6"
           Id="Package\Sequence Container\patient data flow\landing_patient"
           TopLeft="520.71428682275,66.5294117063903" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\patient data flow\Row Count"
-          TopLeft="249.285714816378,178.835294049947" />
-        <NodeLayout
-          Size="152.8,58.4"
-          Id="Package\Sequence Container\patient data flow\Derived Column"
-          TopLeft="411.828572240533,168.12941170639" />
-        <EdgeLayout
-          Id="Package\Sequence Container\patient data flow.Paths[Flat File Source Output]"
-          TopLeft="314.085714816378,103.541176416294">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,75.2941176336531"
-              Start="0,0"
-              End="0,67.7941176336531">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,67.7941176336531" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\patient data flow.Paths[Derived Column Output]"
           TopLeft="488.228572240533,168.12941170639">
@@ -9608,7 +9610,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9630,7 +9634,33 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\patient data flow.Paths[Flat File Source Output]"
+          TopLeft="314.085714816378,103.541176416294">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.2941176336531"
+              Start="0,0"
+              End="0,67.7941176336531">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.7941176336531" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9653,11 +9683,15 @@
     design-time-name="Package\Sequence Container\payer_transitions data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="199.2,41.6"
           Id="Package\Sequence Container\payer_transitions data flow\landing_payer_transitions"
           TopLeft="597.999991089106,131.999998033047" />
+        <NodeLayout
+          Size="152.8,58.4"
+          Id="Package\Sequence Container\payer_transitions data flow\Derived Column"
+          TopLeft="473.542852789894,233.599998033047" />
         <NodeLayout
           Size="177.6,41.6"
           Id="Package\Sequence Container\payer_transitions data flow\csv payer_transitions"
@@ -9666,10 +9700,6 @@
           Size="129.6,41.6"
           Id="Package\Sequence Container\payer_transitions data flow\Row Count"
           TopLeft="292.99999563396,244.305880376604" />
-        <NodeLayout
-          Size="152.8,58.4"
-          Id="Package\Sequence Container\payer_transitions data flow\Derived Column"
-          TopLeft="473.542852789894,233.599998033047" />
         <EdgeLayout
           Id="Package\Sequence Container\payer_transitions data flow.Paths[Flat File Source Output]"
           TopLeft="399.799995365739,166.599998137354">
@@ -9701,29 +9731,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Sequence Container\payer_transitions data flow.Paths[Row Count Output 1]"
-          TopLeft="422.59999563396,263.952939204826">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="50.9428571559342,0"
-              Start="0,0"
-              End="43.4428571559342,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="43.4428571559342,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9757,7 +9767,33 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\payer_transitions data flow.Paths[Row Count Output 1]"
+          TopLeft="422.59999563396,263.952939204826">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.9428571559342,0"
+              Start="0,0"
+              End="43.4428571559342,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="43.4428571559342,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9780,11 +9816,15 @@
     design-time-name="Package\Sequence Container\payers data flow">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="149.6,41.6"
           Id="Package\Sequence Container\payers data flow\landing_payers"
           TopLeft="709.999989420176,139.999997913837" />
+        <NodeLayout
+          Size="152.8,58.4"
+          Id="Package\Sequence Container\payers data flow\Derived Column"
+          TopLeft="549.542851657406,241.599997913837" />
         <NodeLayout
           Size="128,41.6"
           Id="Package\Sequence Container\payers data flow\csv payers"
@@ -9793,32 +9833,6 @@
           Size="129.6,41.6"
           Id="Package\Sequence Container\payers data flow\Row Count"
           TopLeft="386.999994233251,252.305880257394" />
-        <NodeLayout
-          Size="152.8,58.4"
-          Id="Package\Sequence Container\payers data flow\Derived Column"
-          TopLeft="549.542851657406,241.599997913837" />
-        <EdgeLayout
-          Id="Package\Sequence Container\payers data flow.Paths[Flat File Source Output]"
-          TopLeft="451.399994233251,176.599997988343">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,75.7058822690512"
-              Start="0,0"
-              End="0,68.2058822690512">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,68.2058822690512" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\Sequence Container\payers data flow.Paths[Row Count Output 1]"
           TopLeft="516.599994233251,271.952939085616">
@@ -9838,7 +9852,33 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\payers data flow.Paths[Flat File Source Output]"
+          TopLeft="451.399994233251,176.599997988343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.7058822690512"
+              Start="0,0"
+              End="0,68.2058822690512">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68.2058822690512" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9872,7 +9912,9 @@
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9899,22 +9941,22 @@
         <NodeLayout
           Size="161.6,41.6"
           Id="Package\Sequence Container\providers data flow\landing_providers"
-          TopLeft="701.999989539385,170.999997451901" />
-        <NodeLayout
-          Size="140,41.6"
-          Id="Package\Sequence Container\providers data flow\csv providers"
-          TopLeft="364.999994561076,170.999997451901" />
-        <NodeLayout
-          Size="129.6,41.6"
-          Id="Package\Sequence Container\providers data flow\Row Count"
-          TopLeft="364.999994561076,283.305879795458" />
+          TopLeft="406.999988911411,38.7058799208031" />
         <NodeLayout
           Size="152.8,58.4"
           Id="Package\Sequence Container\providers data flow\Derived Column"
-          TopLeft="527.542851985231,272.599997451901" />
+          TopLeft="232.542851357255,140.305879920803" />
+        <NodeLayout
+          Size="140,41.6"
+          Id="Package\Sequence Container\providers data flow\csv providers"
+          TopLeft="69.9999939330984,38.7058799208031" />
+        <NodeLayout
+          Size="129.6,41.6"
+          Id="Package\Sequence Container\providers data flow\Row Count"
+          TopLeft="69.9999939330985,151.01176226436" />
         <EdgeLayout
           Id="Package\Sequence Container\providers data flow.Paths[Flat File Source Output]"
-          TopLeft="432.399994561076,212.599997451901">
+          TopLeft="137.399993933098,80.3058799208031">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -9935,30 +9977,8 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Sequence Container\providers data flow.Paths[Row Count Output 1]"
-          TopLeft="494.599994561076,302.95293862368">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="32.942857424155,0"
-              Start="0,0"
-              End="25.442857424155,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="25.442857424155,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Sequence Container\providers data flow.Paths[Derived Column Output]"
-          TopLeft="603.942851985231,272.599997451901">
+          TopLeft="308.942851357256,140.305879920803">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -9982,6 +10002,28 @@
                     Point3="178.857137554154,-34" />
                   <mssgle:LineSegment
                     End="178.857137554154,-52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container\providers data flow.Paths[Row Count Output 1]"
+          TopLeft="199.599993933099,170.658821092582">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.942857424155,0"
+              Start="0,0"
+              End="25.442857424155,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="25.442857424155,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
